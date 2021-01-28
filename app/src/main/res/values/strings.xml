@@ -3,4 +3,7 @@
     <string name="enter_phone_no">Enter your phone number</string>
     <string name="phone_no">Phone Number</string>
     <string name="register_phone_number">Register Phone Number</string>
+    <string-array name="country_list">
+        <item>+880</item>
+    </string-array>
 </resources>

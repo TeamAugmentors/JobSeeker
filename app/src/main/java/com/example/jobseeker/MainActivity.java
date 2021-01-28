@@ -8,28 +8,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ListIterator;
+import com.example.jobseeker.databinding.ActivityMainBinding;
+import com.example.jobseeker.databinding.Fragment1Binding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextPhone;
+    ActivityMainBinding Binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        Binding= ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(Binding.getRoot());
 
-        editTextPhone = findViewById(R.id.editTextPhone);
+
     }
 
-    public void gotoNextPage(View v){  //method for register button
-        String phoneNo = editTextPhone.getText().toString();
-        if(phoneNo.length()==0){
-            Toast.makeText(this,"You must enter phone no",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Intent intent = new Intent(this,SecondPage.class);
-            intent.putExtra("phoneNo", phoneNo); //Sending the phone no to second page
-            startActivity(intent);
-        }
-    }
 }
