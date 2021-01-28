@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextPhone = (EditText)findViewById(R.id.editTextPhone);
+        editTextPhone = findViewById(R.id.editTextPhone);
     }
 
     public void gotoNextPage(View v){  //method for register button
