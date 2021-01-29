@@ -4,18 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/teal_200"
+    android:background="@color/white"
     tools:context=".SecondPage">
 
+
     <TextView
-        android:id="@+id/numberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Verification"
+        android:textStyle="bold"
+        android:textSize="45sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="70dp"
+        android:textAllCaps="true"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/enter_one_time_passward_we_just_sent"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/purple_700"
+        android:fontFamily="casual"/>
+
+    <com.chaos.view.PinView
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:width="50dp"
+        android:height="50dp"
+        android:cursorVisible="true"
+        android:inputType="number"
+        android:itemBackground="@color/white"
+        app:cursorColor="@color/black"
+        app:hideLineWhenFilled="true"
+        app:itemCount="6"
+        app:itemRadius="10dp"
+        app:lineColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:text="Verify"
+        android:width="40dp"
+        android:height="40dp"
+        android:onClick="verify"/>
+
+
 </LinearLayout>
