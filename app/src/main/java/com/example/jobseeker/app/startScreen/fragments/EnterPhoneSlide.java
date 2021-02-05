@@ -1,9 +1,10 @@
-package com.example.jobseeker.fragments;
+package com.example.jobseeker.app.startScreen.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,11 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.R;
 
-public class PageFragment2 extends Fragment {
+public class EnterPhoneSlide extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_2,container,false);
+        return inflater.inflate(R.layout.fragment_enter_phone_slide,container,false);
     }
+
 }

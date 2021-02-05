@@ -13,18 +13,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker"
         android:name=".parseSdk.Connect">
-        <activity android:name=".NextActivity"></activity>
+        <activity android:name=".app.homePage.HomePage"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity
-            android:name=".SplashScreen"
-            android:theme="@style/SplashScreen">
+            android:name=".app.startScreen.SplashScreen"
+            android:theme="@style/SplashScreen"
+            android:windowSoftInputMode="adjustPan"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SecondPage" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".app.startScreen.WelcomeScreen"
+            android:windowSoftInputMode="adjustPan"
+            />
     </application>
 
 

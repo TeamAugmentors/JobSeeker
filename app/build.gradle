@@ -43,7 +43,13 @@ dependencies {
     testImplementation 'junit:junit:4.13.1.'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.chaos.view:pinview:1.4.4'
-    //
+    //Parse SDK
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.25.0"
+
+    //otp
+    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
+
+    //sdp
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
 }

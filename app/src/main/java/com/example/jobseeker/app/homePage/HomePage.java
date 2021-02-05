@@ -1,14 +1,17 @@
-package com.example.jobseeker;
+package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class NextActivity extends AppCompatActivity {
+import com.example.jobseeker.R;
+
+public class HomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next_activity);
     }
+
 }
