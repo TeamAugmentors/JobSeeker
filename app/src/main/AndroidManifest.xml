@@ -6,32 +6,34 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".parseSdk.Connect"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.JobSeeker"
-        android:name=".parseSdk.Connect">
-        <activity android:name=".app.homePage.HomePage"
-            android:windowSoftInputMode="adjustPan"
-            />
+        android:theme="@style/Theme.JobSeeker">
+        <activity
+            android:name=".app.homePage.HomePage"
+            android:theme="@style/NavigationDrawer"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
         <activity
             android:name=".app.startScreen.SplashScreen"
             android:theme="@style/SplashScreen"
-            android:windowSoftInputMode="adjustPan"
-            >
+            android:windowSoftInputMode="adjustPan">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".app.startScreen.WelcomeScreen"
-            android:windowSoftInputMode="adjustPan"
-            />
+        <activity
+            android:name=".app.startScreen.WelcomeScreen"
+            android:windowSoftInputMode="adjustPan" />
     </application>
-
 
 
 </manifest>
