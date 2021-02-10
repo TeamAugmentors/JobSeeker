@@ -80,7 +80,7 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     public void verify(View view) {
-        Intent intent = new Intent(WelcomeScreen.this, HomePage.class);
+        Intent intent = new Intent(WelcomeScreen.this, Guide.class);
         startActivity(intent);
     }
 }
