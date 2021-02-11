@@ -10,10 +10,12 @@
     <string name="enter_phone_no">Enter your phone number</string>
     <string name="phone_no">Phone Number</string>
     <string name="register_phone_number">Register Phone Number</string>
-    <string name="enter_one_time_passward_we_just_sent">Enter one time passward we just sent</string>
-    <string name="jobseeker">JobSeeker</string>
+    <string name="enter_one_time_password_we_just_sent">Enter one time password we just sent</string>
+    <string name="job_seeker">JobSeeker</string>
     <string name="skip">SKIP</string>
     <string name="next">next</string>
+    <string name="verification">Verification</string>
+    <string name="verify">Verify</string>
     <string-array name="country_list">
         <item>+880</item>
     </string-array>
