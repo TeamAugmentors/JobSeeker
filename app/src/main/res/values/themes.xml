@@ -16,11 +16,6 @@
         <item name="android:statusBarColor">@color/job_seeker_logo_green</item>
     </style>
 
-    <style name="NavigationDrawer" parent="Theme.JobSeeker">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
-    </style>
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/layer_list</item>
 

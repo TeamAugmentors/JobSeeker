@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
@@ -29,6 +30,19 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        init();
+        fetchData();
+
+    }
+
+    private void fetchData() {
+        if (ParseUser.getCurrentUser().get("name") != null){
+            ((TextView) findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().get("name").toString() + "!");
+        } else
+            ((TextView) findViewById(R.id.user)).setText("Welcome, user!");
+    }
+
+    private void init() {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar();
 
@@ -66,6 +80,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 if (e==null) {
                     Toast.makeText(this, "logged out successfully!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, WelcomeScreen.class));
+                    finish();
                 } else
                     Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
