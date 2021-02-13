@@ -19,4 +19,32 @@
     <string-array name="country_list">
         <item>+880</item>
     </string-array>
+    <string-array name="job_list">
+        <item>Job1</item>
+        <item>Job2</item>
+        <item>Job3</item>
+        <item>Job4</item>
+        <item>Job5</item>
+        <item>Job6</item>
+        <item>Job7</item>
+        <item>Job8</item>
+        <item>Job9</item>
+        <item>Job10</item>
+        <item>Job11</item>
+        <item>Job12</item>
+    </string-array>
+    <string-array name="description">
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+    </string-array>
 </resources>
