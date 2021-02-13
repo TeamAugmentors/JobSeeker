@@ -39,11 +39,11 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.13.1.'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
     //Parse SDK
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.25.0"
 
@@ -52,5 +52,11 @@ dependencies {
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    //lottie image view
+    implementation 'com.airbnb.android:lottie:3.6.0'
+
+    //Worms dot indicator
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 
 }

@@ -13,9 +13,10 @@ public class Connect extends Application {
         super.onCreate();
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("gRw1Gi6IbKyW5gzLO9Z4ELrn8yc4bR23yHt9LdeT")
-                .clientKey("m6vU8Jrlji7N8gt7XeCjBXUjZ4KqrtzEO7hzz6Rl")
+                .applicationId("5Qnz0e83vi8p7xiQZaXfWV2B9gTZzpBaHlo00gKf")
+                .clientKey("Cx1a454KK3J9VnTBPR0nQGPbXS5EQzHbqrFhIWrH")
                 .server("https://parseapi.back4app.com")
+                .maxRetries(0)
                 .build()
         );
     }

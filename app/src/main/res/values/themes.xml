@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.JobSeeker" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.JobSeeker" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,15 +12,19 @@
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/job_seeker_logo_green</item>
     </style>
+
     <style name="NavigationDrawer" parent="Theme.JobSeeker">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/layer_list</item>
+
+        <item name="android:statusBarColor">@color/job_seeker_logo_green</item>
+        <item name="android:navigationBarColor">@color/job_seeker_logo_green</item>
     </style>
 </resources>

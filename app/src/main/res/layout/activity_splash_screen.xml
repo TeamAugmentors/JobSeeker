@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.startScreen.SplashScreen">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/job_seeker_logo_green"
+    >
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_fileName="splashscreen/data.json"
+        app:lottie_imageAssetsFolder="splashscreen/images"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
