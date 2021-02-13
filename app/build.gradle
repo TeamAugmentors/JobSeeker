@@ -46,7 +46,6 @@ dependencies {
 
     //Parse SDK
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.25.0"
-
     //otp
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
 
@@ -58,5 +57,7 @@ dependencies {
 
     //Worms dot indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

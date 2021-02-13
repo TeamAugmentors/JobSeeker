@@ -7,7 +7,6 @@ import androidx.core.view.GravityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.startScreen.CreateProfile;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -86,7 +86,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             });
         }
         else if(item.getItemId()==R.id.nav_profile){
-
+                startActivity(new Intent(this, CreateProfile.class));
         }
         return true;
     }
