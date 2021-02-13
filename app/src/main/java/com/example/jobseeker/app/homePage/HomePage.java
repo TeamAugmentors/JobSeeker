@@ -31,7 +31,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(binding.getRoot());
 
         init();
-        fetchData();
+        //fetchData();
 
     }
 
@@ -85,7 +85,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }
+        else if(item.getItemId()==R.id.nav_profile){
 
+        }
         return true;
     }
 }
