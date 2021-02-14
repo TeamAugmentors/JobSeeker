@@ -10,16 +10,21 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
 
 import java.io.IOException;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class CreateProfile extends AppCompatActivity {
 
     ActivityCreateProfileBinding binding;
     private static final int PICK_IMAGE = 1;
-    Uri imageUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,14 +50,12 @@ public class CreateProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==PICK_IMAGE && resultCode == RESULT_OK){
-            imageUri = data.getData();
-            try{
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                binding.profileImage.setImageBitmap(bitmap);
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-
+            Glide.with(this)
+                    .asBitmap()
+                    .load(data.getData())
+                    .override(500,500)
+                    .transform(new MultiTransformation<Bitmap>(new CircleCrop(),new RoundedCornersTransformation(30,10)))
+                    .into(binding.profileImage);
         }
     }
 }
