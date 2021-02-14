@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/job_seeker_logo_green" android:state_focused="true"/>
+    <item android:color="@color/job_seeker_logo_green" android:state_hovered="true"/>
+    <item android:color="@color/job_seeker_logo_green"/>
+</selector>

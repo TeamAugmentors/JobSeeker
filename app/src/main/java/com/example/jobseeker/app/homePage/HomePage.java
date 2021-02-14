@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.startScreen.CreateProfile;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -37,9 +36,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void fetchData() {
         if (ParseUser.getCurrentUser().get("name") != null){
-            ((TextView) findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().get("name").toString() + "!");
+            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().get("name").toString() + "!");
         } else
-            ((TextView) findViewById(R.id.user)).setText("Welcome, user!");
+            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, user!");
     }
 
     private void init() {

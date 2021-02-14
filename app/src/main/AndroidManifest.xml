@@ -13,22 +13,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker">
-        <activity android:name=".app.startScreen.CreateProfile"></activity>
-        <activity android:name=".app.jobBoard.JobBoard"></activity>
+        <activity android:name=".app.homePage.CreateProfile"
+            android:parentActivityName=".app.homePage.HomePage"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity android:name=".app.jobBoard.JobBoard" />
         <activity android:name=".app.startScreen.Guide" />
         <activity
             android:name=".app.homePage.HomePage"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".app.startScreen.SplashScreen"
             android:theme="@style/SplashScreen"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".app.startScreen.WelcomeScreen"
             android:windowSoftInputMode="adjustPan" />

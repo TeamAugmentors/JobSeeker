@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.startScreen;
+package com.example.jobseeker.app.homePage;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +17,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
 
-import java.io.IOException;
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 public class CreateProfile extends AppCompatActivity {
 
     ActivityCreateProfileBinding binding;
@@ -30,6 +26,18 @@ public class CreateProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        init();
+
+    }
+
+    private void init() {
+        setSupportActionBar(binding.toolbar);
+
+        getSupportActionBar().setTitle("Create Profile");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
 
@@ -54,7 +62,7 @@ public class CreateProfile extends AppCompatActivity {
                     .asBitmap()
                     .load(data.getData())
                     .override(500,500)
-                    .transform(new MultiTransformation<Bitmap>(new CircleCrop(),new RoundedCornersTransformation(30,10)))
+                    .transform(new CircleCrop())
                     .into(binding.profileImage);
         }
     }

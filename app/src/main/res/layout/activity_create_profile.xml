@@ -4,104 +4,117 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".app.startScreen.CreateProfile">
+    android:gravity="center_horizontal"
+    tools:context=".app.homePage.CreateProfile">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:background="@color/job_seeker_logo_green"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldFirstName"
-        app:endIconMode="clear_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:padding="@dimen/_5sdp"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First Name">
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:hint="First Name"
+        android:textColorHint="#4A0CBC20"
+        app:endIconMode="clear_text"
+        app:endIconTint="#FF0000"
+        app:hintTextColor="@color/job_seeker_logo_green">
+
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/job_seeker_logo_green" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/outlinedTextFieldLastName"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:padding="@dimen/_5sdp"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Last Name">
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:hint="Last Name"
+        android:textColorHint="#4A0CBC20"
+        app:endIconMode="clear_text"
+        app:endIconTint="#FF0000"
+        app:hintTextColor="@color/job_seeker_logo_green">
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/job_seeker_logo_green" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:id="@+id/outlinedTextFieldPhoneNo"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:padding="@dimen/_5sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Phone No">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/outlinedTextFieldBkashNo"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:padding="@dimen/_5sdp"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_marginTop="@dimen/_20sdp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Bkash No">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:hint="Bkash Number"
+        android:textColorHint="#4A0CBC20"
         app:endIconMode="clear_text"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:id="@+id/outlinedTextFielNIDNo"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:padding="@dimen/_5sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="NID No">
+        app:endIconTint="#FF0000"
+        app:hintTextColor="@color/job_seeker_logo_green">
+
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/job_seeker_logo_green" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
+
+    <ImageView
         android:id="@+id/profile_Image"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="@dimen/_1sdp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:background="@color/white"
-        android:src="@drawable/ic_person"
+        android:src="@drawable/upload_pic"
         />
-    <TextView
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageUpload"
-        android:text="Click here to upload"
-        android:onClick="uploadImage"/>
+
+    <at.markushi.ui.CircleButton
+        android:id="@+id/uniBtn"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:src="@drawable/ic_plus"
+        android:elevation="@dimen/_5sdp"
+        app:cb_color="@color/job_seeker_logo_green"
+        android:layout_gravity="center"
+        app:cb_pressedRingWidth="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_minus40sdp"
+        android:onClick="uploadImage"
+        />
+
+<!--    <TextView-->
+<!--        android:id="@+id/imageUpload"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_5sdp"-->
+<!--        android:onClick="uploadImage"-->
+<!--        android:text="Click here to upload" />-->
 
 
     <Button
-        android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update"
-        android:onClick="update"/>
+        android:layout_marginTop="@dimen/_20sdp"
+        android:onClick="update"
+        android:text="Update" />
 
 
 </LinearLayout>
