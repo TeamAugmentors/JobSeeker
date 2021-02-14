@@ -11,7 +11,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldFirstName"
+        app:endIconMode="clear_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:padding="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="First Name">
@@ -21,9 +23,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="@dimen/_20sdp"
+        app:endIconMode="clear_text"
+        android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/outlinedTextFieldLastName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:padding="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Last Name">
@@ -33,9 +37,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="@dimen/_20sdp"
+        app:endIconMode="clear_text"
+        android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/outlinedTextFieldPhoneNo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:padding="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Phone No">
@@ -45,9 +51,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="@dimen/_20sdp"
+        app:endIconMode="clear_text"
+        android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/outlinedTextFieldBkashNo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:padding="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Bkash No">
@@ -56,9 +64,11 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="@dimen/_20sdp"
+        app:endIconMode="clear_text"
+        android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/outlinedTextFielNIDNo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:padding="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="NID No">

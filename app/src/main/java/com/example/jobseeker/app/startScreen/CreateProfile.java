@@ -48,6 +48,7 @@ public class CreateProfile extends AppCompatActivity {
             imageUri = data.getData();
             try{
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                binding.profileImage.setImageBitmap(bitmap);
             }catch (IOException e){
                 e.printStackTrace();
             }
