@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:hint="First Name"
+        app:errorEnabled="true"
         android:textColorHint="@color/job_seeker_green_hint"
         app:endIconMode="clear_text"
         app:endIconTint="#FF0000"
@@ -49,6 +50,7 @@
         android:hint="Last Name"
         android:textColorHint="@color/job_seeker_green_hint"
         app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:endIconTint="#FF0000"
         app:hintTextColor="@color/job_seeker_logo_green">
 
@@ -70,6 +72,7 @@
         android:hint="Bkash Number"
         android:textColorHint="@color/job_seeker_green_hint"
         app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:endIconTint="#FF0000"
         app:hintTextColor="@color/job_seeker_logo_green"
         >
@@ -92,6 +95,7 @@
         />
 
     <at.markushi.ui.CircleButton
+        android:id="@+id/uniBtn"
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_60sdp"
         android:src="@drawable/ic_plus"
@@ -109,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:onClick="uploadImage"
-        android:textColor="@color/job_seeker_red"
+        android:textColor="@color/hint_black"
         android:textAlignment="center"
         android:fontFamily="@font/roboto_light"
         android:lineSpacingExtra="@dimen/_3sdp"

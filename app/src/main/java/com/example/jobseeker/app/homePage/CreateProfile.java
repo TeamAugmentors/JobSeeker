@@ -34,6 +34,7 @@ public class CreateProfile extends AppCompatActivity {
 
     ActivityCreateProfileBinding binding;
     private static final int PICK_IMAGE = 1;
+    private boolean isImageSelected = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,35 @@ public class CreateProfile extends AppCompatActivity {
     }
 
 
+    public void update(View view) {
+        boolean isFieldEmpty = false;
+        if(binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()){
+            binding.outlinedTextFieldFirstName.setError("*Required");
+            isFieldEmpty = true;
+        }
+        else{
+            binding.outlinedTextFieldFirstName.setError("");
+        }
+        if(binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()){
+            binding.outlinedTextFieldLastName.setError("*Required");
+            isFieldEmpty = true;
+        }
+        else{
+            binding.outlinedTextFieldLastName.setError("");
+        }
+        if(binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()){
+            binding.outlinedTextFieldBkashNo.setError("*Required");
+            isFieldEmpty = true;
+        }
+        else{
+            binding.outlinedTextFieldBkashNo.setError("");
+        }
+        if(!isImageSelected){
+            binding.imageUpload.setText("Please! Upload a professional"+ "\n" +"Profile Picture");
+            binding.imageUpload.setTextColor(getColor(R.color.red));
+        }
+    }
+
     public void uploadImage(View view) {
         Intent gallery = new Intent();
         gallery.setType("image/*");
@@ -100,12 +130,17 @@ public class CreateProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==PICK_IMAGE && resultCode == RESULT_OK){
+            isImageSelected = true;
+            binding.imageUpload.setText(null);
             Glide.with(this)
                     .asBitmap()
                     .load(data.getData())
                     .override(500,500)
                     .transform(new CircleCrop())
                     .into(binding.profileImage);
+        }
+        else{
+            isImageSelected = false;
         }
     }
 
