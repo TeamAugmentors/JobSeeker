@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -18,8 +21,10 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
+import com.parse.GetDataCallback;
 import com.parse.Parse;
 import com.parse.ParseCloud;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -36,6 +41,38 @@ public class CreateProfile extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         init();
+
+        fetchData();
+
+    }
+
+    private void fetchData() {
+
+        if (ParseUser.getCurrentUser().get("firstName") != null){
+            Toast.makeText(this, "Fetching", Toast.LENGTH_SHORT).show();
+            //Profile was created before
+            binding.outlinedTextFieldFirstName.getEditText().setText(ParseUser.getCurrentUser().getString("firstName"));
+            binding.outlinedTextFieldLastName.getEditText().setText(ParseUser.getCurrentUser().getString("lastName"));
+            binding.outlinedTextFieldBkashNo.getEditText().setText(ParseUser.getCurrentUser().getString("bkashNo"));
+
+            ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
+            imageFile.getDataInBackground((data, e) -> {
+                        if (e == null) {
+                            // Decode the Byte[] into
+                            // Bitmap
+
+                            Bitmap bmp = BitmapFactory
+                                    .decodeByteArray(
+                                            data, 0,
+                                            data.length);
+
+                            binding.profileImage.setImageBitmap(bmp);
+                        } else {
+                            Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }else
+            Toast.makeText(this, "lol gg", Toast.LENGTH_SHORT).show();
 
     }
 
