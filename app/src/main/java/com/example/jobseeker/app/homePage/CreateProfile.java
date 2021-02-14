@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
@@ -16,6 +18,12 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
+import com.parse.Parse;
+import com.parse.ParseCloud;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
 
 public class CreateProfile extends AppCompatActivity {
 
@@ -41,9 +49,6 @@ public class CreateProfile extends AppCompatActivity {
     }
 
 
-    public void update(View view) {
-    }
-
     public void uploadImage(View view) {
         Intent gallery = new Intent();
         gallery.setType("image/*");
@@ -65,5 +70,25 @@ public class CreateProfile extends AppCompatActivity {
                     .transform(new CircleCrop())
                     .into(binding.profileImage);
         }
+    }
+
+    public void submit(View view) {
+        ParseUser.getCurrentUser().put("fullName" ,  binding.outlinedTextFieldFirstName.getEditText().getText().toString() + " " +
+                binding.outlinedTextFieldLastName.getEditText().getText().toString());
+
+        ParseUser.getCurrentUser().put("bkashNo" , binding.outlinedTextFieldBkashNo.getEditText().getText().toString());
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ((BitmapDrawable)binding.profileImage.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] data = byteArrayOutputStream.toByteArray();
+        ParseFile file = new ParseFile("proPic.jpeg", data);
+
+        ParseUser.getCurrentUser().put("proPic", file);
+        ParseUser.getCurrentUser().saveInBackground(e -> {
+            if (e == null){
+                Toast.makeText(this, "SUCCESS!", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 }
