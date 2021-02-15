@@ -23,10 +23,6 @@
         <item name="android:navigationBarColor">@color/job_seeker_logo_green</item>
     </style>
 
-    <style name="Theme.JobSeeker.JobBoard" parent="Theme.MaterialComponents.NoActionBar.Bridge">
-
-    </style>
-
     <style name="CreateUser" parent="Theme.MaterialComponents.Light">
 
     </style>
