@@ -35,19 +35,17 @@ public class JobBoard extends AppCompatActivity {
 
     private void fetchData() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e==null) {
-                    adapter = new JobBoardAdapter(objects);
-                } else {
-                    Toast.makeText(JobBoard.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        query.findInBackground((objects, e) -> {
+            if (e==null) {
+                adapter = new JobBoardAdapter(objects);
+                Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
+                binding.recyclerView.setAdapter(adapter);
+            } else {
+                Toast.makeText(JobBoard.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     private void init() {
@@ -57,5 +55,7 @@ public class JobBoard extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
