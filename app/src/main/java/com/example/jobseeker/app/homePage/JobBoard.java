@@ -45,13 +45,12 @@ public class JobBoard extends AppCompatActivity {
                 Toast.makeText(JobBoard.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     private void init() {
         ToolbarHelper.create(binding.toolbar, this, "Job Board");
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView.setItemViewCacheSize(1);
     }
 }

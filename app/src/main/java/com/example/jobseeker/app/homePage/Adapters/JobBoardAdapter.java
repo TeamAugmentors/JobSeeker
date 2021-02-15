@@ -3,10 +3,12 @@ package com.example.jobseeker.app.homePage.Adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ItemJobBoardBinding;
 import com.parse.ParseObject;
 
@@ -51,6 +53,8 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         holder.binding.description.setText(parseObjects.get(pos).getString("description"));
         holder.binding.skills.setText(parseObjects.get(pos).getString("requiredSkills"));
         holder.binding.salary.setText(parseObjects.get(pos).getString("salary") + "$");
+
+        holder.binding.getRoot().setAnimation(AnimationUtils.loadAnimation(holder.context, R.anim.fade_scale_in));
     }
 
     @Override
