@@ -30,15 +30,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(binding.getRoot());
 
         init();
-        //fetchData();
+        fetchData();
 
     }
 
     private void fetchData() {
         if (ParseUser.getCurrentUser().get("name") != null){
             ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().get("name").toString() + "!");
+            binding.navView.getMenu().getItem(0).setTitle("Edit Profile");
         } else
             ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, user!");
+        binding.navView.getMenu().getItem(0).setTitle("Create Profile");
     }
 
     private void init() {
