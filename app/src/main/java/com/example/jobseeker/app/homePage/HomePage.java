@@ -9,15 +9,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.jobBoard.JobBoard;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,12 +38,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void fetchData() {
         if (ParseUser.getCurrentUser().get("firstName") != null){
-//            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().get("name").toString() + "!");
             binding.navView.getMenu().getItem(0).setTitle("Edit Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_edit_profile);
+            ((TextView)binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().getString("firstName") + "!");
 
         } else {
-//            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, user!");
+            ((TextView)binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
             binding.navView.getMenu().getItem(0).setTitle("Create Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
         }
@@ -92,5 +96,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(new Intent(this, CreateProfile.class));
         }
         return true;
+    }
+
+    public void jobBoard(View view) {
+        startActivity (new Intent(this, JobBoard.class));
+    }
+
+    public void createJob(View view){
+        startActivity(new Intent(this, CreateJob.class));
     }
 }
