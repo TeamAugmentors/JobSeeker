@@ -10,14 +10,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.google.android.material.navigation.NavigationView;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +43,21 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_edit_profile);
             ((TextView)binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().getString("firstName") + "!");
 
+            ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
+            imageFile.getDataInBackground((data, e) -> {
+                if (e == null) {
+
+                    Glide.with(this)
+                            .asBitmap()
+                            .load(data)
+                            .override(500,500)
+                            .transform(new CircleCrop())
+                            .into((ImageView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.proPic));
+
+                } else {
+                    Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
             ((TextView)binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
             binding.navView.getMenu().getItem(0).setTitle("Create Profile");

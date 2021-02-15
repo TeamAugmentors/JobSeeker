@@ -227,6 +227,7 @@ public class CreateProfile extends AppCompatActivity {
             ParseUser.getCurrentUser().saveInBackground(e -> {
                 if (e == null){
                     Toast.makeText(this, "SUCCESS!", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else
                     Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
