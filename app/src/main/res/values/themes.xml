@@ -25,8 +25,9 @@
     <style name="CreateUser" parent="Theme.MaterialComponents.Light">
 
     </style>
-
-
+    <style name="Navigation" parent="Theme.JobSeeker">
+        <item name="colorPrimary">@color/job_seeker_logo_green</item>
+    </style>
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/input_etext_outline_color</item>
     </style>

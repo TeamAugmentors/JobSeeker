@@ -123,7 +123,7 @@
         android:background="@color/white"
         app:itemIconTint="@color/drawer_item_color"
         app:itemTextColor="@color/drawer_item_color"
-        app:itemBackground="@android:color/transparent"
+        android:theme="@style/Navigation"
         app:menu="@menu/drawer_menu"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
