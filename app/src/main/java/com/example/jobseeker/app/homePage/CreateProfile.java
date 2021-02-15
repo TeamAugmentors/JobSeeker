@@ -59,13 +59,6 @@ public class CreateProfile extends AppCompatActivity {
             ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
             imageFile.getDataInBackground((data, e) -> {
                         if (e == null) {
-                            // Decode the Byte[] into
-                            // Bitmap
-
-//                            Bitmap bmp = BitmapFactory
-//                                    .decodeByteArray(
-//                                            data, 0,
-//                                            data.length);
 
                             Glide.with(this)
                                     .asBitmap()
