@@ -48,6 +48,7 @@
                 android:text="JAVA, Android studio 4.2+, GitHub"
                 android:textColor="@color/hint_black"
                 android:textSize="@dimen/_10sdp" />
+
         </LinearLayout>
 
         <TextView
@@ -59,7 +60,6 @@
             android:textColor="@color/job_seeker_logo_green"
             android:fontFamily="@font/roboto_regular"
             />
-
 
     </LinearLayout>
 

@@ -1,9 +1,12 @@
 package com.example.jobseeker.app.homePage.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +40,6 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         // for any view that will be set as you render a row
         Context context;
         ItemJobBoardBinding binding;
-
         public ViewHolder(ItemJobBoardBinding b, Context context) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
