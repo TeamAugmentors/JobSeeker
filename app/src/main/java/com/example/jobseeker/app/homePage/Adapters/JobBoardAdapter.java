@@ -50,7 +50,7 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         holder.binding.title.setText(parseObjects.get(pos).getString("title"));
         holder.binding.description.setText(parseObjects.get(pos).getString("description"));
         holder.binding.skills.setText(parseObjects.get(pos).getString("requiredSkills"));
-        holder.binding.salary.setText(parseObjects.get(pos).getString("salary"));
+        holder.binding.salary.setText(parseObjects.get(pos).getString("salary") + "$");
     }
 
     @Override
