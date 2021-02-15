@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +23,9 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
+import com.google.android.material.internal.NavigationMenu;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.parse.GetDataCallback;
 import com.parse.Parse;
 import com.parse.ParseCloud;
@@ -40,11 +45,71 @@ public class CreateProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         init();
-
         fetchData();
+        errorTextControl();
+    }
 
+    private void errorTextControl() {
+        binding.outlinedTextFieldFirstName.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()) {
+                    binding.outlinedTextFieldFirstName.setError("*This Field is Required");
+                }
+                else{
+                    binding.outlinedTextFieldFirstName.setError("");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        binding.outlinedTextFieldLastName.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()) {
+                    binding.outlinedTextFieldLastName.setError("*This Field is Required");
+                }
+                else{
+                    binding.outlinedTextFieldLastName.setError("");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        binding.outlinedTextFieldBkashNo.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()) {
+                    Log.d("Here","I am here");
+                    binding.outlinedTextFieldBkashNo.setError("*This Field is Required");
+                }
+                else{
+                    Log.d("Here1","I am here");
+                    binding.outlinedTextFieldBkashNo.setError("");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void fetchData() {
@@ -96,21 +161,21 @@ public class CreateProfile extends AppCompatActivity {
     public boolean check() {
         boolean isFieldEmpty = false;
         if(binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()){
-            binding.outlinedTextFieldFirstName.setError("*Required");
+            binding.outlinedTextFieldFirstName.setError("*This Field is Required");
             isFieldEmpty = true;
         }
         else{
             binding.outlinedTextFieldFirstName.setError("");
         }
         if(binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()){
-            binding.outlinedTextFieldLastName.setError("*Required");
+            binding.outlinedTextFieldLastName.setError("*This Field is Required");
             isFieldEmpty = true;
         }
         else{
             binding.outlinedTextFieldLastName.setError("");
         }
         if(binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()){
-            binding.outlinedTextFieldBkashNo.setError("*Required");
+            binding.outlinedTextFieldBkashNo.setError("*This Field is Required");
             isFieldEmpty = true;
         }
         else{

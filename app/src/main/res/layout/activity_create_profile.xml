@@ -29,6 +29,7 @@
         android:textColorHint="@color/job_seeker_green_hint"
         app:endIconMode="clear_text"
         app:endIconTint="#FF0000"
+
         app:hintTextColor="@color/job_seeker_logo_green">
 
 
