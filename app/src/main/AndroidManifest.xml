@@ -4,8 +4,6 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-feature android:name="android.hardware.type.watch" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,24 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker">
 
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
-
-        <activity
-            android:name=".app.homePage.CreateJob"
-            android:label="@string/title_activity_create_job">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".app.homePage.CreateJob" />
         <activity
             android:name=".app.homePage.CreateProfile"
             android:parentActivityName=".app.homePage.HomePage"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".app.jobBoard.JobBoard" />
+        <activity android:name=".app.homePage.JobBoard"
+            android:theme="@style/Theme.JobSeeker.JobBoard"/>
+
         <activity android:name=".app.startScreen.Guide" />
         <activity
             android:name=".app.homePage.HomePage"

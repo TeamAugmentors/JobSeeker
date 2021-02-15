@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.jobBoard.JobBoard">
+    android:background="@color/white"
+    tools:context=".app.homePage.JobBoard">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_280sdp"
+        android:layout_height="@dimen/_200sdp"
         android:background="@color/job_seeker_logo_green"
         android:fitsSystemWindows="true">
 
@@ -22,17 +23,9 @@
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             app:title="Job Board">
 
-            <ImageView
-                android:layout_width="@dimen/_320sdp"
-                android:layout_height="@dimen/_200sdp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_list"
-                app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/jobToolbar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />

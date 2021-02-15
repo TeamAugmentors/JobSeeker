@@ -15,13 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.jobBoard.JobBoard;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,7 +50,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void init() {
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerLayout,binding.toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);
