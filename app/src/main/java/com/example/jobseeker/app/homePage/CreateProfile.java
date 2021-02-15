@@ -62,12 +62,18 @@ public class CreateProfile extends AppCompatActivity {
                             // Decode the Byte[] into
                             // Bitmap
 
-                            Bitmap bmp = BitmapFactory
-                                    .decodeByteArray(
-                                            data, 0,
-                                            data.length);
+//                            Bitmap bmp = BitmapFactory
+//                                    .decodeByteArray(
+//                                            data, 0,
+//                                            data.length);
 
-                            binding.profileImage.setImageBitmap(bmp);
+                            Glide.with(this)
+                                    .asBitmap()
+                                    .load(data)
+                                    .override(500,500)
+                                    .transform(new CircleCrop())
+                                    .into(binding.profileImage);
+
                         } else {
                             Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -87,7 +93,7 @@ public class CreateProfile extends AppCompatActivity {
     }
 
 
-    public void update(View view) {
+    public boolean check() {
         boolean isFieldEmpty = false;
         if(binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()){
             binding.outlinedTextFieldFirstName.setError("*Required");
@@ -113,7 +119,10 @@ public class CreateProfile extends AppCompatActivity {
         if(!isImageSelected){
             binding.imageUpload.setText("Please! Upload a professional"+ "\n" +"Profile Picture");
             binding.imageUpload.setTextColor(getColor(R.color.red));
+            isFieldEmpty = true;
         }
+
+        return isFieldEmpty;
     }
 
     public void uploadImage(View view) {
@@ -145,22 +154,24 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     public void submit(View view) {
-        ParseUser.getCurrentUser().put("fullName" ,  binding.outlinedTextFieldFirstName.getEditText().getText().toString() + " " +
-                binding.outlinedTextFieldLastName.getEditText().getText().toString());
+        if (!check()){
+            ParseUser.getCurrentUser().put("firstName" ,  binding.outlinedTextFieldFirstName.getEditText().getText().toString());
+            ParseUser.getCurrentUser().put("lastName" , binding.outlinedTextFieldLastName.getEditText().getText().toString());
 
-        ParseUser.getCurrentUser().put("bkashNo" , binding.outlinedTextFieldBkashNo.getEditText().getText().toString());
+            ParseUser.getCurrentUser().put("bkashNo" , binding.outlinedTextFieldBkashNo.getEditText().getText().toString());
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ((BitmapDrawable)binding.profileImage.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] data = byteArrayOutputStream.toByteArray();
-        ParseFile file = new ParseFile("proPic.jpeg", data);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ((BitmapDrawable)binding.profileImage.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] data = byteArrayOutputStream.toByteArray();
+            ParseFile file = new ParseFile("proPic.jpeg", data);
 
-        ParseUser.getCurrentUser().put("proPic", file);
-        ParseUser.getCurrentUser().saveInBackground(e -> {
-            if (e == null){
-                Toast.makeText(this, "SUCCESS!", Toast.LENGTH_SHORT).show();
-            } else
-                Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        });
+            ParseUser.getCurrentUser().put("proPic", file);
+            ParseUser.getCurrentUser().saveInBackground(e -> {
+                if (e == null){
+                    Toast.makeText(this, "SUCCESS!", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 }

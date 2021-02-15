@@ -35,12 +35,16 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void fetchData() {
-        if (ParseUser.getCurrentUser().get("name") != null){
-            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().get("name").toString() + "!");
+        if (ParseUser.getCurrentUser().get("firstName") != null){
+//            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().get("name").toString() + "!");
             binding.navView.getMenu().getItem(0).setTitle("Edit Profile");
-        } else
-            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, user!");
-        binding.navView.getMenu().getItem(0).setTitle("Create Profile");
+            binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_edit_profile);
+
+        } else {
+//            ((TextView) binding.navView.getHeaderView(0).findViewById(R.id.user)).setText("Welcome, user!");
+            binding.navView.getMenu().getItem(0).setTitle("Create Profile");
+            binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
+        }
     }
 
     private void init() {
