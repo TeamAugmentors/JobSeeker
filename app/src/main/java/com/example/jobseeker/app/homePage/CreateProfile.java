@@ -23,6 +23,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
+import com.example.jobseeker.utils.ToolbarHelper;
 import com.google.android.material.internal.NavigationMenu;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -142,12 +143,7 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     private void init() {
-        setSupportActionBar(binding.toolbar);
-
-        getSupportActionBar().setTitle("Create Profile");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ToolbarHelper.create(binding.toolbar, this, "Create Profile");
     }
 
 

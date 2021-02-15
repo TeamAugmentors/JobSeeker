@@ -5,10 +5,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
@@ -17,11 +15,8 @@ import com.example.jobseeker.app.homePage.HomePage;
 import com.example.jobseeker.app.startScreen.adapters.WelcomeScreenViewPager2Adapter;
 import com.mukesh.OtpView;
 import com.parse.FunctionCallback;
-import com.parse.LogInCallback;
 import com.parse.ParseCloud;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 import java.util.HashMap;
 
@@ -37,7 +32,6 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         init();
 
     }

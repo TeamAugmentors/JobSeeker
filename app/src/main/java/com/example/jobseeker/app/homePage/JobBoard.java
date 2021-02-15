@@ -11,6 +11,7 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.Adapters.JobBoardAdapter;
 import com.example.jobseeker.app.startScreen.adapters.RecyclerViewAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
+import com.example.jobseeker.utils.ToolbarHelper;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseCloud;
@@ -49,12 +50,7 @@ public class JobBoard extends AppCompatActivity {
     }
 
     private void init() {
-        setSupportActionBar(binding.toolbar);
-
-        getSupportActionBar().setTitle("Job Board");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ToolbarHelper.create(binding.toolbar, this, "Job Board");
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

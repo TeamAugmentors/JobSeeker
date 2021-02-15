@@ -28,45 +28,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enter_phone_no"
-        android:textSize="@dimen/_20sdp"
         android:textColor="@color/black"
+        android:fontFamily="@font/roboto_light"
+        android:textSize="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.060000002" />
 
 
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="01-XXX-XXX-XXX"
-            android:importantForAutofill="no"
-            android:inputType="phone"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/black"
-            android:textColorHint="@color/hint_black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNoTextView"
-            app:layout_constraintVertical_bias="0.100000024"/>
-
-
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextPhoneOutline"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="getOtp"
-        android:text="@string/get_otp"
-        android:textSize="@dimen/_16sdp"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:hint="Phone Number"
+        android:textColorHint="@color/job_seeker_green_hint"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/job_seeker_logo_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNoTextView"
+        app:layout_constraintVertical_bias="0.120000005">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:textCursorDrawable="@null"
+            android:inputType="number"
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/job_seeker_logo_green" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/job_seeker_logo_green"
+        android:drawableEnd="@drawable/ic_email"
+        android:drawablePadding="@dimen/_10sdp"
+        android:drawableTint="@color/white"
+        android:fontFamily="@font/roboto_regular"
+        android:onClick="getOtp"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:text="Get SMS"
+        android:textSize="@dimen/_16sdp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhoneOutline"
         app:layout_constraintVertical_bias="0.13" />
 
 

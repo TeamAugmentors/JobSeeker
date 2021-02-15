@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateJobBinding;
+import com.example.jobseeker.utils.ToolbarHelper;
 
 public class CreateJob extends AppCompatActivity {
 
@@ -16,7 +17,12 @@ public class CreateJob extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateJobBinding.inflate(getLayoutInflater());
 
-        setContentView(R.layout.activity_create_job);
+        setContentView(binding.getRoot());
 
+        init();
+    }
+
+    private void init() {
+        ToolbarHelper.create(binding.toolbar, this, "Create Job");
     }
 }

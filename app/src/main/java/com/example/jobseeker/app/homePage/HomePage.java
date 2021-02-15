@@ -1,6 +1,7 @@
 package com.example.jobseeker.app.homePage;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -73,6 +74,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         toggle.syncState();
 
         binding.navView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchData();
     }
 
     @Override
