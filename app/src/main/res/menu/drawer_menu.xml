@@ -4,19 +4,23 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_profile"
+        <item
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_new_profile"
-            android:title="Create Profile"/>
+            android:title="Create Profile" />
 
-        <item android:id="@+id/nav_message"
-             android:icon="@drawable/ic_message"
-             android:title="@string/message" />
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/ic_message"
+            android:title="@string/message" />
 
-        <item android:id="@+id/nav_new_picture"
+        <item
+            android:id="@+id/nav_new_picture"
             android:icon="@drawable/ic_new_picture"
             android:title="@string/picture" />
 
-        <item android:id="@+id/nav_logout"
+        <item
+            android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
             android:title="Logout" />
     </group>
