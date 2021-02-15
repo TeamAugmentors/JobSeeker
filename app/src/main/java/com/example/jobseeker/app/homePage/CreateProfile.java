@@ -61,7 +61,7 @@ public class CreateProfile extends AppCompatActivity {
                 if (binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()) {
                     binding.outlinedTextFieldFirstName.setError("*This Field is Required");
                 }
-                else{
+                else {
                     binding.outlinedTextFieldFirstName.setError("");
                 }
             }
