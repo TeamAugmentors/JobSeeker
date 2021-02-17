@@ -3,25 +3,20 @@ package com.example.jobseeker.app.homePage;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.Adapters.JobBoardAdapter;
-import com.example.jobseeker.app.startScreen.adapters.RecyclerViewAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseCloud;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.List;
-
-public class JobBoard extends AppCompatActivity {
+public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJobBoardListener {
     JobBoardAdapter adapter;
     ActivityJobBoardBinding binding;
     @Override
@@ -38,7 +33,7 @@ public class JobBoard extends AppCompatActivity {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
         query.findInBackground((objects, e) -> {
             if (e==null) {
-                adapter = new JobBoardAdapter(objects);
+                adapter = new JobBoardAdapter(objects, this);
                 Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
                 binding.recyclerView.setAdapter(adapter);
             } else {
@@ -52,5 +47,15 @@ public class JobBoard extends AppCompatActivity {
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemViewCacheSize(1);
+    }
+
+    @Override
+    public void onJobBoardClick(int position) {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.description_popup_window);
+
+        dialog.show();
     }
 }
