@@ -96,11 +96,13 @@ public class WelcomeScreen extends AppCompatActivity {
         ParseUser.logInInBackground(phoneNo, ((OtpView) findViewById(R.id.otp_view)).getText().toString(), (user1, e) -> {
             if (e == null) {
                 Toast.makeText(this, "Login was a success!", Toast.LENGTH_SHORT).show();
-                if (ParseUser.getCurrentUser().get("firstName") != null) {
+                if (ParseUser.getCurrentUser().getBoolean("isGuideShow") == true) {
                     startActivity(new Intent(this, HomePage.class));
                     finish();
                 } else {
+                    ParseUser.getCurrentUser().put("isGuideShow",true);
                     startActivity(new Intent(this, Guide.class));
+
                     finish();
                 }
 

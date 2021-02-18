@@ -61,7 +61,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         dialog.setContentView(R.layout.description_popup_window);
 
-        //dialog.show();
+        dialog.show();
     }
 
 }
