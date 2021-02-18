@@ -16,7 +16,9 @@ import com.example.jobseeker.app.startScreen.adapters.WelcomeScreenViewPager2Ada
 import com.mukesh.OtpView;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.HashMap;
 
@@ -101,6 +103,14 @@ public class WelcomeScreen extends AppCompatActivity {
                     finish();
                 } else {
                     ParseUser.getCurrentUser().put("isGuideShow",true);
+                    ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e!=null){
+                                Toast.makeText(WelcomeScreen.this, "Failed. "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     startActivity(new Intent(this, Guide.class));
 
                     finish();

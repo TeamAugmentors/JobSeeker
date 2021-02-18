@@ -27,7 +27,6 @@ public class EnterOTPSlide extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         otpHeader = getView().findViewById(R.id.otp_header);
         otpView = getView().findViewById(R.id.otp_view);
-
         otpView.setAnimationEnable(true);
     }
 
@@ -40,5 +39,8 @@ public class EnterOTPSlide extends Fragment {
         otpHeader.setText(text);
     }
 
-
+    public void onResume() {
+        super.onResume();
+        otpView.requestFocus();
+    }
 }
