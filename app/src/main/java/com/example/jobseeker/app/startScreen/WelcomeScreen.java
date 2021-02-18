@@ -66,13 +66,13 @@ public class WelcomeScreen extends AppCompatActivity {
         } else {
 
             HashMap<String, String> map = new HashMap<>();
-            map.put("username" , phoneNo);
+            map.put("username", phoneNo);
             String otp = generateOtp(5);
             Toast.makeText(this, otp, Toast.LENGTH_SHORT).show();
             map.put("otp", otp);
 
             ParseCloud.callFunctionInBackground("getOtp", map, (FunctionCallback<Boolean>) (isLogin, e) -> {
-                if (e == null){
+                if (e == null) {
                     slideChange = true;
                     binding.viewPager2.setCurrentItem(1);
                     adapter.getEnterOTPSlide().setOtpHeaderText("We have sent a code to +88" + phoneNo);
@@ -96,8 +96,14 @@ public class WelcomeScreen extends AppCompatActivity {
         ParseUser.logInInBackground(phoneNo, ((OtpView) findViewById(R.id.otp_view)).getText().toString(), (user1, e) -> {
             if (e == null) {
                 Toast.makeText(this, "Login was a success!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, HomePage.class));
-                finish();
+                if (ParseUser.getCurrentUser().get("firstName") != null) {
+                    startActivity(new Intent(this, HomePage.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(this, Guide.class));
+                    finish();
+                }
+
             } else
                 Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
