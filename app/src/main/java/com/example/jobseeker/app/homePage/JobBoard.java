@@ -1,12 +1,16 @@
 package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
@@ -51,11 +55,13 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
     @Override
     public void onJobBoardClick(int position) {
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        Dialog dialog = new Dialog(this,R.style.Theme_JobSeeker);
+        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         dialog.setContentView(R.layout.description_popup_window);
 
-        dialog.show();
+        //dialog.show();
     }
+
 }
