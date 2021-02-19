@@ -47,9 +47,9 @@ public class WelcomeScreen extends AppCompatActivity {
         binding.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
+                phoneNo = ((EditText) findViewById(R.id.editTextPhone)).getText().toString();
                 if (position == 1 && !slideChange) {
                     binding.viewPager2.setCurrentItem(0);
-                    Toast.makeText(WelcomeScreen.this, "You must enter phone number", Toast.LENGTH_SHORT).show();
                 } else {
                     slideChange = false;
                 }
@@ -66,7 +66,6 @@ public class WelcomeScreen extends AppCompatActivity {
         } else if (phoneNo.length() != 11) {
             Toast.makeText(WelcomeScreen.this, "Please enter a correct phone number!", Toast.LENGTH_SHORT).show();
         } else {
-
             HashMap<String, String> map = new HashMap<>();
             map.put("username", phoneNo);
             String otp = generateOtp(5);
@@ -102,12 +101,12 @@ public class WelcomeScreen extends AppCompatActivity {
                     startActivity(new Intent(this, HomePage.class));
                     finish();
                 } else {
-                    ParseUser.getCurrentUser().put("isGuideShow",true);
+                    ParseUser.getCurrentUser().put("isGuideShow", true);
                     ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if(e!=null){
-                                Toast.makeText(WelcomeScreen.this, "Failed. "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            if (e != null) {
+                                Toast.makeText(WelcomeScreen.this, "Failed. " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
