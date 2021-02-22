@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.startScreen.Guide;
 import com.example.jobseeker.app.startScreen.adapters.GuideViewPager2Adapter;
 import com.example.jobseeker.app.startScreen.adapters.JobViewPager2Adapter;
 import com.example.jobseeker.databinding.ActivityCreateJobBinding;
@@ -56,10 +58,28 @@ public class CreateJob extends AppCompatActivity {
     }
 
     public void next(View view) {
-        Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
+        if(binding.viewPagerJob.getCurrentItem()!=binding.viewPagerJob.getAdapter().getItemCount()-1)
+        {
+            binding.viewPagerJob.setCurrentItem(binding.viewPagerJob.getCurrentItem()+1);
+            if(binding.viewPagerJob.getCurrentItem()==binding.viewPagerJob.getAdapter().getItemCount()-1)
+                binding.next.setText("SUBMIT");
+            else
+                binding.next.setText("NEXT");
+        }
+        else
+        {
+            Toast.makeText(this, "SUBMIT", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void back(View view) {
-
+        if(binding.viewPagerJob.getCurrentItem()!=0) {
+            binding.viewPagerJob.setCurrentItem(binding.viewPagerJob.getCurrentItem() - 1);
+            if(binding.viewPagerJob.getCurrentItem()==0)
+                binding.back.setVisibility(View.GONE);
+            else{
+                binding.back.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }
