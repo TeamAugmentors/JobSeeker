@@ -41,6 +41,7 @@ public class CreateProfile extends AppCompatActivity {
     ActivityCreateProfileBinding binding;
     private static final int PICK_IMAGE = 1;
     private boolean isImageSelected = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +58,16 @@ public class CreateProfile extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()) {
                     binding.outlinedTextFieldFirstName.setError("*This Field is Required");
-                }
-                else {
+                } else {
                     binding.outlinedTextFieldFirstName.setError("");
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -76,15 +78,16 @@ public class CreateProfile extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()) {
                     binding.outlinedTextFieldLastName.setError("*This Field is Required");
-                }
-                else{
+                } else {
                     binding.outlinedTextFieldLastName.setError("");
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -95,17 +98,18 @@ public class CreateProfile extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()) {
-                    Log.d("Here","I am here");
+                    Log.d("Here", "I am here");
                     binding.outlinedTextFieldBkashNo.setError("*This Field is Required");
-                }
-                else{
-                    Log.d("Here1","I am here");
+                } else {
+                    Log.d("Here1", "I am here");
                     binding.outlinedTextFieldBkashNo.setError("");
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -115,7 +119,7 @@ public class CreateProfile extends AppCompatActivity {
 
     private void fetchData() {
 
-        if (ParseUser.getCurrentUser().get("firstName") != null){
+        if (ParseUser.getCurrentUser().get("firstName") != null) {
             Toast.makeText(this, "Fetching", Toast.LENGTH_SHORT).show();
             //Profile was created before
             binding.outlinedTextFieldFirstName.getEditText().setText(ParseUser.getCurrentUser().getString("firstName"));
@@ -124,21 +128,24 @@ public class CreateProfile extends AppCompatActivity {
 
             ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
             imageFile.getDataInBackground((data, e) -> {
-                        if (e == null) {
+                if (e == null) {
 
-                            Glide.with(this)
-                                    .asBitmap()
-                                    .load(data)
-                                    .override(500,500)
-                                    .transform(new CircleCrop())
-                                    .into(binding.profileImage);
+                    Glide.with(this)
+                            .asBitmap()
+                            .load(data)
+                            .override(500, 500)
+                            .transform(new CircleCrop())
+                            .into(binding.profileImage);
+                    isImageSelected = true;
 
-                        } else {
-                            Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }else
+                } else {
+                    Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
             Toast.makeText(this, "lol gg", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -149,29 +156,26 @@ public class CreateProfile extends AppCompatActivity {
 
     public boolean check() {
         boolean isFieldEmpty = false;
-        if(binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()){
+        if (binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()) {
             binding.outlinedTextFieldFirstName.setError("*This Field is Required");
             isFieldEmpty = true;
-        }
-        else{
+        } else {
             binding.outlinedTextFieldFirstName.setError("");
         }
-        if(binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()){
+        if (binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()) {
             binding.outlinedTextFieldLastName.setError("*This Field is Required");
             isFieldEmpty = true;
-        }
-        else{
+        } else {
             binding.outlinedTextFieldLastName.setError("");
         }
-        if(binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()){
+        if (binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()) {
             binding.outlinedTextFieldBkashNo.setError("*This Field is Required");
             isFieldEmpty = true;
-        }
-        else{
+        } else {
             binding.outlinedTextFieldBkashNo.setError("");
         }
-        if(!isImageSelected){
-            binding.imageUpload.setText("Please! Upload a professional"+ "\n" +"Profile Picture");
+        if (!isImageSelected) {
+            binding.imageUpload.setText("Please! Upload a professional" + "\n" + "Profile Picture");
             binding.imageUpload.setTextColor(getColor(R.color.red));
             isFieldEmpty = true;
         }
@@ -184,7 +188,7 @@ public class CreateProfile extends AppCompatActivity {
         gallery.setType("image/*");
         gallery.setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(Intent.createChooser(gallery, "Select Picture"),PICK_IMAGE);
+        startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
 
     }
 
@@ -192,36 +196,36 @@ public class CreateProfile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==PICK_IMAGE && resultCode == RESULT_OK){
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             isImageSelected = true;
             binding.imageUpload.setText(null);
             Glide.with(this)
                     .asBitmap()
                     .load(data.getData())
-                    .override(500,500)
+                    .override(500, 500)
                     .transform(new CircleCrop())
                     .into(binding.profileImage);
-        }
-        else{
-            isImageSelected = false;
+        } else {
+            if(!isImageSelected)
+                isImageSelected = false;
         }
     }
 
     public void submit(View view) {
-        if (!check()){
-            ParseUser.getCurrentUser().put("firstName" ,  binding.outlinedTextFieldFirstName.getEditText().getText().toString());
-            ParseUser.getCurrentUser().put("lastName" , binding.outlinedTextFieldLastName.getEditText().getText().toString());
+        if (!check()) {
+            ParseUser.getCurrentUser().put("firstName", binding.outlinedTextFieldFirstName.getEditText().getText().toString());
+            ParseUser.getCurrentUser().put("lastName", binding.outlinedTextFieldLastName.getEditText().getText().toString());
 
-            ParseUser.getCurrentUser().put("bkashNo" , binding.outlinedTextFieldBkashNo.getEditText().getText().toString());
+            ParseUser.getCurrentUser().put("bkashNo", binding.outlinedTextFieldBkashNo.getEditText().getText().toString());
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ((BitmapDrawable)binding.profileImage.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            ((BitmapDrawable) binding.profileImage.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byte[] data = byteArrayOutputStream.toByteArray();
             ParseFile file = new ParseFile("proPic.jpeg", data);
 
             ParseUser.getCurrentUser().put("proPic", file);
             ParseUser.getCurrentUser().saveInBackground(e -> {
-                if (e == null){
+                if (e == null) {
                     Toast.makeText(this, "SUCCESS!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else
