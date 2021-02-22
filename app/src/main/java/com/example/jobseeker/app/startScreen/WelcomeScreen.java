@@ -47,6 +47,7 @@ public class WelcomeScreen extends AppCompatActivity {
         binding.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
+                ((OtpView) findViewById(R.id.otp_view)).setText("");
                 phoneNo = ((EditText) findViewById(R.id.editTextPhone)).getText().toString();
                 if (position == 1 && !slideChange) {
                     binding.viewPager2.setCurrentItem(0);
@@ -60,6 +61,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
     //onClick
     public void getOtp(View view) {
+        ((OtpView) findViewById(R.id.otp_view)).setText("");
         phoneNo = ((EditText) findViewById(R.id.editTextPhone)).getText().toString();
         if (phoneNo.length() == 0) {
             Toast.makeText(WelcomeScreen.this, "Please enter your phone number", Toast.LENGTH_SHORT).show();

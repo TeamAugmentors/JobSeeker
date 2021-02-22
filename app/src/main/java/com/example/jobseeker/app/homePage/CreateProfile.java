@@ -205,9 +205,6 @@ public class CreateProfile extends AppCompatActivity {
                     .override(500, 500)
                     .transform(new CircleCrop())
                     .into(binding.profileImage);
-        } else {
-            if(!isImageSelected)
-                isImageSelected = false;
         }
     }
 
