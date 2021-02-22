@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.appGuide.fragments;
+package com.example.jobseeker.app.startScreen.fragments.guideFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
