@@ -3,7 +3,6 @@
     package="com.example.jobseeker">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,16 +14,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker">
-
-        <activity android:name=".app.homePage.CreateJob"
+        <activity android:name=".app.homePage.AppliedPost"
             android:parentActivityName=".app.homePage.HomePage"/>
+        <activity android:name=".app.homePage.CreatedPost"
+            android:parentActivityName=".app.homePage.HomePage"/>
+        <activity
+            android:name=".app.homePage.CreateJob"
+            android:parentActivityName=".app.homePage.HomePage" />
         <activity
             android:name=".app.homePage.CreateProfile"
             android:parentActivityName=".app.homePage.HomePage"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".app.homePage.JobBoard"
-            android:parentActivityName=".app.homePage.HomePage"/>
-
+        <activity
+            android:name=".app.homePage.JobBoard"
+            android:parentActivityName=".app.homePage.HomePage" />
         <activity android:name=".app.startScreen.Guide" />
         <activity
             android:name=".app.homePage.HomePage"

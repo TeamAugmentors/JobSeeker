@@ -117,6 +117,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         else if(item.getItemId()==R.id.nav_profile){
                 startActivity(new Intent(this, CreateProfile.class));
         }
+        else if(item.getItemId()==R.id.nav_created_jobs){
+            startActivity(new Intent(this, CreatedPost.class));
+        }
+        else if(item.getItemId()==R.id.nav_applied_jobs){
+            startActivity(new Intent(this, AppliedPost.class));
+        }
         return true;
     }
 

@@ -1,20 +1,14 @@
 package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.homePage.Adapters.JobBoardAdapter;
+import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.parse.ParseObject;
