@@ -8,7 +8,7 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_new_profile"
             android:title="Create Profile" />
-
+ƒ
     </group>
 
     <item android:title="My Jobs">
