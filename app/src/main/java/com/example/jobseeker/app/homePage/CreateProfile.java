@@ -3,6 +3,7 @@ package com.example.jobseeker.app.homePage;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,8 +14,13 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +29,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
+import com.example.jobseeker.utils.HideKeyboard;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.google.android.material.internal.NavigationMenu;
 import com.google.android.material.navigation.NavigationView;
@@ -125,6 +132,31 @@ public class CreateProfile extends AppCompatActivity {
             binding.outlinedTextFieldFirstName.getEditText().setText(ParseUser.getCurrentUser().getString("firstName"));
             binding.outlinedTextFieldLastName.getEditText().setText(ParseUser.getCurrentUser().getString("lastName"));
             binding.outlinedTextFieldBkashNo.getEditText().setText(ParseUser.getCurrentUser().getString("bkashNo"));
+
+            binding.outlinedTextFieldFirstName.setEndIconVisible(false);
+            binding.outlinedTextFieldLastName.setEndIconVisible(false);
+            binding.outlinedTextFieldBkashNo.setEndIconVisible(false);
+
+//            binding.outlinedTextFieldBkashNo.setOnKeyListener(new View.OnKeyListener() {
+//                @Override
+//                public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                    if (event.getAction() == KeyEvent.KEYCODE_ENTER)
+//                        Toast.makeText(CreateProfile.this, "odkgoksego", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+//            });
+//
+            binding.text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+                        getCurrentFocus().clearFocus();
+                        HideKeyboard.hide((InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE), binding.getRoot());
+                        return true;
+                    }else
+                        return false;
+                }
+            });
 
             ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
             imageFile.getDataInBackground((data, e) -> {

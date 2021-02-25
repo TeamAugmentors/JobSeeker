@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
@@ -56,6 +59,14 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         dialog.setContentView(R.layout.description_popup_window);
 
         dialog.show();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search,menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+        searchView.setQueryHint("Search");
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
