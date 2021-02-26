@@ -224,6 +224,7 @@
             android:background="@color/job_seeker_green_hint" />
 
         <TextView
+            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -235,9 +236,9 @@
             android:textSize="@dimen/_14sdp" />
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
-            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/description_background"
             android:padding="@dimen/_5sdp"
             android:scrollbarThumbVertical="@drawable/scroll_bar_thumb"

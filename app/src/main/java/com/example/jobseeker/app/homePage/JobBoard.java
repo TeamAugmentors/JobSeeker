@@ -13,10 +13,14 @@ import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -156,6 +160,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         View dialogView = dialog.getWindow().getDecorView();
 
+
         dialogView.findViewById(R.id.close).setOnClickListener(v -> {
             dialog.dismiss();
         });
@@ -170,6 +175,20 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
             ((TextView) dialogView.findViewById(R.id.negotiable)).setText("Yes");
         else
             ((TextView) dialogView.findViewById(R.id.negotiable)).setText("No");
+        ScrollView scrollView = dialogView.findViewById(R.id.scrollView);
+        String text = ((TextView) dialogView.findViewById(R.id.description)).getText().toString();
+        int charCount = text.length();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        LinearLayout.LayoutParams params;
+        if(charCount<=200){
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        else{
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
+        }
+        scrollView.setLayoutParams(params);
 
 
     }
