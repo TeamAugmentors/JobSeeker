@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/_4sdp">
+
+    <LinearLayout
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="10"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="Android Developer"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_20sdp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="end"
+                >
+
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:id="@+id/close"
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
+                    android:backgroundTint="@color/white"
+                    app:cornerRadius="@dimen/_30sdp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:layout_gravity="end"
+                    android:elevation="0dp"
+                    android:shadowColor="@color/white"
+                    app:icon="@drawable/ic_round_clear_24"
+                    app:iconTint="@color/job_seeker_logo_green"
+                    app:iconSize="@dimen/_15sdp"
+                    app:iconPadding="0dp"
+                    android:padding="0dp"
+                    app:iconGravity="textStart"
+                    app:rippleColor="@color/job_seeker_green_hint"
+                    />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/job_seeker_green_hint"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="Budget"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:drawableEnd="@drawable/ic_taka"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableTint="@color/job_seeker_logo_green"
+                android:fontFamily="@font/roboto_light"
+                android:text="3500"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="Duration"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="5 - 8 Days"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="Revisions"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/revisions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="3"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="Negotiable"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/negotiable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/roboto_light"
+                android:text="Yes"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_14sdp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/job_seeker_green_hint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:fontFamily="@font/roboto_light"
+            android:text="Description"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textAlignment="textStart"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_14sdp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/description_background"
+            android:padding="@dimen/_5sdp"
+            android:scrollbarThumbVertical="@drawable/scroll_bar_thumb"
+            android:layout_gravity="start"
+            >
+
+            <TextView
+
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                android:fontFamily="@font/roboto_light"
+                android:text="Need an android"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+        </ScrollView>
+        <com.ncorti.slidetoact.SlideToActView
+            android:id="@+id/applySlider"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:clickable="false"
+            android:hapticFeedbackEnabled="true"
+            app:animation_duration="250"
+            app:area_margin="@dimen/_5sdp"
+            app:bump_vibration="60"
+            app:complete_icon="@drawable/anim_loading_spinner"
+            app:icon_margin="@dimen/_5sdp"
+            app:inner_color="@color/white"
+            app:outer_color="@color/job_seeker_logo_green"
+            app:slider_height="@dimen/_35sdp"
+            app:slider_icon="@drawable/ic_next_arrow"
+            app:text="Slide to Apply" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

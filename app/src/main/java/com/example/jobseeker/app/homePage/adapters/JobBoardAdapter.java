@@ -13,15 +13,17 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ItemJobBoardBinding;
 import com.parse.ParseObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHolder> {
 
     // Store a member variable for the contacts
-    private List<ParseObject> parseObjects;
+    private ArrayList<ParseObject> parseObjects;
     private OnJobBoardListener mOnJobBoardListener;
 
-    public JobBoardAdapter(List<ParseObject> object, OnJobBoardListener onJobBoardListener) {
+    public JobBoardAdapter(ArrayList<ParseObject> object, OnJobBoardListener onJobBoardListener) {
         parseObjects = object;
         mOnJobBoardListener = onJobBoardListener;
     }
@@ -41,6 +43,7 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         Context context;
         ItemJobBoardBinding binding;
         OnJobBoardListener onJobBoardListener;
+
         public ViewHolder(ItemJobBoardBinding b, Context context, OnJobBoardListener onJobBoardListener) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
@@ -53,7 +56,7 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            onJobBoardListener.onJobBoardClick(getAdapterPosition());
+            onJobBoardListener.onJobBoardClick(getAdapterPosition(), parseObjects);
         }
     }
 
@@ -61,8 +64,11 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int pos) {
         holder.binding.title.setText(parseObjects.get(pos).getString("title"));
         holder.binding.description.setText(parseObjects.get(pos).getString("description"));
-        holder.binding.skills.setText(parseObjects.get(pos).getString("requiredSkills"));
-        holder.binding.salary.setText(parseObjects.get(pos).getString("salary") + "$");
+//        holder.binding.skills.setText(parseObjects.get(pos).getString("requiredSkills"));
+
+        /*Write a function that displays salary in K if its greater than 1000, and displays it normally if it is under 1000, and set it to holder.biding.salary*/
+        holder.binding.salary.setText(parseObjects.get(pos).getInt("budget") + "");
+        /*Write a function that displays text upto 25 characters from description and puts "..." at the end if its greater than 25 characters, set it to holder.biding.description*/
 
         holder.binding.getRoot().setAnimation(AnimationUtils.loadAnimation(holder.context, R.anim.fade_scale_in));
     }
@@ -73,6 +79,13 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
     }
 
     public interface OnJobBoardListener {
-        void onJobBoardClick(int position);
+        void onJobBoardClick(int position,List<ParseObject> parseObjects);
+    }
+
+    public void filter(ArrayList<ParseObject> filteredList){
+        if (!parseObjects.equals(filteredList)){
+            parseObjects = filteredList;
+            notifyDataSetChanged();
+        }
     }
 }

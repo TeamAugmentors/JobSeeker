@@ -20,35 +20,34 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/job_seeker_logo_green"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            >
-            
-            <LinearLayout
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+
+            <EditText
+                android:id="@+id/search"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
-                android:orientation="vertical">
-
-                <EditText
-                    android:layout_marginHorizontal="@dimen/_25sdp"
-                    android:layout_marginTop="@dimen/_50sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:height="@dimen/_35sdp"
-                    android:hint="Search Job"
-                    android:textColorHint="@color/white"
-                    android:paddingLeft="@dimen/_20sdp"
-                    android:drawableEnd="@drawable/ic_menu_search"
-                    android:background="@drawable/search_bar_background">
-                </EditText>
-
-            </LinearLayout>
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/_40sdp"
+                android:background="@drawable/search_bar_background"
+                android:drawableEnd="@drawable/ic_menu_search"
+                android:drawableTint="@color/job_seeker_logo_green"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:elevation="5dp"
+                android:shadowColor="@color/black"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textCursorDrawable="@null"
+                android:hint="Search Job"
+                android:textColorHint="@color/job_seeker_green_hint" />
 
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                />
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -60,6 +59,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

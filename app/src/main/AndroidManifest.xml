@@ -25,9 +25,11 @@
             android:name=".app.homePage.CreateProfile"
             android:parentActivityName=".app.homePage.HomePage"
             android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".app.homePage.JobBoard"
             android:parentActivityName=".app.homePage.HomePage" />
+
         <activity android:name=".app.startScreen.Guide" />
         <activity
             android:name=".app.homePage.HomePage"

@@ -29,4 +29,17 @@
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/input_etext_outline_color</item>
     </style>
+
+    <style name="PauseDialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+        <item name="android:colorPrimary">@color/job_seeker_logo_green</item>
+    </style>
+
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/spin_in</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+    </style>
+
+    <declare-styleable name="ScrollViewWithMaxHeight">
+    </declare-styleable>
 </resources>
