@@ -1,10 +1,12 @@
 package com.example.jobseeker.app.homePage.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,13 +68,33 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         holder.binding.description.setText(parseObjects.get(pos).getString("description"));
 //        holder.binding.skills.setText(parseObjects.get(pos).getString("requiredSkills"));
 
-        /*Write a function that displays salary in K if its greater than 1000, and displays it normally if it is under 1000, and set it to holder.biding.salary*/
-        holder.binding.salary.setText(parseObjects.get(pos).getInt("budget") + "");
-        /*Write a function that displays text upto 25 characters from description and puts "..." at the end if its greater than 25 characters, set it to holder.biding.description*/
+        /*a function that displays salary in K if its greater than 1000, and displays it normally if it is under 1000, and set it to holder.biding.salary*/
+        double temp=parseObjects.get(pos).getInt("budget");
+        if(temp>1000)
+        {
+            temp/=1000;
+            int flag = (int)((temp*10)%10);
+            int temp2 = (int)(temp);
 
+            if(flag==0)
+                holder.binding.salary.setText(temp2+"K");
+            else
+                holder.binding.salary.setText(temp+"K");
+        }
+        else
+            holder.binding.salary.setText(parseObjects.get(pos).getInt("budget") + "");
+        /*a function that displays text upto 25 characters from description and puts "..." at the end if its greater than 25 characters, set it to holder.biding.description*/
+        String test = holder.binding.description.getText().toString();
+        if(test.length()>74)
+        {
+            holder.binding.description.setText(test.substring(0,73)+"...");
+        }
         holder.binding.getRoot().setAnimation(AnimationUtils.loadAnimation(holder.context, R.anim.fade_scale_in));
     }
 
+    private void setSalary(){
+
+    }
     @Override
     public int getItemCount() {
         return parseObjects.size();
