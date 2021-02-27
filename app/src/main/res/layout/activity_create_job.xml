@@ -14,6 +14,7 @@
         android:background="@color/job_seeker_logo_green"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:layout_constraintEnd_toEndOf="parent"
+        app:titleTextColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/view_pager_job"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -8,29 +8,33 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_new_profile"
             android:title="Create Profile" />
-ƒ
+        ƒ
     </group>
 
     <item android:title="My Jobs">
         <menu>
-            <item android:id="@+id/nav_created_jobs"
+            <item
+                android:id="@+id/nav_created_jobs"
                 android:icon="@drawable/ic_create_job"
-                android:title="Created Jobs"/>
+                android:title="Created Jobs" />
 
-            <item android:id="@+id/nav_applied_jobs"
+            <item
+                android:id="@+id/nav_applied_jobs"
                 android:icon="@drawable/ic_list"
-                android:title="Applied Jobs"/>
+                android:title="Applied Jobs" />
         </menu>
     </item>
     <item android:title="History">
         <menu>
-            <item android:id="@+id/nav_job_history"
+            <item
+                android:id="@+id/nav_job_history"
                 android:icon="@drawable/ic_create_job"
-                android:title="Job History"/>
+                android:title="Job History" />
 
-            <item android:id="@+id/nav_payment_history"
+            <item
+                android:id="@+id/nav_payment_history"
                 android:icon="@drawable/ic_list"
-                android:title="Payment History"/>
+                android:title="Payment History" />
         </menu>
     </item>
     <item android:title="">

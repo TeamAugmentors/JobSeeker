@@ -3,9 +3,11 @@ package com.example.jobseeker.app.homePage;
 import androidx.annotation.LongDef;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -68,7 +70,7 @@ public class CreateProfile extends AppCompatActivity {
         binding = ActivityCreateProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
-        ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.black));
+        ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
         new Handler().postDelayed(() -> {
             fetchData();
             errorTextControl();
@@ -303,28 +305,37 @@ public class CreateProfile extends AppCompatActivity {
 
     public void manageText(int currPage){
         if(currPage == 0){
-            ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.black));
-            ((TextView)findViewById(R.id.skillSets)).setTextColor(getResources().getColor(R.color.hint_black));
-            ((TextView)findViewById(R.id.payment)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
+            ((TextView)findViewById(R.id.skillSets)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
+            ((TextView)findViewById(R.id.payment)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
             ((TextView)findViewById(R.id.yourInfo)).setTextSize(20);
             ((TextView)findViewById(R.id.skillSets)).setTextSize(18);
             ((TextView)findViewById(R.id.payment)).setTextSize(18);
+            ((TextView)findViewById(R.id.payment)).setBackground(null);
+            ((TextView)findViewById(R.id.skillSets)).setBackground(null);
+            ((TextView)findViewById(R.id.yourInfo)).setBackgroundResource(R.drawable.text_background);
         }
         else if(currPage == 1){
-            ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.hint_black));
-            ((TextView)findViewById(R.id.skillSets)).setTextColor(getResources().getColor(R.color.black));
-            ((TextView)findViewById(R.id.payment)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
+            ((TextView)findViewById(R.id.skillSets)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
+            ((TextView)findViewById(R.id.payment)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
             ((TextView)findViewById(R.id.yourInfo)).setTextSize(18);
             ((TextView)findViewById(R.id.skillSets)).setTextSize(20);
             ((TextView)findViewById(R.id.payment)).setTextSize(18);
+            ((TextView)findViewById(R.id.yourInfo)).setBackground(null);
+            ((TextView)findViewById(R.id.payment)).setBackground(null);
+            ((TextView)findViewById(R.id.skillSets)).setBackgroundResource(R.drawable.text_background);
         }
         else if(currPage == 2){
-            ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.hint_black));
-            ((TextView)findViewById(R.id.skillSets)).setTextColor(getResources().getColor(R.color.hint_black));
-            ((TextView)findViewById(R.id.payment)).setTextColor(getResources().getColor(R.color.black));
+            ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
+            ((TextView)findViewById(R.id.skillSets)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
+            ((TextView)findViewById(R.id.payment)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
             ((TextView)findViewById(R.id.yourInfo)).setTextSize(18);
             ((TextView)findViewById(R.id.skillSets)).setTextSize(18);
             ((TextView)findViewById(R.id.payment)).setTextSize(20);
+            ((TextView)findViewById(R.id.yourInfo)).setBackground(null);
+            ((TextView)findViewById(R.id.skillSets)).setBackground(null);
+            ((TextView)findViewById(R.id.payment)).setBackgroundResource(R.drawable.text_background);
         }
     }
 

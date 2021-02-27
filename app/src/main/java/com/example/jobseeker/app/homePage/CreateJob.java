@@ -1,10 +1,13 @@
 package com.example.jobseeker.app.homePage;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.jobseeker.R;
@@ -25,12 +28,15 @@ public class CreateJob extends AppCompatActivity {
         binding = ActivityCreateJobBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+        final Drawable upArrow =  ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
 
-        init();
+        init(upArrow);
     }
 
-    private void init() {
+    private void init(Drawable upArrow) {
         ToolbarHelper.create(binding.toolbar, this, "Create Job");
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         adapter = new CreateJobViewPagerAdapter(this);
         binding.viewPagerJob.setAdapter(adapter);
         binding.viewPagerJob.setOffscreenPageLimit(5);
