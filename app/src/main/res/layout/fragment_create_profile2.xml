@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_700"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="@dimen/_60sdp"
+        android:id="@+id/outlinedTextFieldBkashNo"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:hint="Bkash Number"
+        android:textColorHint="@color/job_seeker_green_hint"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:endIconTint="#FF0000"
+        app:hintTextColor="@color/job_seeker_logo_green"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:id="@+id/text"
+            android:fontFamily="@font/roboto_light"
+            android:layout_width="match_parent"
+            android:inputType="number"
+
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:textColor="@color/job_seeker_logo_green" />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

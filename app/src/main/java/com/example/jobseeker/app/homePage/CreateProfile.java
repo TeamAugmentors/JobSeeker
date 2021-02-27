@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -73,9 +74,10 @@ public class CreateProfile extends AppCompatActivity {
             binding.viewPagerCreateProfile.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageSelected(int position) {
-                    Toast.makeText(CreateProfile.this, "Hello", Toast.LENGTH_SHORT).show();
-                    if (check()) {
+                    if (position == 1 && checkPage1()) {
                         binding.viewPagerCreateProfile.setCurrentItem(position - 1);
+                    } else if (position == 2 && checkPage2()) {
+                        binding.viewPagerCreateProfile.setCurrentItem(position-1);
                     }
                 }
             });
@@ -203,7 +205,7 @@ public class CreateProfile extends AppCompatActivity {
     }
 
 
-    public boolean check() {
+    public boolean checkPage1() {
         boolean isFieldEmpty = false;
         if (((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).getEditText().getText().toString().isEmpty()) {
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).setError("*This Field is Required");
@@ -217,18 +219,23 @@ public class CreateProfile extends AppCompatActivity {
         } else {
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).setError("");
         }
+        if (!isImageSelected) {
+            ((TextView) findViewById(R.id.imageUpload)).setText("Please! Upload a professional" + "\n" + "Profile Picture");
+            ((TextView) findViewById(R.id.imageUpload)).setTextColor(getColor(R.color.red));
+            isFieldEmpty = true;
+        }
+        Log.d("checkPage1: ", String.valueOf(isFieldEmpty));
+        return isFieldEmpty;
+    }
+
+    public boolean checkPage2() {
+        boolean isFieldEmpty = false;
         if (((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).getEditText().getText().toString().isEmpty()) {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("*This Field is Required");
             isFieldEmpty = true;
         } else {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("");
         }
-        if (!isImageSelected) {
-            ((TextView) findViewById(R.id.imageUpload)).setText("Please! Upload a professional" + "\n" + "Profile Picture");
-            ((TextView) findViewById(R.id.imageUpload)).setTextColor(getColor(R.color.red));
-            isFieldEmpty = true;
-        }
-
         return isFieldEmpty;
     }
 
@@ -258,7 +265,7 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     public void submit(View view) {
-        if (!check()) {
+        if (!checkPage1()) {
             ParseUser.getCurrentUser().put("firstName", ((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).getEditText().getText().toString());
             ParseUser.getCurrentUser().put("lastName", ((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).getEditText().getText().toString());
 
@@ -281,8 +288,13 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     public void nextPage(View view) {
-        if (!check() && binding.viewPagerCreateProfile.getCurrentItem() != binding.viewPagerCreateProfile.getAdapter().getItemCount() - 1) {
-            binding.viewPagerCreateProfile.setCurrentItem(binding.viewPagerCreateProfile.getCurrentItem() + 1);
+        if (binding.viewPagerCreateProfile.getCurrentItem() != binding.viewPagerCreateProfile.getAdapter().getItemCount() - 1) {
+            if (!checkPage1() && binding.viewPagerCreateProfile.getCurrentItem()==0) {
+                binding.viewPagerCreateProfile.setCurrentItem(binding.viewPagerCreateProfile.getCurrentItem() + 1);
+            }
+            else if(!checkPage2() && binding.viewPagerCreateProfile.getCurrentItem()==1){
+                binding.viewPagerCreateProfile.setCurrentItem(binding.viewPagerCreateProfile.getCurrentItem() + 1);
+            }
         }
     }
 }
