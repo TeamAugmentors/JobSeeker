@@ -106,7 +106,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_30sdp"
             android:fontFamily="@font/roboto_light_italic"
-            android:text="This is the minimum number of days required for your project"
+            android:text="This is the maximum number of days you can allow for your project"
             android:textAlignment="textStart"
             android:textColor="@color/job_seeker_logo_green" />
 

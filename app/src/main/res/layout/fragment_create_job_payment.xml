@@ -1,6 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_50sdp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:text="Sample Files"
+        android:textColor="@color/job_seeker_logo_green"
+        android:textSize="@dimen/_30sdp" />
+
+    <View
+        android:background="@color/job_seeker_logo_green"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:fontFamily="@font/roboto_light"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_width="wrap_content"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="You can add some sample for reference. This step is optional."
+        android:textAlignment="textStart"
+        android:textColor="@color/job_seeker_logo_green"
+        android:textSize="@dimen/_15sdp" />
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/button_background_filled"
+            android:drawablePadding="@dimen/_6sdp"
+            android:drawableStart="@drawable/ic_add_filled"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_light"
+            android:id="@+id/addFile2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="Add file"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:fontFamily="@font/roboto_light"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_35sdp"
+            android:layout_width="wrap_content"
+            android:text=".pdf/.doc/.png/.jpeg"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_14sdp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/button_background_filled"
+            android:drawablePadding="@dimen/_6sdp"
+            android:drawableStart="@drawable/ic_add_filled"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_light"
+            android:id="@+id/addFile3"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="Add file"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:fontFamily="@font/roboto_light"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_35sdp"
+            android:layout_width="wrap_content"
+            android:text=".pdf/.doc/.png/.jpeg"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_14sdp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/button_background_filled"
+            android:drawablePadding="@dimen/_6sdp"
+            android:drawableStart="@drawable/ic_add_filled"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_light"
+            android:id="@+id/addFile1"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="Add file"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
+
+        <TextView
+            android:fontFamily="@font/roboto_light"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_35sdp"
+            android:layout_width="wrap_content"
+            android:text=".pdf/.doc/.png/.jpeg"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_14sdp" />
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:id="@+id/create_job"
+        android:background="@drawable/button_background"
+        android:drawablePadding="@dimen/_6sdp"
+        android:drawableTint="@color/white"
+        android:fontFamily="@font/roboto_light"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:paddingHorizontal="@dimen/_25sdp"
+        android:paddingVertical="@dimen/_6sdp"
+        android:text="Create Job"
+        android:textAllCaps="false"
+        android:textColor="@color/job_seeker_logo_green"
+        android:textSize="@dimen/_16sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_60sdp"/>
+</LinearLayout>
+

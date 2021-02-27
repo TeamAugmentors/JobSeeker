@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.jobseeker.app.homePage.fragments.FragmentJobRequirement;
-import com.example.jobseeker.app.homePage.fragments.CreateJob3;
+import com.example.jobseeker.app.homePage.fragments.FragmentJobPayment;
 import com.example.jobseeker.app.homePage.fragments.FragmentJobTitle;
 
 public class CreateJobViewPagerAdapter  extends FragmentStateAdapter {
@@ -24,7 +24,7 @@ public class CreateJobViewPagerAdapter  extends FragmentStateAdapter {
             case 1:
                 return new FragmentJobRequirement();
             case 2:
-                return new CreateJob3();
+                return new FragmentJobPayment();
         }
 
         return new FragmentJobTitle();
