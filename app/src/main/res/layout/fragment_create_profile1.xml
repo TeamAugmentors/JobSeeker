@@ -13,7 +13,7 @@
         android:id="@+id/profile_Image"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_90sdp"
         android:background="@color/white"
         android:src="@drawable/upload_pic"
         />
