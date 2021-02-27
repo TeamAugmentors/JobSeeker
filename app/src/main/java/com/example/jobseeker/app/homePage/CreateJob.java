@@ -5,8 +5,11 @@ import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +30,6 @@ public class CreateJob extends AppCompatActivity {
 
     ActivityCreateJobBinding binding;
     CreateJobViewPagerAdapter adapter;
-    MaterialDatePicker materialDatePicker;
     DatePickerDialog picker;
 
     @Override
@@ -38,9 +40,24 @@ public class CreateJob extends AppCompatActivity {
         setContentView(binding.getRoot());
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
-
-
         init(upArrow);
+        new Handler().postDelayed(() -> {
+            MaterialDatePicker.Builder materialDatePickerBuilder = MaterialDatePicker.Builder.datePicker();
+            materialDatePickerBuilder.setTitleText("Select A Deadline");
+            final MaterialDatePicker materialDatePicker = materialDatePickerBuilder.build();
+            findViewById(R.id.date_pick_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+                }
+            });
+            materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+                @Override
+                public void onPositiveButtonClick(Object selection) {
+                    ((TextView)findViewById(R.id.date_text_view)).setText(materialDatePicker.getHeaderText());
+                }
+            });
+        }, 1000);
     }
 
     private void init(Drawable upArrow) {
@@ -70,10 +87,6 @@ public class CreateJob extends AppCompatActivity {
             }
         });
 
-        MaterialDatePicker.Builder materialDatePickerBuilder = MaterialDatePicker.Builder.datePicker();
-        materialDatePicker = materialDatePickerBuilder.build();
-
-
     }
 
     public void next(View view) {
@@ -87,7 +100,7 @@ public class CreateJob extends AppCompatActivity {
                 //lastSlide
 
             } else {
-                
+
             }
         }
 

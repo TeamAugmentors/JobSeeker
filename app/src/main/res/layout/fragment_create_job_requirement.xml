@@ -68,28 +68,35 @@
             android:textAlignment="textStart"
             android:textColor="@color/job_seeker_logo_green" />
 
-
-        <DatePicker
+        <Button
+            android:id="@+id/date_pick_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.Date"
-            android:headerBackground="@color/job_seeker_logo_green"
-            android:calendarTextColor="@color/job_seeker_logo_green"
-            android:backgroundTint="@color/job_seeker_logo_green"
-            android:background="@color/job_seeker_logo_green"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"/>
+            android:layout_marginTop="@dimen/_25sdp"
+            android:text="Select deadline"
+            app:icon="@drawable/ic_baseline_calender" />
+
+        <!--        <DatePicker-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:theme="@style/Theme.Date"-->
+        <!--            android:headerBackground="@color/job_seeker_logo_green"-->
+        <!--            android:calendarTextColor="@color/job_seeker_logo_green"-->
+        <!--            android:backgroundTint="@color/job_seeker_logo_green"-->
+        <!--            android:background="@color/job_seeker_logo_green"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"/>-->
 
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:fontFamily="@font/roboto_light"
-            android:inputType="none"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_regular"
             android:textColor="@color/job_seeker_logo_green"
-            android:textSize="@dimen/_14sdp" />
-
+            android:textSize="@dimen/_15sdp" />
 
         <TextView
             android:layout_width="wrap_content"
