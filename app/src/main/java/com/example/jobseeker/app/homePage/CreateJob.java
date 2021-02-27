@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage;
 
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class CreateJob extends AppCompatActivity {
         binding = ActivityCreateJobBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
-        final Drawable upArrow =  ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
 
         init(upArrow);
@@ -61,10 +62,8 @@ public class CreateJob extends AppCompatActivity {
             }
         });
 
-        MaterialDatePicker.Builder materialDatePickerBuilder =  MaterialDatePicker.Builder.dateRangePicker();
+        MaterialDatePicker.Builder materialDatePickerBuilder = MaterialDatePicker.Builder.dateRangePicker();
         materialDatePicker = materialDatePickerBuilder.build();
-
-
 
     }
 
@@ -75,11 +74,10 @@ public class CreateJob extends AppCompatActivity {
     private void goToNextSlide() {
         if (binding.viewPagerJob.getCurrentItem() != binding.viewPagerJob.getAdapter().getItemCount() - 1) {
             binding.viewPagerJob.setCurrentItem(binding.viewPagerJob.getCurrentItem() + 1);
-            if (binding.viewPagerJob.getCurrentItem() == binding.viewPagerJob.getAdapter().getItemCount() - 1){
+            if (binding.viewPagerJob.getCurrentItem() == binding.viewPagerJob.getAdapter().getItemCount() - 1) {
                 //lastSlide
                 Toast.makeText(this, "last slide", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 Toast.makeText(this, "last not", Toast.LENGTH_SHORT).show();
             }
         }
@@ -97,9 +95,17 @@ public class CreateJob extends AppCompatActivity {
         }
     }
 
-    public void calender(View view) {
-        Toast.makeText(this, "AOPFGLAWOG", Toast.LENGTH_SHORT).show();
+    public void showCalender(View view) {
         materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
 
+        materialDatePicker.addOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (getCurrentFocus() != null)
+                    getCurrentFocus().clearFocus();
+            }
+        });
+
+        //Get the date range, put it into days as no. of days,
     }
 }
