@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.startScreen.fragments.createJobFragment;
+package com.example.jobseeker.app.homePage.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.R;
 
-public class CreateJob3 extends Fragment {
+public class CreateJob2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_job_payment,container,false);
+        return inflater.inflate(R.layout.fragment_create_job_requirement,container,false);
     }
 }

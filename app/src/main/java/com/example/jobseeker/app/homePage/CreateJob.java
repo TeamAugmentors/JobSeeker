@@ -1,25 +1,24 @@
 package com.example.jobseeker.app.homePage;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.startScreen.Guide;
-import com.example.jobseeker.app.startScreen.adapters.GuideViewPager2Adapter;
-import com.example.jobseeker.app.startScreen.adapters.JobViewPager2Adapter;
+import com.example.jobseeker.app.homePage.adapters.CreateJobViewPagerAdapter;
 import com.example.jobseeker.databinding.ActivityCreateJobBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 public class CreateJob extends AppCompatActivity {
 
     ActivityCreateJobBinding binding;
-    JobViewPager2Adapter adapter;
+    CreateJobViewPagerAdapter adapter;
+    MaterialDatePicker materialDatePicker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,57 +28,72 @@ public class CreateJob extends AppCompatActivity {
 
         init();
     }
+
     private void init() {
         ToolbarHelper.create(binding.toolbar, this, "Create Job");
-        adapter = new JobViewPager2Adapter(this);
+        adapter = new CreateJobViewPagerAdapter(this);
         binding.viewPagerJob.setAdapter(adapter);
         binding.viewPagerJob.setOffscreenPageLimit(5);
         binding.dotsIndicator.setViewPager2(binding.viewPagerJob);
+
         binding.viewPagerJob.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if(position==binding.viewPagerJob.getAdapter().getItemCount()-1) {
-                    if(binding.viewPagerJob.getCurrentItem()==binding.viewPagerJob.getAdapter().getItemCount()-1)
-                        binding.next.setText("SUBMIT");
+                if (position == binding.viewPagerJob.getAdapter().getItemCount() - 1) {
+                    if (binding.viewPagerJob.getCurrentItem() == binding.viewPagerJob.getAdapter().getItemCount() - 1) {
+                        //Last slide
+                        binding.next.setVisibility(View.INVISIBLE);
+                    }
+                } else {
+                    binding.next.setVisibility(View.VISIBLE);
                 }
-                else
-                {
-                    binding.next.setText("NEXT");
-                }
-                if(position==0){
-                    binding.back.setVisibility(View.GONE);
-                }
-                else
-                {
+                if (position == 0) {
+                    binding.back.setVisibility(View.INVISIBLE);
+                } else {
                     binding.back.setVisibility(View.VISIBLE);
                 }
             }
         });
+
+        MaterialDatePicker.Builder materialDatePickerBuilder =  MaterialDatePicker.Builder.dateRangePicker();
+        materialDatePicker = materialDatePickerBuilder.build();
+
+
+
     }
 
     public void next(View view) {
-        if(binding.viewPagerJob.getCurrentItem()!=binding.viewPagerJob.getAdapter().getItemCount()-1)
-        {
-            binding.viewPagerJob.setCurrentItem(binding.viewPagerJob.getCurrentItem()+1);
-            if(binding.viewPagerJob.getCurrentItem()==binding.viewPagerJob.getAdapter().getItemCount()-1)
-                binding.next.setText("SUBMIT");
-            else
-                binding.next.setText("NEXT");
+        goToNextSlide();
+    }
+
+    private void goToNextSlide() {
+        if (binding.viewPagerJob.getCurrentItem() != binding.viewPagerJob.getAdapter().getItemCount() - 1) {
+            binding.viewPagerJob.setCurrentItem(binding.viewPagerJob.getCurrentItem() + 1);
+            if (binding.viewPagerJob.getCurrentItem() == binding.viewPagerJob.getAdapter().getItemCount() - 1){
+                //lastSlide
+                Toast.makeText(this, "last slide", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "last not", Toast.LENGTH_SHORT).show();
+            }
         }
-        else
-        {
-            Toast.makeText(this, "SUBMIT", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     public void back(View view) {
-        if(binding.viewPagerJob.getCurrentItem()!=0) {
+        if (binding.viewPagerJob.getCurrentItem() != 0) {
             binding.viewPagerJob.setCurrentItem(binding.viewPagerJob.getCurrentItem() - 1);
-            if(binding.viewPagerJob.getCurrentItem()==0)
-                binding.back.setVisibility(View.GONE);
-            else{
+            if (binding.viewPagerJob.getCurrentItem() == 0)
+                binding.back.setVisibility(View.INVISIBLE);
+            else {
                 binding.back.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    public void calender(View view) {
+        Toast.makeText(this, "AOPFGLAWOG", Toast.LENGTH_SHORT).show();
+        materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+
     }
 }

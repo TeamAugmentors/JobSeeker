@@ -15,16 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker">
         <activity android:name=".app.homePage.AppliedPost"
-            android:parentActivityName=".app.homePage.HomePage"/>
+            android:parentActivityName=".app.homePage.HomePage"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".app.homePage.CreatedPost"
-            android:parentActivityName=".app.homePage.HomePage"/>
+            android:parentActivityName=".app.homePage.HomePage"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity
             android:name=".app.homePage.CreateJob"
-            android:parentActivityName=".app.homePage.HomePage" />
+            android:parentActivityName=".app.homePage.HomePage"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.Date"
+            />
         <activity
             android:name=".app.homePage.CreateProfile"
             android:parentActivityName=".app.homePage.HomePage"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            />
 
         <activity
             android:name=".app.homePage.JobBoard"

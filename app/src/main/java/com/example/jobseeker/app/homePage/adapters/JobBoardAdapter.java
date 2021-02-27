@@ -47,8 +47,10 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         OnJobBoardListener onJobBoardListener;
 
         public ViewHolder(ItemJobBoardBinding b, Context context, OnJobBoardListener onJobBoardListener) {
+
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
+
             super(b.getRoot());
             binding = b;
             this.context = context;

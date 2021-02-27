@@ -154,7 +154,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     @Override
     public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
 
-        Dialog dialog = new Dialog(this, R.style.PauseDialog);
+        Dialog dialog = new Dialog(this, R.style.Dialog);
         dialog.setContentView(R.layout.dialog_layout);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();

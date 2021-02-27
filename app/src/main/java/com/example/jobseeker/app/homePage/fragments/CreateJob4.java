@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.startScreen.fragments.createJobFragment;
+package com.example.jobseeker.app.homePage.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

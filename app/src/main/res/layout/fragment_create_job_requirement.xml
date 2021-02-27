@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_50sdp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Budget &amp;\nTime Frame"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_30sdp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:background="@color/job_seeker_logo_green" />
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/jobDescriptionLayout"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:hint="Budget"
+            app:endIconDrawable="@drawable/ic_taka"
+            android:textColorHint="@color/job_seeker_green_hint"
+            app:endIconMode="none"
+            app:errorEnabled="false"
+            app:endIconTint="@color/job_seeker_logo_green"
+            app:hintTextColor="@color/job_seeker_logo_green">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:textColor="@color/job_seeker_logo_green"
+                android:inputType="number"
+                android:textSize="@dimen/_14sdp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:fontFamily="@font/roboto_light_italic"
+            android:text="This is the total budget for your project"
+            android:textAlignment="textStart"
+            android:textColor="@color/job_seeker_logo_green" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/datePicker"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:hint="Number of Days"
+            app:endIconDrawable="@drawable/ic_taka"
+            android:textColorHint="@color/job_seeker_green_hint"
+            app:endIconMode="none"
+            app:errorEnabled="false"
+            app:endIconTint="@color/job_seeker_logo_green"
+            app:hintTextColor="@color/job_seeker_logo_green">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:onClick="calender"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:textColor="@color/job_seeker_logo_green"
+                android:inputType="number"
+                android:textSize="@dimen/_14sdp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:fontFamily="@font/roboto_light_italic"
+            android:text="This is the minimum number of days required for your project"
+            android:textAlignment="textStart"
+            android:textColor="@color/job_seeker_logo_green" />
+
+
+    </LinearLayout>
+
+</ScrollView>

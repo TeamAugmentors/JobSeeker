@@ -9,6 +9,7 @@
         <!-- Status bar color. -->
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/job_seeker_logo_green</item>
+
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
@@ -30,16 +31,45 @@
         <item name="boxStrokeColor">@color/input_etext_outline_color</item>
     </style>
 
-    <style name="PauseDialog" parent="Theme.MaterialComponents.Dialog">
-        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+    <style name="CreateJobTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/job_input_etext_outline_color</item>
+    </style>
+
+    <style name="Dialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
         <item name="android:colorPrimary">@color/job_seeker_logo_green</item>
     </style>
 
-    <style name="PauseDialogAnimation">
+    <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/spin_in</item>
         <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
 
-    <declare-styleable name="ScrollViewWithMaxHeight">
-    </declare-styleable>
+    <style name="textChipStyle." parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:fontFamily">@font/roboto_light_xml</item>
+    </style>
+
+    <style name="Theme.Date" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="materialCalendarFullscreenTheme">@style/CustomThemeOverlay_MaterialCalendar_Fullscreen</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/job_seeker_logo_green</item>
+        <!-- Secondary brand color. -->
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
+        <!-- Status bar color. -->
+        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/job_seeker_logo_green</item>
+    </style>
+
+    <style name="CustomThemeOverlay_MaterialCalendar_Fullscreen"
+        parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="materialCalendarStyle">@style/Custom_MaterialCalendar.Fullscreen</item>
+    </style>
+
+    <style name="Custom_MaterialCalendar.Fullscreen"
+        parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

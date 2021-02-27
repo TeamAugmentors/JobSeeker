@@ -17,4 +17,6 @@
     <color name="job_seeker_green_hint">#8A0CBC20</color>
     <color name="hint_white">#C6FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="job_black">#92000000</color>
+    <color name="color_transparent">#00FFFFFF</color>
 </resources>
