@@ -13,7 +13,7 @@
         android:id="@+id/profile_Image"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_90sdp"
         android:background="@color/white"
         android:src="@drawable/upload_pic"
         />
@@ -88,33 +88,7 @@
             android:textColor="@color/job_seeker_logo_green" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextFieldBkashNo"
-        style="@style/LoginTextInputLayoutStyle"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25sdp"
-        android:hint="Bkash Number"
-        android:textColorHint="@color/job_seeker_green_hint"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:endIconTint="#FF0000"
-        app:hintTextColor="@color/job_seeker_logo_green"
-        >
 
-        <com.google.android.material.textfield.TextInputEditText
-
-            android:id="@+id/text"
-            android:fontFamily="@font/roboto_light"
-            android:layout_width="match_parent"
-            android:inputType="number"
-
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:layout_height="wrap_content"
-            android:textColor="@color/job_seeker_logo_green" />
-    </com.google.android.material.textfield.TextInputLayout>
 
 
 

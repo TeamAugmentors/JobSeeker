@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -67,19 +68,17 @@ public class CreateProfile extends AppCompatActivity {
         binding = ActivityCreateProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
+        ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.black));
         new Handler().postDelayed(() -> {
             fetchData();
             errorTextControl();
-            binding.viewPagerCreateProfile.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                @Override
-                public void onPageSelected(int position) {
-                    Toast.makeText(CreateProfile.this, "Hello", Toast.LENGTH_SHORT).show();
-                    if (check()) {
-                        binding.viewPagerCreateProfile.setCurrentItem(position - 1);
-                    }
-                }
-            });
         }, 1000);
+        binding.viewPagerCreateProfile.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+               manageText(binding.viewPagerCreateProfile.getCurrentItem());
+            }
+        });
     }
 
 
@@ -228,7 +227,7 @@ public class CreateProfile extends AppCompatActivity {
             ((TextView) findViewById(R.id.imageUpload)).setTextColor(getColor(R.color.red));
             isFieldEmpty = true;
         }
-
+        Log.d("checkPage1: ", String.valueOf(isFieldEmpty));
         return isFieldEmpty;
     }
 
@@ -281,8 +280,52 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     public void nextPage(View view) {
-        if (!check() && binding.viewPagerCreateProfile.getCurrentItem() != binding.viewPagerCreateProfile.getAdapter().getItemCount() - 1) {
-            binding.viewPagerCreateProfile.setCurrentItem(binding.viewPagerCreateProfile.getCurrentItem() + 1);
+        if (binding.viewPagerCreateProfile.getCurrentItem() != binding.viewPagerCreateProfile.getAdapter().getItemCount() - 1) {
+                binding.viewPagerCreateProfile.setCurrentItem(binding.viewPagerCreateProfile.getCurrentItem() + 1);
+                manageText(binding.viewPagerCreateProfile.getCurrentItem());
         }
     }
+
+    public void pageOne(View view) {
+        binding.viewPagerCreateProfile.setCurrentItem(0);
+        manageText(0);
+
+    }
+    public void pageTwo(View view) {
+        binding.viewPagerCreateProfile.setCurrentItem(1);
+        manageText(1);
+
+    }
+    public void pageThree(View view) {
+        binding.viewPagerCreateProfile.setCurrentItem(2);
+        manageText(2);
+    }
+
+    public void manageText(int currPage){
+        if(currPage == 0){
+            ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.black));
+            ((TextView)findViewById(R.id.skillSets)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.payment)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.yourInfo)).setTextSize(20);
+            ((TextView)findViewById(R.id.skillSets)).setTextSize(18);
+            ((TextView)findViewById(R.id.payment)).setTextSize(18);
+        }
+        else if(currPage == 1){
+            ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.skillSets)).setTextColor(getResources().getColor(R.color.black));
+            ((TextView)findViewById(R.id.payment)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.yourInfo)).setTextSize(18);
+            ((TextView)findViewById(R.id.skillSets)).setTextSize(20);
+            ((TextView)findViewById(R.id.payment)).setTextSize(18);
+        }
+        else if(currPage == 2){
+            ((TextView)findViewById(R.id.yourInfo)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.skillSets)).setTextColor(getResources().getColor(R.color.hint_black));
+            ((TextView)findViewById(R.id.payment)).setTextColor(getResources().getColor(R.color.black));
+            ((TextView)findViewById(R.id.yourInfo)).setTextSize(18);
+            ((TextView)findViewById(R.id.skillSets)).setTextSize(18);
+            ((TextView)findViewById(R.id.payment)).setTextSize(20);
+        }
+    }
+
 }
