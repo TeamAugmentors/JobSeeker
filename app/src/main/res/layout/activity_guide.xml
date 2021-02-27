@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:dampingRatio="0.5"
-        app:dotsColor="@color/white"
+        app:dotsColor="@color/job_seeker_green_hint"
         app:dotsCornerRadius="2dp"
         app:dotsSize="16dp"
         app:dotsSpacing="6dp"

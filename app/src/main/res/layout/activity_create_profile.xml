@@ -1,140 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    tools:context=".app.homePage.CreateProfile">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_create_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
+    </androidx.viewpager2.widget.ViewPager2>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         android:background="@color/job_seeker_logo_green"
-        />
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/profile_Image"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@color/white"
-        android:src="@drawable/upload_pic"
-        />
-
-    <at.markushi.ui.CircleButton
-        android:id="@+id/uniBtn"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:src="@drawable/ic_plus"
-        android:elevation="@dimen/_5sdp"
-        app:cb_color="@color/job_seeker_logo_green"
-        android:layout_gravity="center"
-        app:cb_pressedRingWidth="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_minus40sdp"
-        android:onClick="uploadImage"
-        />
-
-    <TextView
-        android:id="@+id/imageUpload"
+    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+        android:id="@+id/dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:onClick="uploadImage"
-        android:textColor="@color/hint_black"
-        android:textAlignment="center"
-        android:fontFamily="@font/roboto_light"
-        android:lineSpacingExtra="@dimen/_3sdp"
-        android:text="Upload a professional\nProfile Picture" />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextFieldFirstName"
-        style="@style/LoginTextInputLayoutStyle"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25sdp"
-        android:hint="First Name"
-        app:errorEnabled="true"
-        app:endIconMode="clear_text"
-        android:textColorHint="@color/job_seeker_green_hint"
-        app:endIconTint="#FF0000"
-        app:hintTextColor="@color/job_seeker_logo_green">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_light"
-            android:singleLine="true"
-            android:textColor="@color/job_seeker_logo_green" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextFieldLastName"
-        style="@style/LoginTextInputLayoutStyle"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25sdp"
-        android:hint="Last Name"
-        android:textColorHint="@color/job_seeker_green_hint"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:endIconTint="#FF0000"
-        app:hintTextColor="@color/job_seeker_logo_green">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:fontFamily="@font/roboto_light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textColor="@color/job_seeker_logo_green" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextFieldBkashNo"
-        style="@style/LoginTextInputLayoutStyle"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25sdp"
-        android:hint="Bkash Number"
-        android:textColorHint="@color/job_seeker_green_hint"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:endIconTint="#FF0000"
-        app:hintTextColor="@color/job_seeker_logo_green"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-
-            android:id="@+id/text"
-            android:fontFamily="@font/roboto_light"
-            android:layout_width="match_parent"
-            android:inputType="number"
-
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:layout_height="wrap_content"
-            android:textColor="@color/job_seeker_logo_green" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-
+        app:dampingRatio="0.5"
+        app:dotsColor="@color/job_seeker_logo_green"
+        app:dotsCornerRadius="2dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="6dp"
+        app:dotsStrokeColor="@color/black"
+        app:dotsStrokeWidth="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_pager_create_profile"
+        app:layout_constraintEnd_toEndOf="@+id/view_pager_create_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87"
+        app:stiffness="300" />
 
 
     <Button
+        android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:backgroundTint="@color/job_seeker_green_hint"
-        android:onClick="submit"
-        android:text="SUBMIT" />
+        android:background="@null"
+        android:text="@string/next"
+        android:onClick="next"
+        app:layout_constraintBottom_toBottomOf="@+id/view_pager_create_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dots_indicator"
+        app:layout_constraintVertical_bias="0.63" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

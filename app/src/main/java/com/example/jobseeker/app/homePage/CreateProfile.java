@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.startScreen.adapters.CreateProfileViewPager2Adapter;
+import com.example.jobseeker.app.startScreen.adapters.WelcomeScreenViewPager2Adapter;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
 import com.example.jobseeker.utils.HideKeyboard;
 import com.example.jobseeker.utils.ToolbarHelper;
@@ -43,14 +47,18 @@ import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 
+import at.markushi.ui.CircleButton;
+
 public class CreateProfile extends AppCompatActivity {
 
     ActivityCreateProfileBinding binding;
     private static final int PICK_IMAGE = 1;
     private boolean isImageSelected = false;
+    CreateProfileViewPager2Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         binding = ActivityCreateProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -60,7 +68,7 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     private void errorTextControl() {
-        binding.outlinedTextFieldFirstName.getEditText().addTextChangedListener(new TextWatcher() {
+        ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -68,10 +76,10 @@ public class CreateProfile extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()) {
-                    binding.outlinedTextFieldFirstName.setError("*This Field is Required");
+                if (((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).getEditText().getText().toString().isEmpty()) {
+                    ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).setError("*This Field is Required");
                 } else {
-                    binding.outlinedTextFieldFirstName.setError("");
+                    ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).setError("");
                 }
             }
 
@@ -80,7 +88,7 @@ public class CreateProfile extends AppCompatActivity {
 
             }
         });
-        binding.outlinedTextFieldLastName.getEditText().addTextChangedListener(new TextWatcher() {
+        ((TextInputLayout)findViewById(R.id.outlinedTextField)).getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -88,10 +96,10 @@ public class CreateProfile extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()) {
-                    binding.outlinedTextFieldLastName.setError("*This Field is Required");
+                if (((TextInputLayout)findViewById(R.id.outlinedTextField)).getEditText().getText().toString().isEmpty()) {
+                    ((TextInputLayout)findViewById(R.id.outlinedTextField)).setError("*This Field is Required");
                 } else {
-                    binding.outlinedTextFieldLastName.setError("");
+                    ((TextInputLayout)findViewById(R.id.outlinedTextField)).setError("");
                 }
             }
 
@@ -100,7 +108,7 @@ public class CreateProfile extends AppCompatActivity {
 
             }
         });
-        binding.outlinedTextFieldBkashNo.getEditText().addTextChangedListener(new TextWatcher() {
+        ((TextInputLayout)findViewById(R.id.outlinedTextFieldBkashNo)).getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -108,12 +116,10 @@ public class CreateProfile extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()) {
-                    Log.d("Here", "I am here");
-                    binding.outlinedTextFieldBkashNo.setError("*This Field is Required");
+                if (((TextInputLayout)findViewById(R.id.outlinedTextFieldBkashNo)).getEditText().getText().toString().isEmpty()) {
+                    ((TextInputLayout)findViewById(R.id.outlinedTextFieldBkashNo)).setError("*This Field is Required");
                 } else {
-                    Log.d("Here1", "I am here");
-                    binding.outlinedTextFieldBkashNo.setError("");
+                    ((TextInputLayout)findViewById(R.id.outlinedTextFieldBkashNo)).setError("");
                 }
             }
 
@@ -125,35 +131,30 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     private void fetchData() {
-
+        ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName))
+         = ((TextInputLayout)findViewById(R.id.outlinedTextField))
+        bkashNo = ((TextInputLayout)findViewById(R.id.outlinedTextFieldBkashNo))
+        profileImage = findViewById(R.id.profile_Image);
+        imageUpload = findViewById(R.id.imageUpload);
         if (ParseUser.getCurrentUser().get("firstName") != null) {
             Toast.makeText(this, "Fetching", Toast.LENGTH_SHORT).show();
             //Profile was created before
-            binding.outlinedTextFieldFirstName.getEditText().setText(ParseUser.getCurrentUser().getString("firstName"));
-            binding.outlinedTextFieldLastName.getEditText().setText(ParseUser.getCurrentUser().getString("lastName"));
-            binding.outlinedTextFieldBkashNo.getEditText().setText(ParseUser.getCurrentUser().getString("bkashNo"));
+            ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).getEditText().setText(ParseUser.getCurrentUser().getString("firstName"));
+            .getEditText().setText(ParseUser.getCurrentUser().getString(""));
+            bkashNo.getEditText().setText(ParseUser.getCurrentUser().getString("bkashNo"));
 
-            binding.outlinedTextFieldFirstName.setEndIconVisible(false);
-            binding.outlinedTextFieldLastName.setEndIconVisible(false);
-            binding.outlinedTextFieldBkashNo.setEndIconVisible(false);
+            ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).setEndIconVisible(false);
+            .setEndIconVisible(false);
+            bkashNo.setEndIconVisible(false);
 
-//            binding.outlinedTextFieldBkashNo.setOnKeyListener(new View.OnKeyListener() {
-//                @Override
-//                public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                    if (event.getAction() == KeyEvent.KEYCODE_ENTER)
-//                        Toast.makeText(CreateProfile.this, "odkgoksego", Toast.LENGTH_SHORT).show();
-//                    return false;
-//                }
-//            });
-//
-            binding.text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            bkashNo.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
                         getCurrentFocus().clearFocus();
-                        HideKeyboard.hide((InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE), binding.getRoot());
+                        HideKeyboard.hide((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE), binding.getRoot());
                         return true;
-                    }else
+                    } else
                         return false;
                 }
             });
@@ -167,7 +168,7 @@ public class CreateProfile extends AppCompatActivity {
                             .load(data)
                             .override(500, 500)
                             .transform(new CircleCrop())
-                            .into(binding.profileImage);
+                            .into(profileImage);
                     isImageSelected = true;
 
                 } else {
@@ -183,32 +184,35 @@ public class CreateProfile extends AppCompatActivity {
 
     private void init() {
         ToolbarHelper.create(binding.toolbar, this, "Create Profile");
+        adapter = new CreateProfileViewPager2Adapter(this);
+        binding.viewPagerCreateProfile.setAdapter(adapter);
+        binding.viewPagerCreateProfile.setOffscreenPageLimit(2);
     }
 
 
     public boolean check() {
         boolean isFieldEmpty = false;
-        if (binding.outlinedTextFieldFirstName.getEditText().getText().toString().isEmpty()) {
-            binding.outlinedTextFieldFirstName.setError("*This Field is Required");
+        if (((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).getEditText().getText().toString().isEmpty()) {
+            ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).setError("*This Field is Required");
             isFieldEmpty = true;
         } else {
-            binding.outlinedTextFieldFirstName.setError("");
+            ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).setError("");
         }
-        if (binding.outlinedTextFieldLastName.getEditText().getText().toString().isEmpty()) {
-            binding.outlinedTextFieldLastName.setError("*This Field is Required");
+        if (.getEditText().getText().toString().isEmpty()) {
+            .setError("*This Field is Required");
             isFieldEmpty = true;
         } else {
-            binding.outlinedTextFieldLastName.setError("");
+            .setError("");
         }
-        if (binding.outlinedTextFieldBkashNo.getEditText().getText().toString().isEmpty()) {
-            binding.outlinedTextFieldBkashNo.setError("*This Field is Required");
+        if (bkashNo.getEditText().getText().toString().isEmpty()) {
+            bkashNo.setError("*This Field is Required");
             isFieldEmpty = true;
         } else {
-            binding.outlinedTextFieldBkashNo.setError("");
+            bkashNo.setError("");
         }
         if (!isImageSelected) {
-            binding.imageUpload.setText("Please! Upload a professional" + "\n" + "Profile Picture");
-            binding.imageUpload.setTextColor(getColor(R.color.red));
+            imageUpload.setText("Please! Upload a professional" + "\n" + "Profile Picture");
+            imageUpload.setTextColor(getColor(R.color.red));
             isFieldEmpty = true;
         }
 
@@ -230,25 +234,25 @@ public class CreateProfile extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             isImageSelected = true;
-            binding.imageUpload.setText(null);
+            imageUpload.setText(null);
             Glide.with(this)
                     .asBitmap()
                     .load(data.getData())
                     .override(500, 500)
                     .transform(new CircleCrop())
-                    .into(binding.profileImage);
+                    .into(profileImage);
         }
     }
 
     public void submit(View view) {
         if (!check()) {
-            ParseUser.getCurrentUser().put("firstName", binding.outlinedTextFieldFirstName.getEditText().getText().toString());
-            ParseUser.getCurrentUser().put("lastName", binding.outlinedTextFieldLastName.getEditText().getText().toString());
+            ParseUser.getCurrentUser().put("firstName", ((TextInputLayout)findViewById(R.id.outlinedTextFieldFirstName)).getEditText().getText().toString());
+            ParseUser.getCurrentUser().put("", .getEditText().getText().toString());
 
-            ParseUser.getCurrentUser().put("bkashNo", binding.outlinedTextFieldBkashNo.getEditText().getText().toString());
+            ParseUser.getCurrentUser().put("bkashNo", bkashNo.getEditText().getText().toString());
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ((BitmapDrawable) binding.profileImage.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            ((BitmapDrawable) profileImage.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byte[] data = byteArrayOutputStream.toByteArray();
             ParseFile file = new ParseFile("proPic.jpeg", data);
 
