@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    tools:context=".app.homePage.CreateProfile">
+    android:gravity="center_horizontal">
 
 
     <ImageView
         android:id="@+id/profile_Image"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_60sdp"
         android:background="@color/white"
         android:src="@drawable/upload_pic"
         />
@@ -117,17 +116,6 @@
             android:textColor="@color/job_seeker_logo_green" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:backgroundTint="@color/job_seeker_green_hint"
-        android:onClick="submit"
-        android:text="SUBMIT" />
 
 
 </LinearLayout>

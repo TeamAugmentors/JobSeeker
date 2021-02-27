@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.startScreen.fragments.createProfileFragments;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.R;
 
-public class CreateProfile1 extends Fragment {
+public class CreateProfile2 extends Fragment {
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_create_profile1,container,false);
+        return inflater.inflate(R.layout.fragment_create_profile2,container,false);
     }
-
 }
