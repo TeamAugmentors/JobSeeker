@@ -28,12 +28,5 @@ public class FragmentJobRequirement extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.datePickerLayout.setOnKeyListener(null);
-
-        binding.datePickerLayout.getEditText().setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
-                ((CreateJob)getActivity()).showCalender(null);
-            }
-        });
     }
 }

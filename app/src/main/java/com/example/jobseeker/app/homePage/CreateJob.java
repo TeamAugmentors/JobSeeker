@@ -1,10 +1,12 @@
 package com.example.jobseeker.app.homePage;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +18,17 @@ import com.example.jobseeker.app.homePage.adapters.CreateJobViewPagerAdapter;
 import com.example.jobseeker.databinding.ActivityCreateJobBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class CreateJob extends AppCompatActivity {
 
     ActivityCreateJobBinding binding;
     CreateJobViewPagerAdapter adapter;
     MaterialDatePicker materialDatePicker;
+    DatePickerDialog picker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,7 @@ public class CreateJob extends AppCompatActivity {
         setContentView(binding.getRoot());
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
+
 
         init(upArrow);
     }
@@ -62,8 +70,9 @@ public class CreateJob extends AppCompatActivity {
             }
         });
 
-        MaterialDatePicker.Builder materialDatePickerBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        MaterialDatePicker.Builder materialDatePickerBuilder = MaterialDatePicker.Builder.datePicker();
         materialDatePicker = materialDatePickerBuilder.build();
+
 
     }
 
@@ -76,9 +85,9 @@ public class CreateJob extends AppCompatActivity {
             binding.viewPagerJob.setCurrentItem(binding.viewPagerJob.getCurrentItem() + 1);
             if (binding.viewPagerJob.getCurrentItem() == binding.viewPagerJob.getAdapter().getItemCount() - 1) {
                 //lastSlide
-                Toast.makeText(this, "last slide", Toast.LENGTH_SHORT).show();
+
             } else {
-                Toast.makeText(this, "last not", Toast.LENGTH_SHORT).show();
+                
             }
         }
 
@@ -95,17 +104,4 @@ public class CreateJob extends AppCompatActivity {
         }
     }
 
-    public void showCalender(View view) {
-        materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
-
-        materialDatePicker.addOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if (getCurrentFocus() != null)
-                    getCurrentFocus().clearFocus();
-            }
-        });
-
-        //Get the date range, put it into days as no. of days,
-    }
 }
