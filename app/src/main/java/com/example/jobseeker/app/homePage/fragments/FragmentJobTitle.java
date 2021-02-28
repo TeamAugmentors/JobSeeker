@@ -20,9 +20,7 @@ public class FragmentJobTitle extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentCreateJobTitleBinding.inflate(inflater, container, false);
-
-        return binding.getRoot();
+        return (binding = FragmentCreateJobTitleBinding.inflate(inflater, container, false)).getRoot();
     }
 
     @Override
@@ -37,7 +35,10 @@ public class FragmentJobTitle extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if(binding.jobTitleLayout.getEditText().getText().toString().length()!=0){
+                    binding.title.setText("A clear, concrete description is welcomed");
+                    binding.title.setTextColor(ContextCompat.getColor(getContext(), R.color.job_seeker_logo_green));
+                }
             }
 
             @Override
@@ -66,7 +67,10 @@ public class FragmentJobTitle extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if(binding.jobDescriptionLayout.getEditText().getText().toString().length()!=0){
+                    binding.description.setText("Always remember, the best job titles are\\nunder 30 letters!");
+                    binding.description.setTextColor(ContextCompat.getColor(getContext(), R.color.job_seeker_logo_green));
+                }
             }
 
             @Override
@@ -93,4 +97,9 @@ public class FragmentJobTitle extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    public FragmentCreateJobTitleBinding getBinding() {
+        return binding;
+    }
+
 }

@@ -170,6 +170,7 @@
         android:paddingHorizontal="@dimen/_25sdp"
         android:paddingVertical="@dimen/_6sdp"
         android:text="Create Job"
+        android:onClick="createJob"
         android:textAllCaps="false"
         android:textColor="@color/job_seeker_logo_green"
         android:textSize="@dimen/_16sdp"

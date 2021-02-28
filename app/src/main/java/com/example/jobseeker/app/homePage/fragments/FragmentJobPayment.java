@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.homePage.CreateJob;
 import com.example.jobseeker.databinding.FragmentCreateJobPaymentBinding;
 
 import java.io.File;
@@ -34,6 +35,7 @@ public class FragmentJobPayment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Files
         String fileTypes[] = {"image/*","application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
         binding.addFile1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +64,7 @@ public class FragmentJobPayment extends Fragment {
                 startActivityForResult(myFileIntent, 3);
             }
         });
+
     }
 
     @Override
@@ -145,4 +148,5 @@ public class FragmentJobPayment extends Fragment {
                 break;
         }
     }
+
 }

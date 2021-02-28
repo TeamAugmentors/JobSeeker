@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.CreateJob;
 import com.example.jobseeker.databinding.FragmentCreateJobBudgetBinding;
+import com.example.jobseeker.databinding.FragmentCreateJobPaymentBinding;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -114,6 +115,7 @@ public class FragmentJobBudget extends Fragment {
 
     public void setNumberOfDays() {
         double diff = printDifference(new Date().getTime(), materialDatePicker.getSelection().toString());
+        binding.dateTextView.setTextSize(30);
         if (diff <= 0d) {
             //12 hours
             binding.dateTextView.setText("12 Hours");
@@ -143,5 +145,14 @@ public class FragmentJobBudget extends Fragment {
         double daysInMilli = hoursInMilli * 24;
 
         return different / daysInMilli;
+    }
+
+    @Override
+    public void setTargetFragment(@Nullable Fragment fragment, int requestCode) {
+        super.setTargetFragment(fragment, requestCode);
+    }
+
+    public FragmentCreateJobBudgetBinding getBinding() {
+        return binding;
     }
 }
