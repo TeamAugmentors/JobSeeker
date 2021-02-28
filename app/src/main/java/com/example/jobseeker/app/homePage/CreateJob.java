@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 
 import java.util.Calendar;
 import java.util.Date;
+
+import static android.view.View.GONE;
 
 public class CreateJob extends AppCompatActivity {
 
@@ -111,24 +114,32 @@ public class CreateJob extends AppCompatActivity {
     }
 
     public void createJob(View v){
-        if(adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString().length()==0 || adapter.getFragmentJobTitle().getBinding().jobTitleLayout.getEditText().getText().toString().length()==0){
+        if(adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString().length()<50 || adapter.getFragmentJobTitle().getBinding().jobTitleLayout.getEditText().getText().toString().length()==0){
             binding.viewPagerJob.setCurrentItem(0);
 
             if(adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString().length()==0){
                 adapter.getFragmentJobTitle().getBinding().description.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
                 adapter.getFragmentJobTitle().getBinding().description.setText("This field is required");
             }
+            else if(adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString().length()<50){
+                adapter.getFragmentJobTitle().getBinding().description.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
+                adapter.getFragmentJobTitle().getBinding().description.setText("Enter minimum 50 characters");
+            }
             if(adapter.getFragmentJobTitle().getBinding().jobTitleLayout.getEditText().getText().toString().length()==0){
                 adapter.getFragmentJobTitle().getBinding().title.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
                 adapter.getFragmentJobTitle().getBinding().title.setText("This field is required");
             }
         }
-        else if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()==0 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length()==0){
+        else if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()<3 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length()==0){
             binding.viewPagerJob.setCurrentItem(1);
 
             if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()==0){
                 adapter.getFragmentJobBudget().getBinding().budgetWarning.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
                 adapter.getFragmentJobBudget().getBinding().budgetWarning.setText("This field is required");
+            }
+            if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().compareTo("500")<0 || adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()<3){
+                adapter.getFragmentJobBudget().getBinding().budgetWarning.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
+                adapter.getFragmentJobBudget().getBinding().budgetWarning.setText("Minimum budget is 500 BDT");
             }
             if(adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length()==0){
                 adapter.getFragmentJobBudget().getBinding().dateTextView.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
@@ -142,5 +153,20 @@ public class CreateJob extends AppCompatActivity {
             startActivity(new Intent(this,HomePage.class));
             finish();
         }
+    }
+
+    public void fileRemove1(View view) {
+        view.setVisibility(GONE);
+        adapter.getFragmentJobPayment().getBinding().file1.setText(".pdf/.doc/.png/.jpeg");
+    }
+
+    public void fileRemove2(View view) {
+        view.setVisibility(GONE);
+        adapter.getFragmentJobPayment().getBinding().file2.setText(".pdf/.doc/.png/.jpeg");
+    }
+
+    public void fileRemove3(View view) {
+        view.setVisibility(GONE);
+        adapter.getFragmentJobPayment().getBinding().file3.setText(".pdf/.doc/.png/.jpeg");
     }
 }

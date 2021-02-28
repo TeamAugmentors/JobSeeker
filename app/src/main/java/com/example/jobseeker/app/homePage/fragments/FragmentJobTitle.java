@@ -36,7 +36,7 @@ public class FragmentJobTitle extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(binding.jobTitleLayout.getEditText().getText().toString().length()!=0){
-                    binding.title.setText("A clear, concrete description is welcomed");
+                    binding.title.setText("Always remember, the best job titles are\nunder 30 letters!");
                     binding.title.setTextColor(ContextCompat.getColor(getContext(), R.color.job_seeker_logo_green));
                 }
             }
@@ -68,7 +68,7 @@ public class FragmentJobTitle extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(binding.jobDescriptionLayout.getEditText().getText().toString().length()!=0){
-                    binding.description.setText("Always remember, the best job titles are\\nunder 30 letters!");
+                    binding.description.setText("A clear, concrete description is welcomed");
                     binding.description.setTextColor(ContextCompat.getColor(getContext(), R.color.job_seeker_logo_green));
                 }
             }

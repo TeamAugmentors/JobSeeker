@@ -40,7 +40,6 @@
 
     <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="match_parent">
@@ -71,15 +70,22 @@
             android:maxLines="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_35sdp"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_120sdp"
             android:text=".pdf/.doc/.png/.jpeg"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_14sdp" />
+        <ImageView
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:id="@+id/cross1"
+            android:src="@drawable/ic_round_clear_24"
+            app:tint="@color/job_seeker_red"
+            android:onClick="fileRemove1"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="match_parent">
@@ -109,15 +115,23 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_marginStart="@dimen/_35sdp"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_120sdp"
             android:text=".pdf/.doc/.png/.jpeg"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_14sdp" />
+        <ImageView
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:id="@+id/cross2"
+            android:src="@drawable/ic_round_clear_24"
+            app:tint="@color/job_seeker_red"
+            android:onClick="fileRemove2"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="match_parent">
@@ -149,10 +163,18 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_marginStart="@dimen/_35sdp"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_120sdp"
             android:text=".pdf/.doc/.png/.jpeg"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_14sdp" />
+        <ImageView
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:id="@+id/cross3"
+            android:src="@drawable/ic_round_clear_24"
+            app:tint="@color/job_seeker_red"
+            android:onClick="fileRemove3"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

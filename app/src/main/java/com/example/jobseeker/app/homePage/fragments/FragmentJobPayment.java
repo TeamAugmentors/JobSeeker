@@ -15,11 +15,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.CreateJob;
+import com.example.jobseeker.databinding.FragmentCreateJobBudgetBinding;
 import com.example.jobseeker.databinding.FragmentCreateJobPaymentBinding;
 
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
+import static android.view.View.GONE;
 
 public class FragmentJobPayment extends Fragment {
     FragmentCreateJobPaymentBinding binding;
@@ -44,6 +46,7 @@ public class FragmentJobPayment extends Fragment {
                 myFileIntent.setType("*/*");
                 myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES,fileTypes);
                 startActivityForResult(myFileIntent, 1);
+
             }
         });
         binding.addFile2.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +76,7 @@ public class FragmentJobPayment extends Fragment {
 
             case 1:
                 if (resultCode == RESULT_OK) {
+                    binding.cross1.setVisibility(View.VISIBLE);
                     Uri uri = data.getData();
                     String uriString = uri.toString();
                     File myFile = new File(uriString);
@@ -98,6 +102,7 @@ public class FragmentJobPayment extends Fragment {
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
+                    binding.cross2.setVisibility(View.VISIBLE);
                     Uri uri = data.getData();
                     String uriString = uri.toString();
                     File myFile = new File(uriString);
@@ -123,6 +128,7 @@ public class FragmentJobPayment extends Fragment {
                 break;
             case 3:
                 if (resultCode == RESULT_OK) {
+                    binding.cross3.setVisibility(View.VISIBLE);
                     Uri uri = data.getData();
                     String uriString = uri.toString();
                     File myFile = new File(uriString);
@@ -148,5 +154,7 @@ public class FragmentJobPayment extends Fragment {
                 break;
         }
     }
-
+    public FragmentCreateJobPaymentBinding getBinding() {
+        return binding;
+    }
 }
