@@ -48,12 +48,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_taka"
+                android:drawableEnd="@drawable/ic_taka_big"
                 android:drawableTint="@color/job_seeker_logo_green"
                 android:fontFamily="@font/roboto_light"
                 android:inputType="number"
                 android:textColor="@color/job_seeker_logo_green"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_17sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,35 +68,48 @@
             android:textAlignment="textStart"
             android:textColor="@color/job_seeker_logo_green" />
 
-        <Button
-            android:id="@+id/date_pick_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:text="Select deadline"
-            app:icon="@drawable/ic_baseline_calender" />
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:orientation="horizontal">
 
-        <!--        <DatePicker-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:theme="@style/Theme.Date"-->
-        <!--            android:headerBackground="@color/job_seeker_logo_green"-->
-        <!--            android:calendarTextColor="@color/job_seeker_logo_green"-->
-        <!--            android:backgroundTint="@color/job_seeker_logo_green"-->
-        <!--            android:background="@color/job_seeker_logo_green"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="@dimen/_10sdp"/>-->
+            <Button
+                android:id="@+id/date_pick_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background_filled"
+                android:fontFamily="@font/roboto_regular"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:text="Select Time"
+                app:icon="@drawable/ic_baseline_calender"
+
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:text="50 Days"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_22sdp"
+                />
 
 
-        <TextView
-            android:id="@+id/date_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/roboto_regular"
-            android:textColor="@color/job_seeker_logo_green"
-            android:textSize="@dimen/_15sdp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

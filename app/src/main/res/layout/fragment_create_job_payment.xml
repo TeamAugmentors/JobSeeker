@@ -48,10 +48,10 @@
         <androidx.appcompat.widget.AppCompatButton
             style="@style/Widget.AppCompat.Button.Borderless"
             android:background="@drawable/button_background_filled"
-            android:drawablePadding="@dimen/_6sdp"
+            android:drawablePadding="@dimen/_10sdp"
             android:drawableStart="@drawable/ic_add_filled"
             android:drawableTint="@color/white"
-            android:fontFamily="@font/roboto_light"
+            android:fontFamily="@font/roboto_regular"
             android:id="@+id/addFile2"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -60,7 +60,6 @@
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_5sdp"
             android:text="Add file"
-            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp" />
 
@@ -85,10 +84,10 @@
         <androidx.appcompat.widget.AppCompatButton
             style="@style/Widget.AppCompat.Button.Borderless"
             android:background="@drawable/button_background_filled"
-            android:drawablePadding="@dimen/_6sdp"
+            android:drawablePadding="@dimen/_10sdp"
             android:drawableStart="@drawable/ic_add_filled"
             android:drawableTint="@color/white"
-            android:fontFamily="@font/roboto_light"
+            android:fontFamily="@font/roboto_regular"
             android:id="@+id/addFile3"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -122,10 +121,10 @@
         <androidx.appcompat.widget.AppCompatButton
             style="@style/Widget.AppCompat.Button.Borderless"
             android:background="@drawable/button_background_filled"
-            android:drawablePadding="@dimen/_6sdp"
+            android:drawablePadding="@dimen/_10sdp"
             android:drawableStart="@drawable/ic_add_filled"
             android:drawableTint="@color/white"
-            android:fontFamily="@font/roboto_light"
+            android:fontFamily="@font/roboto_regular"
             android:id="@+id/addFile1"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

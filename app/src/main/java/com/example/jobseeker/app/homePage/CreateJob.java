@@ -38,31 +38,18 @@ public class CreateJob extends AppCompatActivity {
         binding = ActivityCreateJobBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
-        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
-        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
-        init(upArrow);
-        new Handler().postDelayed(() -> {
-            MaterialDatePicker.Builder materialDatePickerBuilder = MaterialDatePicker.Builder.datePicker();
-            materialDatePickerBuilder.setTitleText("Select A Deadline");
-            final MaterialDatePicker materialDatePicker = materialDatePickerBuilder.build();
-            findViewById(R.id.date_pick_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
-                }
-            });
-            materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-                @Override
-                public void onPositiveButtonClick(Object selection) {
-                    ((TextView)findViewById(R.id.date_text_view)).setText(materialDatePicker.getHeaderText());
-                }
-            });
-        }, 1000);
+
+        init();
+
     }
 
-    private void init(Drawable upArrow) {
+    private void init() {
         ToolbarHelper.create(binding.toolbar, this, "Create Job");
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
+
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         adapter = new CreateJobViewPagerAdapter(this);
         binding.viewPagerJob.setAdapter(adapter);
         binding.viewPagerJob.setOffscreenPageLimit(5);
