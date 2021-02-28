@@ -130,18 +130,14 @@ public class CreateJob extends AppCompatActivity {
                 adapter.getFragmentJobTitle().getBinding().title.setText("This field is required");
             }
         }
-        else if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()<3 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length()==0){
+        else if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()<3 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length()==0 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().compareTo("Please select a date")==0){
             binding.viewPagerJob.setCurrentItem(1);
 
-            if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()==0){
-                adapter.getFragmentJobBudget().getBinding().budgetWarning.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
-                adapter.getFragmentJobBudget().getBinding().budgetWarning.setText("This field is required");
-            }
-            if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().compareTo("500")<0 || adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()<3){
+            if(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().compareTo("500")<0 && adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length()<4){
                 adapter.getFragmentJobBudget().getBinding().budgetWarning.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
                 adapter.getFragmentJobBudget().getBinding().budgetWarning.setText("Minimum budget is 500 BDT");
             }
-            if(adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length()==0){
+            if(adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length()==0 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().compareTo("Please select a date")==0){
                 adapter.getFragmentJobBudget().getBinding().dateTextView.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
                 adapter.getFragmentJobBudget().getBinding().dateTextView.setText("Please select a date");
                 adapter.getFragmentJobBudget().getBinding().dateTextView.setTextSize(17);
@@ -150,7 +146,6 @@ public class CreateJob extends AppCompatActivity {
         else
         {
             Toast.makeText(this, "WHY SO EZ", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,HomePage.class));
             finish();
         }
     }

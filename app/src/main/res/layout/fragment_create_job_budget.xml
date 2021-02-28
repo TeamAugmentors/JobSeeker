@@ -53,7 +53,8 @@
                 android:fontFamily="@font/roboto_light"
                 android:inputType="number"
                 android:textColor="@color/job_seeker_logo_green"
-                android:textSize="@dimen/_17sdp" />
+                android:textSize="@dimen/_17sdp"
+                android:imeOptions="actionDone"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
