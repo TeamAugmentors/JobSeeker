@@ -34,11 +34,13 @@ public class FragmentJobPayment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        String fileTypes[] = {"image/*","application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
         binding.addFile1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 myFileIntent.setType("*/*");
+                myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES,fileTypes);
                 startActivityForResult(myFileIntent, 1);
             }
         });
@@ -47,6 +49,7 @@ public class FragmentJobPayment extends Fragment {
             public void onClick(View v) {
                 myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 myFileIntent.setType("*/*");
+                myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES,fileTypes);
                 startActivityForResult(myFileIntent, 2);
             }
         });
@@ -55,6 +58,7 @@ public class FragmentJobPayment extends Fragment {
             public void onClick(View v) {
                 myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 myFileIntent.setType("*/*");
+                myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES,fileTypes);
                 startActivityForResult(myFileIntent, 3);
             }
         });
