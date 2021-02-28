@@ -84,7 +84,7 @@ public class FragmentJobBudget extends Fragment {
 
                 if (budget.length() >= 5) {
                     if (budget.compareTo("15000") > 0 || budget.length() > 5) {
-                        binding.budgetWarning.setText("Please select a budget lower than 15K");
+                        binding.budgetWarning.setText("Please select a budget lower than 15,000 BDT");
                         binding.budgetLayout.setBoxStrokeColor(getContext().getColor(R.color.job_seeker_red));
                         binding.budgetLayout.getEditText().setCompoundDrawableTintList(ColorStateList.valueOf(getContext().getColor(R.color.job_seeker_red)));
                         binding.budgetLayout.setHintTextColor(getContext().getColorStateList(R.color.job_seeker_red));
@@ -96,6 +96,12 @@ public class FragmentJobBudget extends Fragment {
                         binding.budgetLayout.setHintTextColor(getContext().getColorStateList(R.color.job_seeker_logo_green));
                         binding.budgetWarning.setTextColor(getContext().getColor(R.color.job_seeker_logo_green));
                     }
+                } else {
+                    binding.budgetWarning.setText("This is the total budget for your project");
+                    binding.budgetLayout.setBoxStrokeColor(getContext().getColor(R.color.job_seeker_logo_green));
+                    binding.budgetLayout.getEditText().setCompoundDrawableTintList(ColorStateList.valueOf(getContext().getColor(R.color.job_seeker_logo_green)));
+                    binding.budgetLayout.setHintTextColor(getContext().getColorStateList(R.color.job_seeker_logo_green));
+                    binding.budgetWarning.setTextColor(getContext().getColor(R.color.job_seeker_logo_green));
                 }
             }
 
