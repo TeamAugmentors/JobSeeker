@@ -1,6 +1,9 @@
 package com.example.jobseeker.app.homePage.fragments;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Date;
 
@@ -50,19 +54,78 @@ public class FragmentJobBudget extends Fragment {
         binding.datePickButton.setOnClickListener(v -> materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER"));
 
         materialDatePicker.addOnPositiveButtonClickListener(selection -> setNumberOfDays());
+
+        //budget
+        binding.budgetLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String budget = binding.budgetLayout.getEditText().getText().toString();
+
+                char[] budgetArray = budget.toCharArray();
+
+                StringBuilder result = new StringBuilder();
+                boolean isLeading = false;
+
+                for (char letter : budgetArray) {
+                    if (letter != '0')
+                        isLeading = true;
+                    if (isLeading){
+                        result.append(letter);
+                    }
+                }
+
+                budget=result.toString();
+
+                if (budget.length() >= 5) {
+                    if (budget.compareTo("15000") > 0 || budget.length() > 5) {
+                        binding.budgetWarning.setText("Please select a budget lower than 15K");
+                        binding.budgetLayout.setBoxStrokeColor(getContext().getColor(R.color.job_seeker_red));
+                        binding.budgetLayout.getEditText().setCompoundDrawableTintList(ColorStateList.valueOf(getContext().getColor(R.color.job_seeker_red)));
+                        binding.budgetLayout.setHintTextColor(getContext().getColorStateList(R.color.job_seeker_red));
+                        binding.budgetWarning.setTextColor(getContext().getColor(R.color.job_seeker_red));
+                    } else {
+                        binding.budgetWarning.setText("This is the total budget for your project");
+                        binding.budgetLayout.setBoxStrokeColor(getContext().getColor(R.color.job_seeker_logo_green));
+                        binding.budgetLayout.getEditText().setCompoundDrawableTintList(ColorStateList.valueOf(getContext().getColor(R.color.job_seeker_logo_green)));
+                        binding.budgetLayout.setHintTextColor(getContext().getColorStateList(R.color.job_seeker_logo_green));
+                        binding.budgetWarning.setTextColor(getContext().getColor(R.color.job_seeker_logo_green));
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
-    public void setNumberOfDays(){
+    public void setNumberOfDays() {
         double diff = printDifference(new Date().getTime(), materialDatePicker.getSelection().toString());
-        if (diff <= 0d){
+        if (diff <= 0d) {
             //12 hours
             binding.dateTextView.setText("12 Hours");
-        }else{
+            binding.dateTextView.setTextColor(getContext().getColor(R.color.job_seeker_logo_green));
+            binding.dateWarning.setTextColor(getContext().getColor(R.color.job_seeker_logo_green));
+        } else if ((int) Math.ceil(diff) > 120) {
             binding.dateTextView.setText((int) Math.ceil(diff) + " Days");
+            binding.dateTextView.setTextColor(getContext().getColor(R.color.job_seeker_red));
+            binding.dateWarning.setTextColor(getContext().getColor(R.color.job_seeker_red));
+            binding.dateWarning.setText("Please pick a shorter duration");
+        } else {
+            binding.dateTextView.setText((int) Math.ceil(diff) + " Days");
+            binding.dateTextView.setTextColor(getContext().getColor(R.color.job_seeker_logo_green));
+            binding.dateWarning.setTextColor(getContext().getColor(R.color.job_seeker_logo_green));
         }
     }
 
-    public static double printDifference(Long startDate, String endDate){
+    public static double printDifference(Long startDate, String endDate) {
 
         Long endDateLong = Long.parseLong(endDate);
         //milliseconds
