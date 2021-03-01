@@ -30,8 +30,10 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
+import com.ncorti.slidetoact.SlideToActView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,12 +88,12 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 binding.search.setAlpha((float) (1.0 - (verticalOffset / x)));
             }
 
-            if (searchItem != null){
-                if (verticalOffset/x < 1){
+            if (searchItem != null) {
+                if (verticalOffset / x < 1) {
                     searchItem.setVisible(false);
                     searchView.setVisibility(View.GONE);
                     getSupportActionBar().collapseActionView();
-                } else{
+                } else {
                     searchItem.setVisible(true);
                     searchView.setVisibility(View.VISIBLE);
 
@@ -142,8 +144,8 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     private void filter(String text) {
         ArrayList<ParseObject> filteredList = new ArrayList<>();
 
-        for(ParseObject item : parseObjects){
-            if (item.getString("title").toLowerCase().contains(text.toLowerCase())){
+        for (ParseObject item : parseObjects) {
+            if (item.getString("title").toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
@@ -183,15 +185,27 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         LinearLayout.LayoutParams params;
-        if(charCount<=200){
+        if (charCount <= 200) {
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        else{
+        } else {
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
         }
         scrollView.setLayoutParams(params);
 
+        ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setOnSlideCompleteListener(slideToActView -> {
+            parseObjects.get(position).add("applied", ParseUser.getCurrentUser());
 
+            parseObjects.get(position).saveInBackground(e -> {
+                if (e == null) {
+                    Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    slideToActView.resetSlider();
+                }
+            });
+
+        });
     }
 
     @Override

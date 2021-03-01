@@ -1,18 +1,15 @@
 package com.example.jobseeker.app.homePage;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,7 +105,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(new Intent(this, CreateProfile.class));
         }
         else if(item.getItemId()==R.id.nav_created_jobs){
-            startActivity(new Intent(this, CreatedPost.class));
+            startActivity(new Intent(this, CreatedPosts.class));
         }
         else if(item.getItemId()==R.id.nav_applied_jobs){
             startActivity(new Intent(this, AppliedPost.class));

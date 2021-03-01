@@ -19,7 +19,7 @@
             android:parentActivityName=".app.homePage.HomePage"
             android:windowSoftInputMode="adjustPan"
             />
-        <activity android:name=".app.homePage.CreatedPost"
+        <activity android:name=".app.homePage.CreatedPosts"
             android:parentActivityName=".app.homePage.HomePage"
             android:windowSoftInputMode="adjustPan"
             />

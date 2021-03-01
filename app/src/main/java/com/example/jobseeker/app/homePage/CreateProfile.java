@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -136,7 +138,6 @@ public class CreateProfile extends AppCompatActivity {
 
     private void fetchData() {
         skillChipGroup = findViewById(R.id.skillChipGroup);
-
         if (ParseUser.getCurrentUser().get("firstName") != null) {
 
             Toast.makeText(this, "Fetching", Toast.LENGTH_SHORT).show();
@@ -187,6 +188,8 @@ public class CreateProfile extends AppCompatActivity {
 
         }
 
+        skillChipGroup.setLayoutTransition(new LayoutTransition());
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -195,15 +198,15 @@ public class CreateProfile extends AppCompatActivity {
 
         adapter = new CreateProfileViewPager2Adapter(this);
 
-        binding.viewPager2.setAdapter(adapter);
-        binding.viewPager2.setOffscreenPageLimit(5);
-        binding.dotsIndicator.setViewPager2(binding.viewPager2);
+        setPageViewPager();
+        setTitleViewPager();
 
-        binding.titleViewPager2.setAdapter(new CreateProfileInfoViewPagerAdapter(this));
+        setViewPagerOnChangeCallBacks();
 
-        binding.titleViewPager2.setHorizontalFadingEdgeEnabled(true);
-        binding.titleViewPager2.setOffscreenPageLimit(3);
+    }
 
+    private void setViewPagerOnChangeCallBacks() {
+        //Edge negative margin
         int pageMarginPx = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
         int offsetPx = getResources().getDimensionPixelOffset(R.dimen.offset);
 
@@ -231,6 +234,7 @@ public class CreateProfile extends AppCompatActivity {
             }
         });
 
+        //Callback
         binding.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -258,6 +262,19 @@ public class CreateProfile extends AppCompatActivity {
                 binding.viewPager2.setCurrentItem(position);
             }
         });
+    }
+
+    private void setTitleViewPager() {
+        binding.titleViewPager2.setAdapter(new CreateProfileInfoViewPagerAdapter(this));
+        binding.titleViewPager2.setOffscreenPageLimit(3);
+
+        binding.titleViewPager2.setHorizontalFadingEdgeEnabled(true);
+    }
+
+    private void setPageViewPager() {
+        binding.viewPager2.setAdapter(adapter);
+        binding.viewPager2.setOffscreenPageLimit(5);
+        binding.dotsIndicator.setViewPager2(binding.viewPager2);
 
     }
 

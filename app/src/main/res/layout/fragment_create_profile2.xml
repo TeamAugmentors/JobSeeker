@@ -115,7 +115,6 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/_15sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:animateLayoutChanges="true"
             android:paddingEnd="@dimen/_30sdp"/>
 
     </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.homePage.fragments.createprofile.titleFragments;
+package com.example.jobseeker.app.homePage.fragments.createJob.titleFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.R;
 
-public class FragmentPaymentInfo extends Fragment {
+public class FragmentSampleFiles extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -24,6 +24,6 @@ public class FragmentPaymentInfo extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((TextView) getView().findViewById(R.id.titleInfo)).setText("Payment Info");
+        ((TextView) getView().findViewById(R.id.titleInfo)).setText("Sample Files");
     }
 }

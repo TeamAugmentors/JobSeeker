@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.homePage.fragments.createJob;
+package com.example.jobseeker.app.homePage.fragments.createJob.jobFragments;
 
 import android.content.Intent;
 import android.database.Cursor;

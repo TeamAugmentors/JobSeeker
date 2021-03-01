@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobBudget;
-import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobSample;
-import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobTitle;
+import com.example.jobseeker.app.homePage.fragments.createJob.jobFragments.FragmentJobBudget;
+import com.example.jobseeker.app.homePage.fragments.createJob.jobFragments.FragmentJobSample;
+import com.example.jobseeker.app.homePage.fragments.createJob.jobFragments.FragmentJobTitle;
 
 public class CreateJobViewPagerAdapter  extends FragmentStateAdapter {
     FragmentJobTitle fragmentJobTitle = new FragmentJobTitle();

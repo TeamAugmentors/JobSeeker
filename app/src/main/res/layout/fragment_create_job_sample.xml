@@ -7,24 +7,6 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/_50sdp">
 
-
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_width="wrap_content"
-        android:text="Sample Files"
-        android:textColor="@color/job_seeker_logo_green"
-        android:textSize="@dimen/_30sdp" />
-
-    <View
-        android:background="@color/job_seeker_logo_green"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginEnd="@dimen/_30sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_width="match_parent" />
-
     <TextView
         android:fontFamily="@font/roboto_light"
         android:layout_height="wrap_content"

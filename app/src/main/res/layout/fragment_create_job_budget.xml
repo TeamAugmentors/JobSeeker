@@ -10,25 +10,6 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/_50sdp">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="Budget &amp;\nTime Frame"
-            android:textColor="@color/job_seeker_logo_green"
-            android:textSize="@dimen/_30sdp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            android:background="@color/job_seeker_logo_green" />
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/budgetLayout"
             style="@style/LoginTextInputLayoutStyle"
