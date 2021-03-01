@@ -359,7 +359,7 @@ public class CreateProfile extends AppCompatActivity {
 
 
             if (skillChipGroup.getChildCount() == 0)
-                ParseUser.getCurrentUser().put("skillSet", null);
+                ParseUser.getCurrentUser().remove("skillSet");
             else{
                 ParseUser.getCurrentUser().put("skillSet", ChipHelper.getAllChipText(skillChipGroup));
             }

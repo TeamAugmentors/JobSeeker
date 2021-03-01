@@ -198,13 +198,16 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
             parseObjects.get(position).saveInBackground(e -> {
                 if (e == null) {
                     Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
+
+                    ParseUser.getCurrentUser().add("appliedPosts" , parseObjects.get(position));
+
+                    ParseUser.getCurrentUser().saveEventually();
                     dialog.dismiss();
                 } else {
                     Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     slideToActView.resetSlider();
                 }
             });
-
         });
     }
 

@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobBudget;
-import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobSample;
-import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobTitle;
+
 import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile1;
 import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile2;
 import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile3;

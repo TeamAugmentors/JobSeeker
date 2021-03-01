@@ -29,7 +29,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapter.OnCreatedPostsListener{
+public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapter.OnCreatedPostsListener{
 
     ActivityCreatedPostBinding binding;
     ArrayList<ParseObject> parseObjects;
@@ -45,28 +45,30 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
     }
 
     private void fetchData() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
-        query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.include("appliedPosts");
 
-        query.findInBackground((objects, e) -> {
-            if (e == null) {
+        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (object, e) -> {
+            if (e==null){
+                List<ParseObject> objects = (List<ParseObject>) object.get("appliedPosts");
                 parseObjects = (ArrayList<ParseObject>) objects;
+
                 adapter = new CreatedPostsAdapter(parseObjects, this);
 
                 binding.recyclerView.setAdapter(adapter);
 
-                binding.chip.setText("Created " + parseObjects.size() + " Jobs");
-
-            } else {
-                Toast.makeText(CreatedPosts.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                binding.chip.setText("Applied to " + parseObjects.size() + " Jobs");
+            } else{
+                Toast.makeText(AppliedPosts.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 binding.chip.setText("Unable to fetch");
             }
+
         });
+
     }
 
     private void init() {
-        ToolbarHelper.create(binding.toolbar, this, "Created Jobs");
+        ToolbarHelper.create(binding.toolbar, this, "Applied Jobs");
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemViewCacheSize(1);
