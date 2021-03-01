@@ -5,11 +5,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobBudget;
+import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobSample;
+import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobTitle;
 import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile1;
 import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile2;
 import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile3;
 
 public class CreateProfileViewPager2Adapter extends FragmentStateAdapter {
+
+    CreateProfile1 createProfile1 = new CreateProfile1();
+    CreateProfile2 createProfile2 = new CreateProfile2();
+    CreateProfile3 createProfile3 = new CreateProfile3();
 
     public CreateProfileViewPager2Adapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -18,15 +25,27 @@ public class CreateProfileViewPager2Adapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                return new CreateProfile1();
+                return createProfile1;
             case 1:
-                return new CreateProfile2();
+                return createProfile2;
             case 2:
-                return new CreateProfile3();
+                return createProfile3;
         }
         return null;
+    }
+
+    public CreateProfile1 getFragmentCreateProfile1() {
+        return createProfile1;
+    }
+
+    public CreateProfile2 getFragmentCreateProfile2() {
+        return createProfile2;
+    }
+
+    public CreateProfile3 getFragmentCreateProfile3() {
+        return createProfile3;
     }
 
     @Override

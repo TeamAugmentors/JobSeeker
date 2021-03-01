@@ -176,7 +176,7 @@ public class CreateProfile extends AppCompatActivity {
             });
 
             if (ParseUser.getCurrentUser().getString("skillSet") != null) {
-                ChipHelper.addChipIntoChipGroup( skillChipGroup, this, ParseUser.getCurrentUser().getString("skillSet").split(","));
+                ChipHelper.addChipIntoChipGroup(skillChipGroup, this, ParseUser.getCurrentUser().getString("skillSet").split(","));
             }
 
             ((Button) findViewById(R.id.createProfile)).setText("Update Profile");
@@ -259,31 +259,49 @@ public class CreateProfile extends AppCompatActivity {
 
 
     public boolean check() {
+        int where = -1;
         boolean isFieldEmpty = false;
         if (((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).getEditText().getText().toString().isEmpty()) {
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).setError("*This Field is Required");
+            where = 0;
             isFieldEmpty = true;
         } else {
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).setError("");
         }
         if (((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).getEditText().getText().toString().isEmpty()) {
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).setError("*This Field is Required");
+            where = 0;
             isFieldEmpty = true;
         } else {
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).setError("");
         }
+        if (!isImageSelected) {
+            ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Please upload a Professional Profile Picture");
+            ((TextView) findViewById(R.id.profile_picture_text_view)).setTextColor(getColor(R.color.job_seeker_red));
+            where = 0;
+            isFieldEmpty = true;
+        }
+        if (adapter.getFragmentCreateProfile2().getBinding().SkillSetLayout.getEditText().getText().toString().length() == 0) {
+            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setText("*This Field is Required");
+            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setTextColor(getColor(R.color.job_seeker_red));
+            if (where != 0) {
+                where = 1;
+            }
+            isFieldEmpty = true;
+        } else {
+            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setText("Please enter any skills you posses! This will show up on your profile");
+            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setTextColor(getColor(R.color.job_seeker_logo_green));
+        }
         if (((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).getEditText().getText().toString().isEmpty()) {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("*This Field is Required");
+            if (where != 0 && where != 1) {
+                where = 2;
+            }
             isFieldEmpty = true;
         } else {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("");
         }
-        if (!isImageSelected) {
-            ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Please upload a Professional Profile Picture");
-            ((TextView) findViewById(R.id.profile_picture_text_view)).setTextColor(getColor(R.color.job_seeker_red));
-            isFieldEmpty = true;
-        }
-        Log.d("checkPage1: ", String.valueOf(isFieldEmpty));
+        binding.viewPager2.setCurrentItem(where);
         return isFieldEmpty;
     }
 
@@ -338,6 +356,7 @@ public class CreateProfile extends AppCompatActivity {
             });
 
         }
+
     }
 
     public void goToNextPage(View view) {
@@ -352,8 +371,9 @@ public class CreateProfile extends AppCompatActivity {
         }
     }
 
+
     public void addSkill(View view) {
-        ChipHelper.addChipIntoChipGroup(skillChipGroup, this, ((TextInputLayout)findViewById(R.id.SkillSetLayout)).getEditText().getText().toString());
+        ChipHelper.addChipIntoChipGroup(skillChipGroup, this, ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().getText().toString());
 
         ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().setText("");
     }
