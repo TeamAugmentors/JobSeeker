@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.homePage.CreateProfile;
 import com.example.jobseeker.databinding.FragmentCreateJobBudgetBinding;
 import com.example.jobseeker.databinding.FragmentCreateProfile1Binding;
 import com.google.android.material.chip.ChipDrawable;
@@ -27,7 +28,6 @@ public class CreateProfile1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
     public FragmentCreateProfile1Binding getBinding() {
         return binding;

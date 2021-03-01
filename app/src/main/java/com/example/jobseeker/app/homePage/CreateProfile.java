@@ -73,7 +73,7 @@ public class CreateProfile extends AppCompatActivity {
     }
 
 
-    private void errorTextControl() {
+    public void errorTextControl() {
         ((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -136,7 +136,7 @@ public class CreateProfile extends AppCompatActivity {
         });
     }
 
-    private void fetchData() {
+    public void fetchData() {
         skillChipGroup = findViewById(R.id.skillChipGroup);
         if (ParseUser.getCurrentUser().get("firstName") != null) {
 
@@ -150,7 +150,7 @@ public class CreateProfile extends AppCompatActivity {
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).setEndIconVisible(false);
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldBkashNo)).setEndIconVisible(false);
 
-            ((TextInputLayout) findViewById(R.id.outlinedTextFieldBkashNo)).getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            ((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
