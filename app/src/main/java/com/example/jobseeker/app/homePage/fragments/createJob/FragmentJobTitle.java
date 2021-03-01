@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.homePage.fragments;
+package com.example.jobseeker.app.homePage.fragments.createJob;
 
 import android.os.Bundle;
 import android.text.Editable;

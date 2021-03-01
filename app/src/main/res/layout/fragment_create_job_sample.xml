@@ -33,7 +33,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_width="wrap_content"
         android:lineSpacingExtra="@dimen/_3sdp"
-        android:text="You can add some sample for reference. This step is optional."
+        android:text="You can add some sample files for reference. This step is optional."
         android:textAlignment="textStart"
         android:textColor="@color/job_seeker_logo_green"
         android:textSize="@dimen/_15sdp" />

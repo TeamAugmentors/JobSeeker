@@ -5,14 +5,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.jobseeker.app.homePage.fragments.FragmentJobBudget;
-import com.example.jobseeker.app.homePage.fragments.FragmentJobPayment;
-import com.example.jobseeker.app.homePage.fragments.FragmentJobTitle;
+import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobBudget;
+import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobSample;
+import com.example.jobseeker.app.homePage.fragments.createJob.FragmentJobTitle;
 
 public class CreateJobViewPagerAdapter  extends FragmentStateAdapter {
     FragmentJobTitle fragmentJobTitle = new FragmentJobTitle();
     FragmentJobBudget fragmentJobBudget = new FragmentJobBudget();
-    FragmentJobPayment fragmentJobPayment = new FragmentJobPayment();
+    FragmentJobSample fragmentJobSample = new FragmentJobSample();
 
     public CreateJobViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -27,7 +27,7 @@ public class CreateJobViewPagerAdapter  extends FragmentStateAdapter {
             case 1:
                 return  fragmentJobBudget;
             case 2:
-                return  fragmentJobPayment;
+                return fragmentJobSample;
         }
 
         return new FragmentJobTitle();
@@ -41,8 +41,8 @@ public class CreateJobViewPagerAdapter  extends FragmentStateAdapter {
         return fragmentJobBudget;
     }
 
-    public FragmentJobPayment getFragmentJobPayment() {
-        return fragmentJobPayment;
+    public FragmentJobSample getFragmentJobSample() {
+        return fragmentJobSample;
     }
 
     @Override

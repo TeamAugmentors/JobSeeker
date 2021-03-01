@@ -1,60 +1,47 @@
 package com.example.jobseeker.app.homePage;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.startScreen.Guide;
-import com.example.jobseeker.app.startScreen.adapters.CreateProfileViewPager2Adapter;
-import com.example.jobseeker.app.startScreen.adapters.WelcomeScreenViewPager2Adapter;
+import com.example.jobseeker.app.homePage.adapters.CreateProfileInfoViewPagerAdapter;
+import com.example.jobseeker.app.homePage.adapters.CreateProfileViewPager2Adapter;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
+import com.example.jobseeker.utils.ChipHelper;
 import com.example.jobseeker.utils.HideKeyboard;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.google.android.material.internal.NavigationMenu;
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
-import com.mukesh.OtpView;
-import com.parse.GetDataCallback;
-import com.parse.Parse;
-import com.parse.ParseCloud;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 
-import at.markushi.ui.CircleButton;
 
 public class CreateProfile extends AppCompatActivity {
 
@@ -62,6 +49,7 @@ public class CreateProfile extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private boolean isImageSelected = false;
     CreateProfileViewPager2Adapter adapter;
+    ChipGroup skillChipGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +58,12 @@ public class CreateProfile extends AppCompatActivity {
         binding = ActivityCreateProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
-        ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
+
         new Handler().postDelayed(() -> {
             fetchData();
             errorTextControl();
         }, 1000);
-        binding.viewPagerCreateProfile.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-               manageText(binding.viewPagerCreateProfile.getCurrentItem());
-            }
-        });
+
     }
 
 
@@ -148,7 +131,10 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     private void fetchData() {
+        skillChipGroup = findViewById(R.id.skillChipGroup);
+
         if (ParseUser.getCurrentUser().get("firstName") != null) {
+
             Toast.makeText(this, "Fetching", Toast.LENGTH_SHORT).show();
             //Profile was created before
             ((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).getEditText().setText(ParseUser.getCurrentUser().getString("firstName"));
@@ -172,6 +158,7 @@ public class CreateProfile extends AppCompatActivity {
             });
 
             ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
+
             imageFile.getDataInBackground((data, e) -> {
                 if (e == null) {
 
@@ -181,25 +168,92 @@ public class CreateProfile extends AppCompatActivity {
                             .override(500, 500)
                             .transform(new CircleCrop())
                             .into((ImageView) findViewById(R.id.profile_Image));
-                    isImageSelected = true;
 
+                    isImageSelected = true;
                 } else {
                     Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-        } else {
-            Toast.makeText(this, "lol gg", Toast.LENGTH_SHORT).show();
-        }
 
+            if (ParseUser.getCurrentUser().getString("skillSet") != null) {
+                ChipHelper.addChipIntoChipGroup( skillChipGroup, this, ParseUser.getCurrentUser().getString("skillSet").split(","));
+            }
+
+            ((Button) findViewById(R.id.createProfile)).setText("Update Profile");
+
+        }
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void init() {
         ToolbarHelper.create(binding.toolbar, this, "Create Profile");
+
         adapter = new CreateProfileViewPager2Adapter(this);
-        binding.viewPagerCreateProfile.setAdapter(adapter);
-        binding.viewPagerCreateProfile.setOffscreenPageLimit(5);
-        binding.dotsIndicator.setViewPager2(binding.viewPagerCreateProfile);
+
+        binding.viewPager2.setAdapter(adapter);
+        binding.viewPager2.setOffscreenPageLimit(5);
+        binding.dotsIndicator.setViewPager2(binding.viewPager2);
+
+        binding.titleViewPager2.setAdapter(new CreateProfileInfoViewPagerAdapter(this));
+
+        binding.titleViewPager2.setHorizontalFadingEdgeEnabled(true);
+        binding.titleViewPager2.setOffscreenPageLimit(3);
+
+        int pageMarginPx = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
+        int offsetPx = getResources().getDimensionPixelOffset(R.dimen.offset);
+
+        binding.titleViewPager2.setPageTransformer((page, position) -> {
+            ViewPager2 viewpager = (ViewPager2) page.getParent().getParent();
+            float offset = position * -(2 * offsetPx + pageMarginPx);
+
+            if (viewpager.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
+                if (ViewCompat.getLayoutDirection(viewpager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                    page.setTranslationX(-offset);
+                } else {
+                    page.setTranslationX(offset);
+                }
+            } else {
+                page.setTranslationX(offset);
+            }
+
+            if (position <= -1.0F || position >= 1.0F) {
+                page.setAlpha(0.4F);
+            } else if (position == 0.0F) {
+                page.setAlpha(1.0F);
+            } else {
+
+                page.setAlpha((float) (1.0F - (0.6 * Math.abs(position))));
+            }
+        });
+
+        binding.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                binding.titleViewPager2.setCurrentItem(position);
+
+                if (binding.viewPager2.getCurrentItem() == binding.viewPager2.getAdapter().getItemCount() - 1) {
+                    //if it is at last page
+                    binding.next.setVisibility(View.INVISIBLE);
+                } else
+                    binding.next.setVisibility(View.VISIBLE);
+
+                if (binding.viewPager2.getCurrentItem() == 0) {
+                    //if it is at first page
+                    binding.back.setVisibility(View.INVISIBLE);
+                } else
+                    binding.back.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.titleViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                binding.viewPager2.setCurrentItem(position);
+            }
+        });
 
     }
 
@@ -225,15 +279,15 @@ public class CreateProfile extends AppCompatActivity {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("");
         }
         if (!isImageSelected) {
-            ((TextView) findViewById(R.id.imageUpload)).setText("Please! Upload a professional" + "\n" + "Profile Picture");
-            ((TextView) findViewById(R.id.imageUpload)).setTextColor(getColor(R.color.red));
+            ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Please upload a Professional Profile Picture");
+            ((TextView) findViewById(R.id.profile_picture_text_view)).setTextColor(getColor(R.color.job_seeker_red));
             isFieldEmpty = true;
         }
         Log.d("checkPage1: ", String.valueOf(isFieldEmpty));
         return isFieldEmpty;
     }
 
-    public void uploadImage(View view) {
+    public void uploadProPic(View view) {
         Intent gallery = new Intent();
         gallery.setType("image/*");
         gallery.setAction(Intent.ACTION_GET_CONTENT);
@@ -248,21 +302,22 @@ public class CreateProfile extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             isImageSelected = true;
-            ((TextView) findViewById(R.id.imageUpload)).setText(null);
+
             Glide.with(this)
                     .asBitmap()
                     .load(data.getData())
                     .override(500, 500)
                     .transform(new CircleCrop())
                     .into((ImageView) findViewById(R.id.profile_Image));
+
+            ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Professional Profile Picture");
         }
     }
 
-    public void submit(View view) {
+    public void createProfile(View view) {
         if (!check()) {
             ParseUser.getCurrentUser().put("firstName", ((TextInputLayout) findViewById(R.id.outlinedTextFieldFirstName)).getEditText().getText().toString());
             ParseUser.getCurrentUser().put("lastName", ((TextInputLayout) findViewById(R.id.outlinedTextFieldLastName)).getEditText().getText().toString());
-
             ParseUser.getCurrentUser().put("bkashNo", ((TextInputLayout) findViewById(R.id.outlinedTextFieldBkashNo)).getEditText().getText().toString());
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -271,6 +326,9 @@ public class CreateProfile extends AppCompatActivity {
             ParseFile file = new ParseFile("proPic.jpeg", data);
 
             ParseUser.getCurrentUser().put("proPic", file);
+
+            ParseUser.getCurrentUser().put("skillSet", ChipHelper.getAllChipText(skillChipGroup));
+
             ParseUser.getCurrentUser().saveInBackground(e -> {
                 if (e == null) {
                     Toast.makeText(this, "SUCCESS!", Toast.LENGTH_SHORT).show();
@@ -278,65 +336,25 @@ public class CreateProfile extends AppCompatActivity {
                 } else
                     Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
+
         }
     }
 
-    public void nextPage(View view) {
-        if (binding.viewPagerCreateProfile.getCurrentItem() != binding.viewPagerCreateProfile.getAdapter().getItemCount() - 1) {
-                binding.viewPagerCreateProfile.setCurrentItem(binding.viewPagerCreateProfile.getCurrentItem() + 1);
-                manageText(binding.viewPagerCreateProfile.getCurrentItem());
+    public void goToNextPage(View view) {
+        if (binding.viewPager2.getCurrentItem() != binding.viewPager2.getAdapter().getItemCount() - 1) {
+            binding.viewPager2.setCurrentItem(binding.viewPager2.getCurrentItem() + 1);
         }
     }
 
-    public void pageOne(View view) {
-        binding.viewPagerCreateProfile.setCurrentItem(0);
-        manageText(0);
-
-    }
-    public void pageTwo(View view) {
-        binding.viewPagerCreateProfile.setCurrentItem(1);
-        manageText(1);
-
-    }
-    public void pageThree(View view) {
-        binding.viewPagerCreateProfile.setCurrentItem(2);
-        manageText(2);
-    }
-
-    public void manageText(int currPage){
-        if(currPage == 0){
-            ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
-            ((TextView)findViewById(R.id.skillSets)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
-            ((TextView)findViewById(R.id.payment)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
-            ((TextView)findViewById(R.id.yourInfo)).setTextSize(20);
-            ((TextView)findViewById(R.id.skillSets)).setTextSize(18);
-            ((TextView)findViewById(R.id.payment)).setTextSize(18);
-            ((TextView)findViewById(R.id.payment)).setBackground(null);
-            ((TextView)findViewById(R.id.skillSets)).setBackground(null);
-            ((TextView)findViewById(R.id.yourInfo)).setBackgroundResource(R.drawable.text_background);
-        }
-        else if(currPage == 1){
-            ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
-            ((TextView)findViewById(R.id.skillSets)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
-            ((TextView)findViewById(R.id.payment)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
-            ((TextView)findViewById(R.id.yourInfo)).setTextSize(18);
-            ((TextView)findViewById(R.id.skillSets)).setTextSize(20);
-            ((TextView)findViewById(R.id.payment)).setTextSize(18);
-            ((TextView)findViewById(R.id.yourInfo)).setBackground(null);
-            ((TextView)findViewById(R.id.payment)).setBackground(null);
-            ((TextView)findViewById(R.id.skillSets)).setBackgroundResource(R.drawable.text_background);
-        }
-        else if(currPage == 2){
-            ((TextView)findViewById(R.id.yourInfo)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
-            ((TextView)findViewById(R.id.skillSets)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.hint_black));
-            ((TextView)findViewById(R.id.payment)).setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
-            ((TextView)findViewById(R.id.yourInfo)).setTextSize(18);
-            ((TextView)findViewById(R.id.skillSets)).setTextSize(18);
-            ((TextView)findViewById(R.id.payment)).setTextSize(20);
-            ((TextView)findViewById(R.id.yourInfo)).setBackground(null);
-            ((TextView)findViewById(R.id.skillSets)).setBackground(null);
-            ((TextView)findViewById(R.id.payment)).setBackgroundResource(R.drawable.text_background);
+    public void goToPreviousPage(View view) {
+        if (binding.viewPager2.getCurrentItem() != 0) {
+            binding.viewPager2.setCurrentItem(binding.viewPager2.getCurrentItem() - 1);
         }
     }
 
+    public void addSkill(View view) {
+        ChipHelper.addChipIntoChipGroup(skillChipGroup, this, ((TextInputLayout)findViewById(R.id.SkillSetLayout)).getEditText().getText().toString());
+
+        ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().setText("");
+    }
 }

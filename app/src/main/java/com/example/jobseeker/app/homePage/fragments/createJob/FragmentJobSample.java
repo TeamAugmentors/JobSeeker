@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.homePage.fragments;
+package com.example.jobseeker.app.homePage.fragments.createJob;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,33 +12,37 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import com.example.jobseeker.R;
-import com.example.jobseeker.app.homePage.CreateJob;
-import com.example.jobseeker.databinding.FragmentCreateJobBudgetBinding;
-import com.example.jobseeker.databinding.FragmentCreateJobPaymentBinding;
+import com.example.jobseeker.databinding.FragmentCreateJobSampleBinding;
+import com.parse.ParseFile;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
 
-public class FragmentJobPayment extends Fragment {
-    FragmentCreateJobPaymentBinding binding;
+public class FragmentJobSample extends Fragment {
+    FragmentCreateJobSampleBinding binding;
     Intent myFileIntent;
+    ParseFile[] parseFiles = new ParseFile[3];
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return (binding = FragmentCreateJobPaymentBinding.inflate(inflater, container, false)).getRoot();
+        return (binding = FragmentCreateJobSampleBinding.inflate(inflater, container, false)).getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        parseFiles[0] = null;
+        parseFiles[1] = null;
+        parseFiles[2] = null;
         //Files
         String fileTypes[] = {"image/*","application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
+
         binding.addFile1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +53,7 @@ public class FragmentJobPayment extends Fragment {
 
             }
         });
+
         binding.addFile2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,14 +78,16 @@ public class FragmentJobPayment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
-
             case 1:
                 if (resultCode == RESULT_OK) {
                     binding.cross1.setVisibility(View.VISIBLE);
+
                     Uri uri = data.getData();
                     String uriString = uri.toString();
                     File myFile = new File(uriString);
-                    String path = myFile.getAbsolutePath();
+
+                    parseFiles[0] = (new ParseFile(myFile));
+
                     String displayName = null;
 
                     if (uriString.startsWith("content://")) {
@@ -106,7 +113,9 @@ public class FragmentJobPayment extends Fragment {
                     Uri uri = data.getData();
                     String uriString = uri.toString();
                     File myFile = new File(uriString);
-                    String path = myFile.getAbsolutePath();
+
+                    parseFiles[1] = (new ParseFile(myFile));
+
                     String displayName = null;
 
                     if (uriString.startsWith("content://")) {
@@ -132,7 +141,9 @@ public class FragmentJobPayment extends Fragment {
                     Uri uri = data.getData();
                     String uriString = uri.toString();
                     File myFile = new File(uriString);
-                    String path = myFile.getAbsolutePath();
+
+                    parseFiles[2] = (new ParseFile(myFile));
+
                     String displayName = null;
 
                     if (uriString.startsWith("content://")) {
@@ -154,7 +165,15 @@ public class FragmentJobPayment extends Fragment {
                 break;
         }
     }
-    public FragmentCreateJobPaymentBinding getBinding() {
+    public FragmentCreateJobSampleBinding getBinding() {
         return binding;
+    }
+
+    public ParseFile[] getParseFiles() {
+        return parseFiles;
+    }
+
+    public ArrayList<ParseFile> getParseFileList(){
+        return new ArrayList<ParseFile>(Arrays.asList(parseFiles));
     }
 }

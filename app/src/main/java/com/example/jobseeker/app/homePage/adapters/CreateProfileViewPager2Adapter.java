@@ -1,13 +1,13 @@
-package com.example.jobseeker.app.startScreen.adapters;
+package com.example.jobseeker.app.homePage.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.jobseeker.app.startScreen.fragments.createProfileFragments.CreateProfile1;
-import com.example.jobseeker.app.startScreen.fragments.createProfileFragments.CreateProfile2;
-import com.example.jobseeker.app.startScreen.fragments.createProfileFragments.CreateProfile3;
+import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile1;
+import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile2;
+import com.example.jobseeker.app.homePage.fragments.createprofile.profileFragments.CreateProfile3;
 
 public class CreateProfileViewPager2Adapter extends FragmentStateAdapter {
 

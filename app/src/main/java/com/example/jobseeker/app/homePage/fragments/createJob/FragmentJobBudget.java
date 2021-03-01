@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.homePage.fragments;
+package com.example.jobseeker.app.homePage.fragments.createJob;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.CreateJob;
 import com.example.jobseeker.databinding.FragmentCreateJobBudgetBinding;
-import com.example.jobseeker.databinding.FragmentCreateJobPaymentBinding;
+import com.example.jobseeker.utils.ChipHelper;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;

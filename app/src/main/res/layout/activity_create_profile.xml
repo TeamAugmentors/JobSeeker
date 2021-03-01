@@ -1,106 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
     android:background="@color/white">
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_create_profile"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp">
-
-    </androidx.viewpager2.widget.ViewPager2>
-
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/job_seeker_logo_green"
-        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:titleTextColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/view_pager_job"
         app:layout_constraintTop_toTopOf="parent" />
+    
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:id="@+id/titleViewPager2"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:fadingEdge="horizontal"
+        android:overScrollMode="never"
+        android:fadingEdgeLength="@dimen/_50sdp"
+        />
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/_15sdp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:text="Your Info"-->
+<!--        android:textColor="@color/job_seeker_logo_green"-->
+<!--        android:textSize="@dimen/_30sdp" />-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/job_seeker_logo_green"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        />
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="@dimen/_1sdp"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/view_pager_create_profile"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/view_pager_create_profile"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.09">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/yourInfo"-->
+<!--            android:layout_width="@dimen/_100sdp"-->
+<!--            android:layout_height="@dimen/_25sdp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:gravity="center"-->
+<!--            android:onClick="pageOne"-->
+<!--            android:text="Your Info"-->
+<!--            android:textColor="@color/hint_black"-->
+<!--            android:textSize="@dimen/_18sdp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/skillSets"-->
+<!--            android:layout_width="@dimen/_100sdp"-->
+<!--            android:layout_height="@dimen/_25sdp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:gravity="center"-->
+<!--            android:onClick="pageTwo"-->
+<!--            android:text="Skill Sets"-->
+<!--            android:textColor="@color/hint_black"-->
+<!--            android:textSize="@dimen/_18sdp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/payment"-->
+<!--            android:layout_width="@dimen/_100sdp"-->
+<!--            android:layout_height="@dimen/_25sdp"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:gravity="center"-->
+<!--            android:onClick="pageThree"-->
+<!--            android:text="Payment"-->
+<!--            android:textColor="@color/hint_black"-->
+<!--            android:textSize="@dimen/_18sdp" />-->
+
+<!--    </LinearLayout>-->
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_weight="1"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/view_pager_create_profile"
-        app:layout_constraintEnd_toEndOf="@+id/view_pager_create_profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.09"
-        android:layout_marginHorizontal="@dimen/_1sdp">
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:animateLayoutChanges="true"
+        >
 
-        <TextView
-            android:id="@+id/yourInfo"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:gravity="center"
-            android:text="Your Info"
-            android:onClick="pageOne"
-            android:fontFamily="@font/roboto_regular"
-            android:textColor="@color/hint_black"
-            android:textSize="@dimen/_18sdp"/>
-        <TextView
-            android:id="@+id/skillSets"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:gravity="center"
-            android:text="Skill Sets"
-            android:fontFamily="@font/roboto_regular"
-            android:onClick="pageTwo"
-            android:textColor="@color/hint_black"
-            android:textSize="@dimen/_18sdp"/>
-        <TextView
-            android:id="@+id/payment"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:gravity="center"
-            android:text="Payment"
-            android:fontFamily="@font/roboto_regular"
-            android:onClick="pageThree"
-            android:textColor="@color/hint_black"
-            android:textSize="@dimen/_18sdp"/>
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:rotation="180"
+            android:src="@drawable/ic_right_arrow"
+            android:visibility="invisible"
+            app:tint="@color/job_seeker_logo_green"
+            android:onClick="goToPreviousPage"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dotsIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dotsColor="@color/job_seeker_green_hint"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="16dp"
+            app:dotsSpacing="4dp"
+            app:dotsWidthFactor="2.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95"
+            app:selectedDotColor="@color/job_seeker_logo_green"
+            />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/next"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_right_arrow"
+            app:tint="@color/job_seeker_logo_green"
+            android:onClick="goToNextPage"
+            />
 
     </LinearLayout>
 
 
-    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-        android:id="@+id/dots_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:dampingRatio="0.5"
-        app:dotsColor="@color/job_seeker_logo_green"
-        app:dotsCornerRadius="2dp"
-        app:dotsSize="16dp"
-        app:dotsSpacing="6dp"
-        app:dotsStrokeColor="@color/black"
-        app:dotsStrokeWidth="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view_pager_create_profile"
-        app:layout_constraintEnd_toEndOf="@+id/view_pager_create_profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87"
-        app:stiffness="300" />
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:onClick="nextPage"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="@+id/view_pager_create_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dots_indicator"
-        app:layout_constraintVertical_bias="0.63" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

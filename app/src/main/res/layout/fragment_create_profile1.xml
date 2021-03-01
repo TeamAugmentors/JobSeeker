@@ -11,37 +11,48 @@
 
     <ImageView
         android:id="@+id/profile_Image"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_90sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
         android:background="@color/white"
-        android:src="@drawable/upload_pic"
+        android:src="@drawable/upload_pic" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:id="@+id/proPicBtn"
+        android:onClick="uploadProPic"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:backgroundTint="@color/job_seeker_logo_green"
+        app:cornerRadius="@dimen/_30sdp"
+        android:insetTop="0dp"
+        android:elevation="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_minus13sdp"
+        android:insetBottom="0dp"
+        android:insetLeft="0dp"
+        android:insetRight="0dp"
+        android:layout_gravity="center_horizontal"
+        app:icon="@drawable/ic_plus"
+        app:iconTint="@color/white"
+        app:iconSize="@dimen/_19sdp"
+        app:iconPadding="0dp"
+        android:padding="0dp"
+        app:iconGravity="textStart"
+        app:rippleColor="@color/white"
         />
 
-    <at.markushi.ui.CircleButton
-        android:id="@+id/uniBtn"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:src="@drawable/ic_plus"
-        android:elevation="@dimen/_5sdp"
-        app:cb_color="@color/job_seeker_logo_green"
-        android:layout_gravity="center"
-        app:cb_pressedRingWidth="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_minus40sdp"
-        android:onClick="uploadImage"
-        />
 
     <TextView
-        android:id="@+id/imageUpload"
+        android:id="@+id/profile_picture_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:onClick="uploadImage"
-        android:textColor="@color/hint_black"
+        android:textColor="@color/job_seeker_logo_green"
         android:textAlignment="center"
         android:fontFamily="@font/roboto_light"
         android:lineSpacingExtra="@dimen/_3sdp"
-        android:text="Upload a professional\nProfile Picture" />
+        android:text="Professional Profile Picture" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldFirstName"
         style="@style/LoginTextInputLayoutStyle"
@@ -53,7 +64,7 @@
         app:errorEnabled="true"
         app:endIconMode="clear_text"
         android:textColorHint="@color/job_seeker_green_hint"
-        app:endIconTint="#FF0000"
+        app:endIconTint="@color/job_seeker_logo_green"
         app:hintTextColor="@color/job_seeker_logo_green">
 
 
@@ -69,15 +80,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextFieldLastName"
         style="@style/LoginTextInputLayoutStyle"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
+        app:endIconTint="@color/job_seeker_logo_green"
         android:hint="Last Name"
         android:textColorHint="@color/job_seeker_green_hint"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-        app:endIconTint="#FF0000"
         app:hintTextColor="@color/job_seeker_logo_green">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -86,6 +97,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textColor="@color/job_seeker_logo_green" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
 
