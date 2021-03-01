@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
@@ -41,6 +42,9 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class CreateProfile extends AppCompatActivity {
@@ -281,26 +285,17 @@ public class CreateProfile extends AppCompatActivity {
             where = 0;
             isFieldEmpty = true;
         }
-        if (adapter.getFragmentCreateProfile2().getBinding().SkillSetLayout.getEditText().getText().toString().length() == 0) {
-            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setText("*This Field is Required");
-            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setTextColor(getColor(R.color.job_seeker_red));
-            if (where != 0) {
-                where = 1;
-            }
-            isFieldEmpty = true;
-        } else {
-            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setText("Please enter any skills you posses! This will show up on your profile");
-            adapter.getFragmentCreateProfile2().getBinding().skillWarning.setTextColor(getColor(R.color.job_seeker_logo_green));
-        }
         if (((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).getEditText().getText().toString().isEmpty()) {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("*This Field is Required");
-            if (where != 0 && where != 1) {
+            if (where != 0) {
                 where = 2;
             }
             isFieldEmpty = true;
         } else {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("");
         }
+        if(where==-1)
+            where=2;
         binding.viewPager2.setCurrentItem(where);
         return isFieldEmpty;
     }
@@ -345,7 +340,12 @@ public class CreateProfile extends AppCompatActivity {
 
             ParseUser.getCurrentUser().put("proPic", file);
 
-            ParseUser.getCurrentUser().put("skillSet", ChipHelper.getAllChipText(skillChipGroup));
+
+            if (skillChipGroup.getChildCount() == 0)
+                ParseUser.getCurrentUser().put("skillSet", null);
+            else{
+                ParseUser.getCurrentUser().put("skillSet", ChipHelper.getAllChipText(skillChipGroup));
+            }
 
             ParseUser.getCurrentUser().saveInBackground(e -> {
                 if (e == null) {
@@ -373,8 +373,13 @@ public class CreateProfile extends AppCompatActivity {
 
 
     public void addSkill(View view) {
-        ChipHelper.addChipIntoChipGroup(skillChipGroup, this, ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().getText().toString());
 
-        ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().setText("");
+        String skills = ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().getText().toString().toLowerCase();
+        if (!ChipHelper.findMatch(skillChipGroup, skills)) {
+            ChipHelper.addChipIntoChipGroup(skillChipGroup, this, skills);
+            ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().setText("");
+        } else {
+            Toast.makeText(this, "Skill already exists!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -49,4 +49,13 @@ public class ChipHelper {
 
         return null;
     }
+
+    public static boolean findMatch(ChipGroup chipGroup, String s){
+        for (int i = 0; i < chipGroup.getChildCount(); i++) {
+            if (((Chip) chipGroup.getChildAt(i)).getText().toString().toLowerCase().equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -76,8 +76,9 @@ public class CreateProfile2 extends Fragment {
         binding.SkillSetLayout.getEditText().setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER) && !binding.SkillSetLayout.getEditText().getText().toString().contains(" ")) {
-                    ((CreateProfile) getActivity()).addSkill(v);
+                        (keyCode == KeyEvent.KEYCODE_ENTER) && !binding.SkillSetLayout.getEditText().getText().toString().contains(" ") &&
+                        binding.SkillSetLayout.getEditText().getText().toString().length()!=0) {
+                        ((CreateProfile) getActivity()).addSkill(v);
 
                     return true;
                 }

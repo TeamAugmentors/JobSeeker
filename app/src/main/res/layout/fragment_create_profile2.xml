@@ -33,7 +33,9 @@
                 android:fontFamily="@font/roboto_light"
                 android:textColor="@color/job_seeker_logo_green"
                 android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:textSize="@dimen/_17sdp" />
+<!--            //need to fix ime-->
 
         </com.google.android.material.textfield.TextInputLayout>
 
