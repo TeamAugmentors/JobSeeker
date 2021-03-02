@@ -3,17 +3,25 @@ package com.example.jobseeker.app.homePage;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
@@ -51,6 +59,8 @@ import java.util.Set;
 
 public class CreateProfile extends AppCompatActivity {
 
+    public static final int CAMERA_PERM_CODE = 101;
+    public static final int CAMERA_REQUEST_CODE = 102;
     ActivityCreateProfileBinding binding;
     private static final int PICK_IMAGE = 1;
     private boolean isImageSelected = false;
@@ -311,20 +321,50 @@ public class CreateProfile extends AppCompatActivity {
         } else {
             ((TextInputLayout) (findViewById(R.id.outlinedTextFieldBkashNo))).setError("");
         }
-        if(where==-1)
-            where=2;
+        if (where == -1)
+            where = 2;
         binding.viewPager2.setCurrentItem(where);
         return isFieldEmpty;
     }
 
     public void uploadProPic(View view) {
-        Intent gallery = new Intent();
-        gallery.setType("image/*");
-        gallery.setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
+
+        Dialog dialog = new Dialog(this, R.style.Dialog);
+        dialog.setContentView(R.layout.dialog_image_select);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        View dialogView = dialog.getWindow().getDecorView();
+
+        dialogView.findViewById(R.id.close).setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        dialogView.findViewById(R.id.fileButton).setOnClickListener(v -> {
+            Intent gallery = new Intent();
+            gallery.setType("image/*");
+            gallery.setAction(Intent.ACTION_GET_CONTENT);
+
+            startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
+
+            dialog.dismiss();
+        });
+
+        dialogView.findViewById(R.id.cameraButton).setOnClickListener(v -> {
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+            } else {
+                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera, CAMERA_REQUEST_CODE);
+                dialog.dismiss();
+            }
+
+        });
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -341,6 +381,10 @@ public class CreateProfile extends AppCompatActivity {
                     .into((ImageView) findViewById(R.id.profile_Image));
 
             ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Professional Profile Picture");
+        } else if (requestCode == CAMERA_REQUEST_CODE) {
+            isImageSelected = true;
+
+            //upload image from camera
         }
     }
 
@@ -360,7 +404,7 @@ public class CreateProfile extends AppCompatActivity {
 
             if (skillChipGroup.getChildCount() == 0)
                 ParseUser.getCurrentUser().remove("skillSet");
-            else{
+            else {
                 ParseUser.getCurrentUser().put("skillSet", ChipHelper.getAllChipText(skillChipGroup));
             }
 
