@@ -32,7 +32,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_light"
                 android:textColor="@color/job_seeker_logo_green"
-                android:singleLine="true"
+                android:inputType="text"
+                android:maxLines="1"
+                android:imeOptions="actionGo"
                 android:textSize="@dimen/_17sdp" />
 <!--            //need to fix ime-->
 

@@ -252,6 +252,12 @@ public class CreateJob extends AppCompatActivity {
         }
     }
 
+    public void goToNextPage(View view) {
+        if (binding.viewPager2.getCurrentItem() != binding.viewPager2.getAdapter().getItemCount() - 1) {
+            binding.viewPager2.setCurrentItem(binding.viewPager2.getCurrentItem() + 1);
+        }
+    }
+
     public void fileRemove1(View view) {
         view.setVisibility(GONE);
         adapter.getFragmentJobSample().getBinding().file1.setText(".pdf/.doc/.png/.jpeg");
