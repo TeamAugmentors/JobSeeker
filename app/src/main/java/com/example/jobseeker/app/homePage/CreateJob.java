@@ -171,6 +171,7 @@ public class CreateJob extends AppCompatActivity {
 
     public void createJob(View v) {
         //Check for errors
+        String checkBudget = adapter.getFragmentJobBudget().getBudget();
         if (adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString().length() < 50 || adapter.getFragmentJobTitle().getBinding().jobTitleLayout.getEditText().getText().toString().length() == 0) {
             binding.viewPager2.setCurrentItem(0);
 
@@ -185,10 +186,10 @@ public class CreateJob extends AppCompatActivity {
                 adapter.getFragmentJobTitle().getBinding().title.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
                 adapter.getFragmentJobTitle().getBinding().title.setText("This field is required");
             }
-        } else if (adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length() < 3 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length() == 0 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().compareTo("Please select a date") == 0) {
+        } else if (checkBudget.length() < 3 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().length() == 0 || adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString().compareTo("Please select a date") == 0) {
             binding.viewPager2.setCurrentItem(1);
 
-            if (adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().compareTo("500") < 0 && adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString().length() < 4) {
+            if (checkBudget.compareTo("500") < 0 && checkBudget.toString().length() < 4) {
                 adapter.getFragmentJobBudget().getBinding().budgetWarning.setTextColor(ContextCompat.getColor(this, R.color.job_seeker_red));
                 adapter.getFragmentJobBudget().getBinding().budgetWarning.setText("Minimum budget is 500 BDT");
             }

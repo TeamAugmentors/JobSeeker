@@ -30,6 +30,7 @@ import java.util.Date;
 public class FragmentJobBudget extends Fragment {
     FragmentCreateJobBudgetBinding binding;
     MaterialDatePicker materialDatePicker;
+    String budget;
 
     @Nullable
     @Override
@@ -66,7 +67,7 @@ public class FragmentJobBudget extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                String budget = binding.budgetLayout.getEditText().getText().toString();
+                budget = binding.budgetLayout.getEditText().getText().toString();
 
                 char[] budgetArray = budget.toCharArray();
 
@@ -76,12 +77,12 @@ public class FragmentJobBudget extends Fragment {
                 for (char letter : budgetArray) {
                     if (letter != '0')
                         isLeading = true;
-                    if (isLeading){
+                    if (isLeading) {
                         result.append(letter);
                     }
                 }
 
-                budget=result.toString();
+                budget = result.toString();
 
                 if (budget.length() >= 5) {
                     if (budget.compareTo("15000") > 0 || budget.length() > 5) {
@@ -154,5 +155,9 @@ public class FragmentJobBudget extends Fragment {
 
     public FragmentCreateJobBudgetBinding getBinding() {
         return binding;
+    }
+
+    public String getBudget(){
+        return budget;
     }
 }

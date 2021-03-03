@@ -5,7 +5,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -109,6 +112,49 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }
         else if(item.getItemId()==R.id.nav_applied_jobs){
             startActivity(new Intent(this, AppliedPosts.class));
+        }
+        else if(item.getItemId()==R.id.nav_view_profile){
+            if (ParseUser.getCurrentUser().get("firstName") != null){
+
+                Dialog dialog = new Dialog(this, R.style.Dialog);
+                dialog.setContentView(R.layout.dialogue_view_profile);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                //fetching user image
+                ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
+                imageFile.getDataInBackground((data, e) -> {
+                    if (e == null) {
+
+                        Glide.with(this)
+                                .asBitmap()
+                                .load(data)
+                                .override(500,500)
+                                .transform(new CircleCrop())
+                                .into((ImageView) dialog.findViewById(R.id.view_profile_Image));
+
+                    } else {
+                        Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                //fetching userinfo
+                ((TextView)dialog.findViewById(R.id.view_profile_picture_text_view)).setText(ParseUser.getCurrentUser().get("firstName")+" "+ParseUser.getCurrentUser().get("lastName"));
+                ((TextView)dialog.findViewById(R.id.bkash_number)).setText(ParseUser.getCurrentUser().get("bkashNo").toString());
+                ((TextView)dialog.findViewById(R.id.skill_set)).setText(ParseUser.getCurrentUser().getString("skillSet"));
+                dialog.show();
+
+                View dialogView = dialog.getWindow().getDecorView();
+
+                dialogView.findViewById(R.id.skill_set);
+
+                dialogView.findViewById(R.id.close).setOnClickListener(v -> {
+                    dialog.dismiss();
+                });
+
+            }
+            else{
+
+            }
         }
         return true;
     }
