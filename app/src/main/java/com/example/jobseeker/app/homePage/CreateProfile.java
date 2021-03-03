@@ -54,13 +54,17 @@ import com.yalantis.ucrop.UCrop;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import static androidx.core.content.FileProvider.getUriForFile;
+
 
 public class CreateProfile extends AppCompatActivity {
 
     private static final int REQUEST_STORAGE = 111;
     private static final int REQUEST_FILE = 222;
+    private static final int REQUEST_CAMERA = 333;
+    private static final int CAMERA_REQUEST_CODE = 444;
     ActivityCreateProfileBinding binding;
-    private static final int PICK_IMAGE = 1;
+    public static String fileName;
     private boolean isImageSelected = false;
     CreateProfileViewPager2Adapter adapter;
     ChipGroup skillChipGroup;
@@ -356,15 +360,13 @@ public class CreateProfile extends AppCompatActivity {
 
         dialogView.findViewById(R.id.cameraButton).setOnClickListener(v -> {
 
-//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
-//            } else {
-//                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(camera, CAMERA_REQUEST_CODE);
-//                dialog.dismiss();
-//            }
-            Toast.makeText(this, "Nothing to do", Toast.LENGTH_SHORT).show();
-
+            if (ContextCompat.checkSelfPermission(CreateProfile.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(CreateProfile.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+            } else {
+                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(camera, CAMERA_REQUEST_CODE);
+                dialog.dismiss();
+            }
         });
 
     }
@@ -375,11 +377,10 @@ public class CreateProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_FILE && resultCode == RESULT_OK && data != null) {
-            isImageSelected = true;
-
             startCrop(data.getData());
 
         } else if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            isImageSelected = true;
             Uri imageUriResultCrop = UCrop.getOutput(data);
             if (imageUriResultCrop != null) {
                 Glide.with(this)
@@ -391,15 +392,16 @@ public class CreateProfile extends AppCompatActivity {
 
                 ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Professional Profile Picture");
             }
-
+        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            startCrop(data.getData());
         }
     }
 
     private void startCrop(@NonNull Uri uri) {
 
-        UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(this.getFilesDir(), "U_Crop_Image_" + System.currentTimeMillis() + ".jpeg")));
+        UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(this.getCacheDir(), "U_Crop_Image_" + System.currentTimeMillis() + ".jpeg")));
 
-        uCrop.withAspectRatio(1, 1).withAspectRatio(1,1).withOptions(getCropOption()).start(CreateProfile.this);
+        uCrop.withAspectRatio(1, 1).withAspectRatio(1, 1).withOptions(getCropOption()).start(CreateProfile.this);
     }
 
     private UCrop.Options getCropOption() {
