@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -44,23 +45,20 @@ import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
 import com.example.jobseeker.utils.ChipHelper;
 import com.example.jobseeker.utils.HideKeyboard;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.File;
 
 
 public class CreateProfile extends AppCompatActivity {
 
-    public static final int CAMERA_PERM_CODE = 101;
-    public static final int CAMERA_REQUEST_CODE = 102;
+    private static final int REQUEST_STORAGE = 111;
+    private static final int REQUEST_FILE = 222;
     ActivityCreateProfileBinding binding;
     private static final int PICK_IMAGE = 1;
     private boolean isImageSelected = false;
@@ -341,25 +339,31 @@ public class CreateProfile extends AppCompatActivity {
             dialog.dismiss();
         });
 
-        dialogView.findViewById(R.id.fileButton).setOnClickListener(v -> {
-            Intent gallery = new Intent();
-            gallery.setType("image/*");
-            gallery.setAction(Intent.ACTION_GET_CONTENT);
+        dialogView.findViewById(R.id.galleryButton).setOnClickListener(v -> {
 
-            startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(CreateProfile.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+            } else {
+
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(gallery, REQUEST_FILE);
+            }
+
 
             dialog.dismiss();
         });
 
+
         dialogView.findViewById(R.id.cameraButton).setOnClickListener(v -> {
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
-            } else {
-                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(camera, CAMERA_REQUEST_CODE);
-                dialog.dismiss();
-            }
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+//            } else {
+//                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(camera, CAMERA_REQUEST_CODE);
+//                dialog.dismiss();
+//            }
+            Toast.makeText(this, "Nothing to do", Toast.LENGTH_SHORT).show();
 
         });
 
@@ -370,22 +374,44 @@ public class CreateProfile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_FILE && resultCode == RESULT_OK && data != null) {
             isImageSelected = true;
 
-            Glide.with(this)
-                    .asBitmap()
-                    .load(data.getData())
-                    .override(500, 500)
-                    .transform(new CircleCrop())
-                    .into((ImageView) findViewById(R.id.profile_Image));
+            startCrop(data.getData());
 
-            ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Professional Profile Picture");
-        } else if (requestCode == CAMERA_REQUEST_CODE) {
-            isImageSelected = true;
+        } else if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            Uri imageUriResultCrop = UCrop.getOutput(data);
+            if (imageUriResultCrop != null) {
+                Glide.with(this)
+                        .asBitmap()
+                        .load(imageUriResultCrop)
+                        .override(500, 500)
+                        .transform(new CircleCrop())
+                        .into((ImageView) findViewById(R.id.profile_Image));
 
-            //upload image from camera
+                ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Professional Profile Picture");
+            }
+
         }
+    }
+
+    private void startCrop(@NonNull Uri uri) {
+
+        UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(this.getFilesDir(), "U_Crop_Image_" + System.currentTimeMillis() + ".jpeg")));
+
+        uCrop.withAspectRatio(1, 1).withAspectRatio(1,1).withOptions(getCropOption()).start(CreateProfile.this);
+    }
+
+    private UCrop.Options getCropOption() {
+        UCrop.Options options = new UCrop.Options();
+        options.setCompressionQuality(100);
+        options.setHideBottomControls(false);
+        options.setFreeStyleCropEnabled(true);
+        options.setCropGridColor(getColor(R.color.job_seeker_red));
+        options.setStatusBarColor(getColor(R.color.job_seeker_logo_green));
+        options.setToolbarColor(getColor(R.color.job_seeker_logo_green));
+        options.setActiveControlsWidgetColor(getColor(R.color.job_seeker_logo_green));
+        return options;
     }
 
     public void createProfile(View view) {
