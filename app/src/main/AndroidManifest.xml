@@ -63,6 +63,7 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.JobSeeker"/>
+
     </application>
 
 </manifest>

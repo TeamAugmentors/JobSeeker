@@ -13,6 +13,7 @@ import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -63,8 +65,10 @@ public class CreateProfile extends AppCompatActivity {
     private static final int REQUEST_FILE = 222;
     private static final int REQUEST_CAMERA = 333;
     private static final int CAMERA_REQUEST_CODE = 444;
+    private static final int PERMISSION_CODE = 1000;
+    private static final int CAPTURE_CODE = 1001;
     ActivityCreateProfileBinding binding;
-    public static String fileName;
+    private Uri imageUri;
     private boolean isImageSelected = false;
     CreateProfileViewPager2Adapter adapter;
     ChipGroup skillChipGroup;
@@ -360,14 +364,30 @@ public class CreateProfile extends AppCompatActivity {
 
         dialogView.findViewById(R.id.cameraButton).setOnClickListener(v -> {
 
-            if (ContextCompat.checkSelfPermission(CreateProfile.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(CreateProfile.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if ((checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permission, PERMISSION_CODE);
+                } else {
+                    openCamera();
+                }
+
             } else {
-                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(camera, CAMERA_REQUEST_CODE);
-                dialog.dismiss();
+                openCamera();
             }
+            dialog.dismiss();
         });
+
+    }
+
+    private void openCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Pictures");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(camera, CAPTURE_CODE);
 
     }
 
@@ -379,6 +399,8 @@ public class CreateProfile extends AppCompatActivity {
         if (requestCode == REQUEST_FILE && resultCode == RESULT_OK && data != null) {
             startCrop(data.getData());
 
+        } else if (requestCode == CAPTURE_CODE && resultCode == RESULT_OK) {
+            startCrop(imageUri);
         } else if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             isImageSelected = true;
             Uri imageUriResultCrop = UCrop.getOutput(data);
@@ -392,9 +414,17 @@ public class CreateProfile extends AppCompatActivity {
 
                 ((TextView) findViewById(R.id.profile_picture_text_view)).setText("Professional Profile Picture");
             }
-        } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            startCrop(data.getData());
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openCamera();
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void startCrop(@NonNull Uri uri) {
