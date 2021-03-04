@@ -17,57 +17,54 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:weightSum="10"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="10">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="0dp"
-                android:layout_weight="9"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_weight="9"
                 android:fontFamily="@font/roboto_light"
                 android:text="Android Developer"
-                android:layout_marginEnd="@dimen/_5sdp"
                 android:textAlignment="textStart"
                 android:textColor="@color/job_seeker_logo_green"
                 android:textSize="@dimen/_20sdp" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_gravity="end"
-                >
+                android:layout_weight="1"
+                android:orientation="vertical">
 
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:id="@+id/close"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="@dimen/_13sdp"
                     android:layout_height="@dimen/_13sdp"
-                    android:backgroundTint="@color/white"
-                    app:cornerRadius="@dimen/_30sdp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:insetLeft="0dp"
-                    android:insetRight="0dp"
                     android:layout_gravity="end"
+                    android:backgroundTint="@color/white"
                     android:elevation="0dp"
-                    android:shadowColor="@color/white"
-                    app:icon="@drawable/ic_round_clear_24"
-                    app:iconTint="@color/job_seeker_logo_green"
-                    app:iconSize="@dimen/_15sdp"
-                    app:iconPadding="0dp"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
                     android:padding="0dp"
+                    android:shadowColor="@color/white"
+                    app:cornerRadius="@dimen/_30sdp"
+                    app:icon="@drawable/ic_round_clear_24"
                     app:iconGravity="textStart"
-                    app:rippleColor="@color/job_seeker_green_hint"
-                    />
+                    app:iconPadding="0dp"
+                    app:iconSize="@dimen/_15sdp"
+                    app:iconTint="@color/job_seeker_logo_green"
+                    app:rippleColor="@color/job_seeker_green_hint" />
 
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -76,8 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/job_seeker_green_hint"
-            />
+            android:background="@color/job_seeker_green_hint" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,8 +94,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/budget"
@@ -120,10 +115,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal"
 
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,11 +129,11 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/job_seeker_logo_green"
                 android:textSize="@dimen/_14sdp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/duration"
@@ -154,10 +150,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal"
 
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,11 +164,11 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/job_seeker_logo_green"
                 android:textSize="@dimen/_14sdp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/revisions"
@@ -188,9 +185,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/_10sdp"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -200,11 +197,11 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/job_seeker_logo_green"
                 android:textSize="@dimen/_14sdp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/negotiable"
@@ -224,13 +221,13 @@
             android:background="@color/job_seeker_green_hint" />
 
         <TextView
-            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/roboto_light"
             android:text="Description"
-            android:layout_marginTop="@dimen/_10sdp"
             android:textAlignment="textStart"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_14sdp" />
@@ -239,11 +236,10 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
+            android:layout_gravity="start"
             android:background="@drawable/description_background"
             android:padding="@dimen/_5sdp"
-            android:scrollbarThumbVertical="@drawable/scroll_bar_thumb"
-            android:layout_gravity="start"
-            >
+            android:scrollbarThumbVertical="@drawable/scroll_bar_thumb">
 
             <TextView
 
@@ -259,6 +255,55 @@
                 android:textSize="@dimen/_12sdp" />
 
         </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/job_seeker_green_hint" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/seeFreelancerButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/button_background"
+            android:drawablePadding="@dimen/_6sdp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_light"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="@dimen/_25sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="See freelancers who applied"
+            android:textAllCaps="false"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_16sdp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/deleteButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/delete_button_background"
+            android:drawablePadding="@dimen/_6sdp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_light"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="@dimen/_25sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="@color/job_seeker_red"
+            android:textSize="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_15sdp"/>
+
+
         <com.ncorti.slidetoact.SlideToActView
             android:id="@+id/applySlider"
             android:layout_width="@dimen/_200sdp"

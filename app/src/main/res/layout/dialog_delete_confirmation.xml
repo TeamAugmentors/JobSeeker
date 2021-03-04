@@ -29,9 +29,9 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_weight="9"
                 android:fontFamily="@font/roboto_light"
-                android:text="Select Image"
+                android:text="Delete Job?"
                 android:textAlignment="textStart"
-                android:textColor="@color/job_seeker_logo_green"
+                android:textColor="@color/job_seeker_red"
                 android:textSize="@dimen/_20sdp" />
 
             <LinearLayout
@@ -61,7 +61,7 @@
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
                     app:iconSize="@dimen/_15sdp"
-                    app:iconTint="@color/job_seeker_logo_green"
+                    app:iconTint="@color/job_seeker_red"
                     app:rippleColor="@color/job_seeker_green_hint" />
 
             </LinearLayout>
@@ -69,36 +69,32 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/job_seeker_green_hint" />
-
         <LinearLayout
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/galleryButton"
+                android:id="@+id/yesButton"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_background_filled"
-                android:drawableStart="@drawable/ic_gallery"
-                android:drawablePadding="@dimen/_7sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/delete_button_background"
+                android:drawablePadding="@dimen/_6sdp"
                 android:drawableTint="@color/white"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/roboto_light"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:paddingVertical="@dimen/_5sdp"
-                android:text="Open Gallery"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp" />
+                android:paddingHorizontal="@dimen/_25sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:text="Yes"
+                android:textAllCaps="false"
+                android:textColor="@color/job_seeker_red"
+                android:textSize="@dimen/_16sdp" />
 
             <View
                 android:layout_width="@dimen/_20sdp"
@@ -106,22 +102,23 @@
                 android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/cameraButton"
+                android:id="@+id/noButton"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_background_filled"
-                android:drawableStart="@drawable/ic__camera"
-                android:drawablePadding="@dimen/_7sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/delete_button_background"
+                android:drawablePadding="@dimen/_6sdp"
                 android:drawableTint="@color/white"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/roboto_light"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:paddingVertical="@dimen/_5sdp"
-                android:text="Open Camera"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp" />
+                android:paddingHorizontal="@dimen/_25sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:text="No"
+                android:textAllCaps="false"
+                android:textColor="@color/job_seeker_red"
+                android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
 

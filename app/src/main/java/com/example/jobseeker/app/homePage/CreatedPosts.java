@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -29,15 +30,16 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapter.OnCreatedPostsListener{
+public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapter.OnCreatedPostsListener {
 
     ActivityCreatedPostBinding binding;
     ArrayList<ParseObject> parseObjects;
     CreatedPostsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityCreatedPostBinding.inflate(getLayoutInflater());
+        binding = ActivityCreatedPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
 
@@ -99,15 +101,41 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
 
         Dialog dialog = new Dialog(this, R.style.Dialog);
         dialog.setContentView(R.layout.dialog_layout);
+        //delete confirmation dialog
+        Dialog confirmationDialog = new Dialog(this, R.style.Dialog);
+        confirmationDialog.setContentView(R.layout.dialog_delete_confirmation);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         View dialogView = dialog.getWindow().getDecorView();
+        View confirmationDialogView = confirmationDialog.getWindow().getDecorView();
 
 
         dialogView.findViewById(R.id.close).setOnClickListener(v -> {
             dialog.dismiss();
         });
+
+        dialogView.findViewById(R.id.deleteButton).setOnClickListener(v1 -> {
+            dialog.dismiss();
+
+            confirmationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            confirmationDialog.show();
+
+        });
+
+        //delete confirmation dialog
+        confirmationDialogView.findViewById(R.id.close).setOnClickListener(v1 -> {
+            confirmationDialog.dismiss();
+        });
+
+        confirmationDialogView.findViewById(R.id.yesButton).setOnClickListener(v1 -> {
+            confirmationDialog.dismiss();
+        });
+
+        confirmationDialogView.findViewById(R.id.noButton).setOnClickListener(v1 -> {
+            confirmationDialog.dismiss();
+        });
+
 
         ((TextView) dialogView.findViewById(R.id.title)).setText(parseObjects.get(position).getString("title"));
         ((TextView) dialogView.findViewById(R.id.description)).setText(parseObjects.get(position).getString("description"));
@@ -126,10 +154,9 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         LinearLayout.LayoutParams params;
-        if(charCount<=200){
+        if (charCount <= 200) {
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        else{
+        } else {
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
         }
         scrollView.setLayoutParams(params);
