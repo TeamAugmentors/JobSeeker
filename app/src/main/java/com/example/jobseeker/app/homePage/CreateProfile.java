@@ -52,6 +52,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.yalantis.ucrop.UCrop;
+import com.yalantis.ucrop.UCropActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -347,37 +348,37 @@ public class CreateProfile extends AppCompatActivity {
             dialog.dismiss();
         });
 
+        //Button for open gallery
         dialogView.findViewById(R.id.galleryButton).setOnClickListener(v -> {
 
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(CreateProfile.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(permission, REQUEST_STORAGE);
             } else {
-
-                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(gallery, REQUEST_FILE);
+                openGallery();
             }
-
 
             dialog.dismiss();
         });
 
-
+        //Button for open camera
         dialogView.findViewById(R.id.cameraButton).setOnClickListener(v -> {
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if ((checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                    String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    requestPermissions(permission, PERMISSION_CODE);
-                } else {
-                    openCamera();
-                }
-
+            if ((checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permission, PERMISSION_CODE);
             } else {
                 openCamera();
             }
+
             dialog.dismiss();
         });
 
+    }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, REQUEST_FILE);
     }
 
     private void openCamera() {
@@ -421,6 +422,8 @@ public class CreateProfile extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             openCamera();
+        } else if (requestCode == REQUEST_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openGallery();
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
@@ -443,6 +446,9 @@ public class CreateProfile extends AppCompatActivity {
         options.setStatusBarColor(getColor(R.color.job_seeker_logo_green));
         options.setToolbarColor(getColor(R.color.job_seeker_logo_green));
         options.setActiveControlsWidgetColor(getColor(R.color.job_seeker_logo_green));
+        options.setCircleDimmedLayer(true);
+        options.setCropGridRowCount(3);
+        options.setCropGridColumnCount(3);
         return options;
     }
 
