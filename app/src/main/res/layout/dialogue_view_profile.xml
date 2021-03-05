@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:background="@color/transparent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@color/transparent"
+    android:orientation="vertical">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/view_profile_Image"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
-        android:layout_marginBottom="444dp"
-        android:background="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/transparent"
         android:src="@drawable/upload_pic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:translationZ="10dp"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="@dimen/_3sdp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="@+id/cardView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/_minus40sdp"
+        android:elevation="@dimen/_4sdp"
+        android:translationZ="5dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_4sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardElevation="0dp">
+        app:cardCornerRadius="@dimen/_4sdp">
 
         <LinearLayout
             android:layout_width="@dimen/_280sdp"
@@ -40,112 +43,159 @@
             android:orientation="vertical"
             android:padding="@dimen/_10sdp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/close"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="@dimen/_13sdp"
-                        android:layout_height="@dimen/_13sdp"
-                        android:layout_gravity="end"
-                        android:backgroundTint="@color/white"
-                        android:elevation="0dp"
-                        android:insetLeft="0dp"
-                        android:insetTop="0dp"
-                        android:insetRight="0dp"
-                        android:insetBottom="0dp"
-                        android:padding="0dp"
-                        android:shadowColor="@color/white"
-                        app:cornerRadius="@dimen/_30sdp"
-                        app:icon="@drawable/ic_round_clear_24"
-                        app:iconGravity="textStart"
-                        app:iconPadding="0dp"
-                        app:iconSize="@dimen/_15sdp"
-                        app:iconTint="@color/job_seeker_logo_green"
-                        app:rippleColor="@color/job_seeker_green_hint" />
-
-                </LinearLayout>
-            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/close"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_13sdp"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:backgroundTint="@color/white"
+                android:elevation="0dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:shadowColor="@color/white"
+                app:cornerRadius="@dimen/_30sdp"
+                app:icon="@drawable/ic_round_clear_24"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="@dimen/_15sdp"
+                app:iconTint="@color/job_seeker_logo_green"
+                app:rippleColor="@color/job_seeker_green_hint" />
 
 
             <TextView
                 android:id="@+id/view_profile_picture_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Your Info"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_26sdp" />
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/phone_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text=""
+                android:textAppearance="@style/textChipStyle."
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/job_seeker_logo_green"
+                app:chipIcon="@drawable/ic_phone_call_1"
+                app:chipIconSize="@dimen/_16sdp"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:iconStartPadding="@dimen/_1sdp"
+                app:rippleColor="@color/white" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/bkash_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textAppearance="@style/textChipStyle."
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/job_seeker_logo_green"
+                app:chipIcon="@drawable/bkash"
+                app:chipIconSize="@dimen/_16sdp"
+                app:chipIconVisible="true"
+                app:iconStartPadding="@dimen/_1sdp"
+                app:rippleColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/earn"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:text="GG"
+                    android:textAppearance="@style/textChipStyle."
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="@color/job_seeker_logo_green"
+                    app:chipIcon="@drawable/ic_phone_call_1"
+                    app:chipIconSize="@dimen/_16sdp"
+                    app:chipIconTint="@color/white"
+                    app:chipIconVisible="true"
+                    app:iconStartPadding="@dimen/_1sdp"
+                    app:rippleColor="@color/white" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/job_complete"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="EZ"
+                    android:textAppearance="@style/textChipStyle."
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="@color/job_seeker_logo_green"
+                    app:chipIcon="@drawable/ic_phone_call_1"
+                    app:chipIconSize="@dimen/_16sdp"
+                    app:chipIconTint="@color/white"
+                    app:chipIconVisible="true"
+                    app:iconStartPadding="@dimen/_1sdp"
+                    app:rippleColor="@color/white" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/roboto_light"
-                android:lineSpacingExtra="@dimen/_3sdp"
-                android:text="Your name"
-                android:textAlignment="center"
-                android:textColor="@color/job_seeker_logo_green" />
+                android:text="Skill set"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="25dp" />
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/job_seeker_logo_green" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_20sdp">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:id="@+id/scroll_view">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:fontFamily="@font/roboto_light"
-                    android:text="Bkash Number  : "
-                    android:textColor="@color/job_seeker_logo_green" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/bkash_number"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/skill_chip_group"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:fontFamily="@font/roboto_light"
-                    android:text=""
-                    android:textColor="@color/job_seeker_logo_green" />
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:animateLayoutChanges="true" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_20sdp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:fontFamily="@font/roboto_light"
-                    android:text="Your Skills          : "
-                    android:textColor="@color/job_seeker_logo_green" />
-
-                <TextView
-                    android:id="@+id/skill_set"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:fontFamily="@font/roboto_light"
-                    android:text=""
-                    android:textColor="@color/job_seeker_logo_green" />
-
-            </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

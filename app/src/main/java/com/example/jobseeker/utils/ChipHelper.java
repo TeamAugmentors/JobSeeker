@@ -22,7 +22,7 @@ public class ChipHelper {
         return result.toString();
     }
 
-    public static void addChipIntoChipGroup(ChipGroup chipGroup, Context context, String... texts) {
+    public static void addChipIntoChipGroup(ChipGroup chipGroup, Context context, boolean isCloseIcon, String... texts) {
         for (String text : texts) {
             Chip chip = new Chip(context);
             ChipDrawable chipDrawable = ChipDrawable.createFromResource(context, R.xml.chip);
@@ -31,11 +31,15 @@ public class ChipHelper {
             chip.setCheckable(false);
             chip.setClickable(true);
 
-            chip.setText(text.toUpperCase());
+            if(!isCloseIcon) {
+                chip.setCloseIcon(null);
+            }else{
+                chip.setOnCloseIconClickListener(v -> {
+                    chipGroup.removeView(chip);
+                });
+            }
 
-            chip.setOnCloseIconClickListener(v -> {
-                chipGroup.removeView(chip);
-            });
+            chip.setText(text.toUpperCase());
 
             chipGroup.addView(chip);
         }

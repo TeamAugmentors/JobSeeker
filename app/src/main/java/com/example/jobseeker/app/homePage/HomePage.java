@@ -10,9 +10,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +25,9 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
+import com.example.jobseeker.utils.ChipHelper;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -138,14 +145,31 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 });
 
                 //fetching userinfo
-                ((TextView)dialog.findViewById(R.id.view_profile_picture_text_view)).setText(ParseUser.getCurrentUser().get("firstName")+" "+ParseUser.getCurrentUser().get("lastName"));
-                ((TextView)dialog.findViewById(R.id.bkash_number)).setText(ParseUser.getCurrentUser().get("bkashNo").toString());
-                ((TextView)dialog.findViewById(R.id.skill_set)).setText(ParseUser.getCurrentUser().getString("skillSet"));
+                ((TextView)dialog.findViewById(R.id.view_profile_picture_text_view)).setText(ParseUser.getCurrentUser().get("firstName").toString());
+                ((TextView)dialog.findViewById(R.id.phone_chip)).setText(ParseUser.getCurrentUser().get("username").toString());
+                ((TextView)dialog.findViewById(R.id.bkash_chip)).setText(ParseUser.getCurrentUser().get("bkashNo").toString());
+                if (ParseUser.getCurrentUser().getString("skillSet") != null) {
+                    ChipHelper.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false, ParseUser.getCurrentUser().getString("skillSet").split(","));
+                }
+
+                ScrollView scrollView=dialog.findViewById(R.id.scroll_view);
+                ChipGroup chipGroup = dialog.findViewById(R.id.skill_chip_group);
+                int chipCount = chipGroup.getChildCount();
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+
+                if (chipCount <= 10) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    scrollView.setLayoutParams(params);
+                } else {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
+                    scrollView.setLayoutParams(params);
+                }
+
                 dialog.show();
 
                 View dialogView = dialog.getWindow().getDecorView();
-
-                dialogView.findViewById(R.id.skill_set);
 
                 dialogView.findViewById(R.id.close).setOnClickListener(v -> {
                     dialog.dismiss();

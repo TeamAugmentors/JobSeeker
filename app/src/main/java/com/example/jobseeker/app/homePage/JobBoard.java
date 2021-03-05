@@ -174,26 +174,38 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         ((TextView) dialogView.findViewById(R.id.budget)).setText(parseObjects.get(position).getInt("budget") + "");
         ((TextView) dialogView.findViewById(R.id.duration)).setText(parseObjects.get(position).getString("duration"));
         ((TextView) dialogView.findViewById(R.id.revisions)).setText(parseObjects.get(position).getInt("revisions") + "");
-        ((Button)dialogView.findViewById(R.id.seeFreelancerButton)).setVisibility(View.GONE);
-        ((Button)dialogView.findViewById(R.id.deleteButton)).setVisibility(View.GONE);
+        dialogView.findViewById(R.id.seeFreelancerButton).setVisibility(View.GONE);
+        dialogView.findViewById(R.id.deleteButton).setVisibility(View.GONE);
 
         if (parseObjects.get(position).getBoolean("negotiable"))
             ((TextView) dialogView.findViewById(R.id.negotiable)).setText("Yes");
         else
             ((TextView) dialogView.findViewById(R.id.negotiable)).setText("No");
+
+        //Dynamic scroll view height
+
         ScrollView scrollView = dialogView.findViewById(R.id.scrollView);
+
         String text = ((TextView) dialogView.findViewById(R.id.description)).getText().toString();
+
         int charCount = text.length();
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
-        LinearLayout.LayoutParams params;
+
         if (charCount <= 200) {
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            scrollView.setLayoutParams(params);
         } else {
-            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
+            scrollView.setLayoutParams(params);
         }
-        scrollView.setLayoutParams(params);
+
+
+        //---------------------->
+
+        //apply
 
         ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setOnSlideCompleteListener(slideToActView -> {
             parseObjects.get(position).add("applied", ParseUser.getCurrentUser());
@@ -202,7 +214,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 if (e == null) {
                     Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
 
-                    ParseUser.getCurrentUser().add("appliedPosts" , parseObjects.get(position));
+                    ParseUser.getCurrentUser().add("appliedPosts", parseObjects.get(position));
 
                     ParseUser.getCurrentUser().saveEventually();
                     dialog.dismiss();

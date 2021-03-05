@@ -198,7 +198,7 @@ public class CreateProfile extends AppCompatActivity {
             });
 
             if (ParseUser.getCurrentUser().getString("skillSet") != null) {
-                ChipHelper.addChipIntoChipGroup(skillChipGroup, this, ParseUser.getCurrentUser().getString("skillSet").split(","));
+                ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true, ParseUser.getCurrentUser().getString("skillSet").split(","));
             }
 
             ((Button) findViewById(R.id.createProfile)).setText("Update Profile");
@@ -501,7 +501,7 @@ public class CreateProfile extends AppCompatActivity {
 
         String skills = ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().getText().toString().toLowerCase();
         if (!ChipHelper.findMatch(skillChipGroup, skills)) {
-            ChipHelper.addChipIntoChipGroup(skillChipGroup, this, skills);
+            ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true,skills);
             ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().setText("");
         } else {
             Toast.makeText(this, "Skill already exists!", Toast.LENGTH_SHORT).show();
