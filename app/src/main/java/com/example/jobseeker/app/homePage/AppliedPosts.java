@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -116,6 +117,9 @@ public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapt
         ((TextView) dialogView.findViewById(R.id.budget)).setText(parseObjects.get(position).getInt("budget") + "");
         ((TextView) dialogView.findViewById(R.id.duration)).setText(parseObjects.get(position).getString("duration"));
         ((TextView) dialogView.findViewById(R.id.revisions)).setText(parseObjects.get(position).getInt("revisions") + "");
+        (dialogView.findViewById(R.id.seeFreelancerButton)).setVisibility(View.GONE);
+        (dialogView.findViewById(R.id.deleteButton)).setVisibility(View.GONE);
+        (dialogView.findViewById(R.id.horizontalLine)).setVisibility(View.GONE);
 
         if (parseObjects.get(position).getBoolean("negotiable"))
             ((TextView) dialogView.findViewById(R.id.negotiable)).setText("Yes");
