@@ -147,6 +147,34 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 ((TextView)dialog.findViewById(R.id.view_profile_picture_text_view)).setText(ParseUser.getCurrentUser().get("firstName").toString());
                 ((TextView)dialog.findViewById(R.id.phone_chip)).setText(ParseUser.getCurrentUser().get("username").toString());
                 ((TextView)dialog.findViewById(R.id.bkash_chip)).setText(ParseUser.getCurrentUser().get("bkashNo").toString());
+
+                double temp=ParseUser.getCurrentUser().getInt("totalEarned");
+                if(temp>1000)
+                {
+                    temp/=1000;
+                    int flag = (int)((temp*10)%10);
+                    int temp2 = (int)(temp);
+
+                    if(flag==0)
+                        ((TextView)dialog.findViewById(R.id.earn)).setText(temp2+"K earned");
+                    else{
+                        ((TextView)dialog.findViewById(R.id.earn)).setText(String.format("%.1f",temp)+"K earned");
+                    }
+                }
+                else{
+                    ((TextView)dialog.findViewById(R.id.earn)).setText(String.valueOf(temp)+" earned");
+                }
+
+                int jobs = ParseUser.getCurrentUser().getInt("jobsCompleted");
+                if(jobs>1000)
+                {
+                    jobs/=1000;
+                    ((TextView)dialog.findViewById(R.id.job_complete)).setText(String.format("%.1f",jobs)+" jobs completed");
+                }
+                else {
+                    ((TextView) dialog.findViewById(R.id.job_complete)).setText(String.valueOf(jobs)+ " jobs completed");
+                }
+
                 if (ParseUser.getCurrentUser().getString("skillSet") != null) {
                     ChipHelper.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false, ParseUser.getCurrentUser().getString("skillSet").split(","));
                 }
