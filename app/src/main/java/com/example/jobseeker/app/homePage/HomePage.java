@@ -26,7 +26,6 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.example.jobseeker.utils.ChipHelper;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseFile;
@@ -124,7 +123,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             if (ParseUser.getCurrentUser().get("firstName") != null){
 
                 Dialog dialog = new Dialog(this, R.style.Dialog);
-                dialog.setContentView(R.layout.dialogue_view_profile);
+                dialog.setContentView(R.layout.dialog_view_profile);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 //fetching user image
@@ -169,14 +168,14 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                 dialog.show();
 
-                View dialogView = dialog.getWindow().getDecorView();
-
-                dialogView.findViewById(R.id.close).setOnClickListener(v -> {
+                dialog.findViewById(R.id.close).setOnClickListener(v -> {
                     dialog.dismiss();
                 });
 
-            }
-            else{
+                dialog.findViewById(R.id.root).setOnFocusChangeListener((v, hasFocus) -> {
+                    if (hasFocus)
+                        dialog.dismiss();
+                });
 
             }
         }
@@ -189,5 +188,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void createJob(View view){
         startActivity(new Intent(this, CreateJob.class));
+    }
+
+    public void liveChat(View view) {
+        startActivity(new Intent(this, Inbox.class));
     }
 }

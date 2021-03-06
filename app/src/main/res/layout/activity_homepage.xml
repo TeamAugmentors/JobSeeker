@@ -60,7 +60,7 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:stretchColumns="0,1">
 
             <TableRow
@@ -102,30 +102,25 @@
                     android:textColor="@color/job_seeker_logo_green" />
 
             </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <!--                <Button-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_gravity="center"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="Button 1"-->
-                <!--                    />-->
-
-                <!--                <Button-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_gravity="center"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="Button 2"-->
-                <!--                    />-->
-
-            </TableRow>
-
         </TableLayout>
 
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/homepage_button_bg"
+            android:drawableStart="@drawable/ic_inbox"
+            android:drawableTint="@color/job_seeker_logo_green"
+            android:elevation="@dimen/_5sdp"
+            android:fontFamily="@font/roboto_light"
+            android:onClick="liveChat"
+            android:textSize="@dimen/_15sdp"
+            android:paddingHorizontal="@dimen/_90sdp"
+            android:drawablePadding="@dimen/_10sdp"
+            android:text="Inbox"
+            android:textColor="@color/job_seeker_logo_green" />
 
     </LinearLayout>
 

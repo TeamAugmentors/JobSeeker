@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,15 +12,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
-import com.example.jobseeker.databinding.ActivityAppliedPostBinding;
 import com.example.jobseeker.databinding.ActivityCreatedPostBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.ncorti.slidetoact.SlideToActView;
@@ -30,15 +28,16 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapter.OnCreatedPostsListener{
+public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapter.OnCreatedPostsListener {
 
     ActivityCreatedPostBinding binding;
     ArrayList<ParseObject> parseObjects;
     CreatedPostsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityCreatedPostBinding.inflate(getLayoutInflater());
+        binding = ActivityCreatedPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
 
@@ -48,18 +47,21 @@ public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapt
     private void fetchData() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.include("appliedPosts");
-
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (object, e) -> {
-            if (e==null){
+            if (e == null) {
                 List<ParseObject> objects = (List<ParseObject>) object.get("appliedPosts");
                 parseObjects = (ArrayList<ParseObject>) objects;
 
-                adapter = new CreatedPostsAdapter(parseObjects, this);
+                if (parseObjects != null) {
 
-                binding.recyclerView.setAdapter(adapter);
+                    adapter = new CreatedPostsAdapter(parseObjects, this);
 
-                binding.chip.setText("Applied to " + parseObjects.size() + " Jobs");
-            } else{
+                    binding.recyclerView.setAdapter(adapter);
+                    binding.chip.setText("Applied to " + parseObjects.size() + " Jobs");
+                } else {
+                    binding.chip.setText("Applied to 0 Jobs");
+                }
+            } else {
                 Toast.makeText(AppliedPosts.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 binding.chip.setText("Unable to fetch");
             }
@@ -82,17 +84,6 @@ public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapt
             if (verticalOffset <= x) {
                 binding.chip.setAlpha((float) (1.0 - (verticalOffset / x)));
             }
-//            if (searchItem != null){
-//                if (verticalOffset/x < 1){
-//                    searchItem.setVisible(false);
-//                    searchView.setVisibility(View.GONE);
-//                    getSupportActionBar().collapseActionView();
-//                } else{
-//                    searchItem.setVisible(true);
-//                    searchView.setVisibility(View.VISIBLE);
-//
-//                }
-//            }
         });
 
     }
@@ -132,15 +123,21 @@ public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapt
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         LinearLayout.LayoutParams params;
-        if(charCount<=200){
+        if (charCount <= 200) {
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        else{
+        } else {
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
         }
         scrollView.setLayoutParams(params);
 
         ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setVisibility(View.GONE);
+
+        dialog.findViewById(R.id.message).setVisibility(View.VISIBLE);
+
+        dialog.findViewById(R.id.message).setOnClickListener(v -> {
+            startActivity(new Intent(this, Inbox.class));
+        });
+
     }
 
 }

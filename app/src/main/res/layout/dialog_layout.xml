@@ -283,6 +283,29 @@
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_16sdp" />
 
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:visibility="gone"
+            android:id="@+id/message"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/button_background"
+            android:drawablePadding="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_light"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="@dimen/_25sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="Message"
+            android:textAllCaps="false"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_16sdp" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/deleteButton"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -302,7 +325,9 @@
             android:textAllCaps="false"
             android:textColor="@color/job_seeker_red"
             android:textSize="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_15sdp"/>
+            android:layout_marginBottom="@dimen/_10sdp"/>
+
+
 
 
         <com.ncorti.slidetoact.SlideToActView
