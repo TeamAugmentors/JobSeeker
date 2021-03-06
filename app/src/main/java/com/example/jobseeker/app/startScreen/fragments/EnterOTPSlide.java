@@ -28,8 +28,12 @@ public class EnterOTPSlide extends Fragment {
         otpHeader = getView().findViewById(R.id.otp_header);
         otpView = getView().findViewById(R.id.otp_view);
         otpView.setAnimationEnable(true);
+
     }
 
+    public OtpView getOtpView() {
+        return otpView;
+    }
 
     public TextView getOtpHeader() {
         return otpHeader;

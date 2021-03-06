@@ -79,6 +79,10 @@ public class WelcomeScreen extends AppCompatActivity {
                     slideChange = true;
                     binding.viewPager2.setCurrentItem(1);
                     adapter.getEnterOTPSlide().setOtpHeaderText("We have sent a code to +88" + phoneNo);
+
+                    adapter.getEnterOTPSlide().getOtpView().setText(otp);
+
+                    submitOtp(null);
                 } else
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             });
