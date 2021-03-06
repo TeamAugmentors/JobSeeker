@@ -9,13 +9,14 @@
     android:layout_marginTop="@dimen/_10sdp">
 
     <androidx.cardview.widget.CardView
+        android:foreground="@drawable/custom_ripple"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginStart="@dimen/_25sdp"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardElevation="@dimen/_3sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_2sdp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:cardBackgroundColor="@color/white"
@@ -81,14 +82,18 @@
                 android:textSize="@dimen/_10sdp"
                 />
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminate="true" />
-
 
         </LinearLayout>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:id="@+id/progress_horizontal"
+            android:layout_height="@dimen/_4sdp"
+            app:trackThickness="@dimen/_4sdp"
+            android:layout_gravity="bottom"
+            app:indicatorColor="@color/job_seeker_logo_green"
+            app:trackColor="@color/white"
+            />
 
     </androidx.cardview.widget.CardView>
 

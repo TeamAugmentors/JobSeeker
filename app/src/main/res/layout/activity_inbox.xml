@@ -13,15 +13,70 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/job_seeker_logo_green" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabRippleColor="@color/job_seeker_logo_green"
+            app:tabTextColor="@color/job_seeker_green_hint"
+            app:tabIndicatorFullWidth="false"
+            app:tabSelectedTextColor="@color/job_seeker_logo_green"
+            >
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Applied Jobs" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Created Jobs" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+            >
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extended_fab"
+        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:elevation="@dimen/_5sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:onClick="compose"
+        android:text="Compose"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/job_seeker_logo_green"
+        app:icon="@drawable/ic_edit_profile"
+        app:iconPadding="@dimen/_10sdp"
+        app:iconSize="@dimen/_12sdp"
+        app:iconTint="@color/white"
+        app:collapsedSize="@dimen/_37sdp"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

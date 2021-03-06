@@ -1,11 +1,12 @@
-package com.example.jobseeker.app.homePage.adapters;
+package com.example.jobseeker.app.homePage.adapters.inbox;
 
 import android.content.Context;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,22 +16,26 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ItemInboxBinding;
-import com.example.jobseeker.databinding.ItemJobBoardBinding;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ProgressCallback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> {
 
     // Store a member variable for the contacts
-    private ArrayList<ParseObject> parseObjects;
+    private ArrayList<ParseObject> parseObjects = new ArrayList<>();
     private OnInboxListener mOnInboxListener;
 
-    public InboxAdapter(ArrayList<ParseObject> object, OnInboxListener onInboxListener) {
-        parseObjects = object;
+    public InboxAdapter(HashMap<String,ParseObject> objectHashMap, OnInboxListener onInboxListener) {
+
+        objectHashMap.forEach((s, parseObject) -> {
+            parseObjects.add(parseObject);
+        });
+
         mOnInboxListener = onInboxListener;
     }
 
@@ -74,27 +79,19 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
         holder.binding.firstName.setText(parseObjects.get(pos).getString("firstName"));
 
-        parseObjects.get(pos).getParseFile("proPic").getDataInBackground(new ProgressCallback() {
-            @Override
-            public void done(Integer percentDone) {
-                if (percentDone == 100){
-                    try {
-                        byte[] data = parseObjects.get(pos).getParseFile("proPic").getData();
-                        Glide.with(holder.context)
-                                .asBitmap()
-                                .load(data)
-                                .override(500, 500)
-                                .transform(new CircleCrop())
-                                .into(holder.binding.proPic);
-
-                    } catch (ParseException e) {
-                        Toast.makeText(holder.context, "error! "  + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else{
-
-                }
+        parseObjects.get(pos).getParseFile("proPic").getDataInBackground((data, e) -> {
+            if (e == null) {
+                Glide.with(holder.context)
+                        .asBitmap()
+                        .load(data)
+                        .override(500, 500)
+                        .transform(new CircleCrop())
+                        .into(holder.binding.proPic);
+            } else {
+                Log.d("fiasdjfiaws", "Error on e not equal to null! " + e.getMessage());
             }
         });
+
     }
 
     @Override
@@ -106,8 +103,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
         void onInboxClick(int position, List<ParseObject> parseObjects);
     }
 
-    public void filter(ArrayList<ParseObject> filteredList){
-        if (!parseObjects.equals(filteredList)){
+    public void filter(ArrayList<ParseObject> filteredList) {
+        if (!parseObjects.equals(filteredList)) {
             parseObjects = filteredList;
             notifyDataSetChanged();
         }

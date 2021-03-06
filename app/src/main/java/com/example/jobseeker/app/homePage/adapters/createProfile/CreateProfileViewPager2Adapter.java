@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.homePage.adapters;
+package com.example.jobseeker.app.homePage.adapters.createProfile;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
