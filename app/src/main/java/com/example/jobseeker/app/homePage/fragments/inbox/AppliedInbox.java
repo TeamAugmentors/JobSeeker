@@ -40,6 +40,7 @@ public class AppliedInbox extends Fragment {
     FragemntAppliedInboxBinding binding;
     List<ParseObject> parseObjects;
     InboxAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,27 +63,28 @@ public class AppliedInbox extends Fragment {
 
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (object, e) -> {
             if (e == null) {
-                if (swipeRefreshLayout != null){
+                if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
-                HashMap<String,ParseObject> createdBys = new HashMap<>();
+                HashMap<String, ParseObject> createdBys = new HashMap<>();
                 parseObjects = object.getList("appliedPosts");
-
-                for (int i = 0; i < parseObjects.size(); i++) {
-                    createdBys.put(parseObjects.get(i).getParseObject("createdBy").getObjectId(), parseObjects.get(i).getParseObject("createdBy"));
-                }
-
-                adapter = new InboxAdapter(createdBys, new InboxAdapter.OnInboxListener() {
-                    @Override
-                    public void onInboxClick(int position, List<ParseObject> parseObjects) {
-
+                if (parseObjects != null) {
+                    for (int i = 0; i < parseObjects.size(); i++) {
+                        createdBys.put(parseObjects.get(i).getParseObject("createdBy").getObjectId(), parseObjects.get(i).getParseObject("createdBy"));
                     }
-                });
 
-                binding.recyclerview.setAdapter(adapter);
+                    adapter = new InboxAdapter(createdBys, new InboxAdapter.OnInboxListener() {
+                        @Override
+                        public void onInboxClick(int position, List<ParseObject> parseObjects) {
+
+                        }
+                    });
+
+                    binding.recyclerview.setAdapter(adapter);
+                }
                 Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getActivity(), "Error! "  + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         });
