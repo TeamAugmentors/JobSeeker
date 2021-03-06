@@ -1,10 +1,8 @@
 package com.example.jobseeker.app.homePage;
 
-import android.app.DatePickerDialog;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,22 +12,13 @@ import androidx.core.view.ViewCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.homePage.adapters.CreateJobTitlePagerAdapter;
-import com.example.jobseeker.app.homePage.adapters.CreateJobViewPagerAdapter;
-import com.example.jobseeker.app.homePage.adapters.CreateProfileInfoViewPagerAdapter;
-import com.example.jobseeker.app.homePage.adapters.CreateProfileViewPager2Adapter;
+import com.example.jobseeker.app.homePage.adapters.createJob.CreateJobTitlePagerAdapter;
+import com.example.jobseeker.app.homePage.adapters.createJob.CreateJobViewPagerAdapter;
 import com.example.jobseeker.databinding.ActivityCreateJobBinding;
 import com.example.jobseeker.utils.ChipHelper;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
 import static android.view.View.GONE;
 

@@ -7,8 +7,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_10sdp"
     android:background="@color/transparent"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
-
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/view_profile_Image"
@@ -26,18 +27,19 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_280sdp"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="@dimen/_minus40sdp"
         android:elevation="@dimen/_4sdp"
         android:translationZ="5dp"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_4sdp">
 
         <LinearLayout
-            android:layout_width="@dimen/_280sdp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:orientation="vertical"
@@ -50,7 +52,6 @@
                 android:layout_width="@dimen/_13sdp"
                 android:layout_height="@dimen/_13sdp"
                 android:layout_gravity="end"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:backgroundTint="@color/white"
                 android:elevation="0dp"
                 android:insetLeft="0dp"
@@ -86,7 +87,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text=""
                 android:textAppearance="@style/textChipStyle."
                 android:textColor="@color/white"
                 app:chipBackgroundColor="@color/job_seeker_logo_green"
@@ -103,35 +103,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=""
                 android:textAppearance="@style/textChipStyle."
                 android:textColor="@color/white"
-                app:chipBackgroundColor="@color/job_seeker_logo_green"
-                app:chipIcon="@drawable/bkash"
+                app:chipBackgroundColor="@color/bkash_color"
+                app:chipIcon="@drawable/ic_chip_bkash"
                 app:chipIconSize="@dimen/_16sdp"
                 app:chipIconVisible="true"
                 app:iconStartPadding="@dimen/_1sdp"
                 app:rippleColor="@color/white" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/earn"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:text="GG"
+                    android:text=""
                     android:textAppearance="@style/textChipStyle."
                     android:textColor="@color/white"
                     app:chipBackgroundColor="@color/job_seeker_logo_green"
-                    app:chipIcon="@drawable/ic_phone_call_1"
+                    app:chipIcon="@drawable/ic_chip_taka"
                     app:chipIconSize="@dimen/_16sdp"
-                    app:chipIconTint="@color/white"
                     app:chipIconVisible="true"
                     app:iconStartPadding="@dimen/_1sdp"
                     app:rippleColor="@color/white" />
@@ -141,18 +132,15 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="EZ"
+                    android:text=""
                     android:textAppearance="@style/textChipStyle."
                     android:textColor="@color/white"
                     app:chipBackgroundColor="@color/job_seeker_logo_green"
-                    app:chipIcon="@drawable/ic_phone_call_1"
+                    app:chipIcon="@drawable/ic_chip_job"
                     app:chipIconSize="@dimen/_16sdp"
-                    app:chipIconTint="@color/white"
                     app:chipIconVisible="true"
                     app:iconStartPadding="@dimen/_1sdp"
                     app:rippleColor="@color/white" />
-            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -166,18 +154,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/job_seeker_logo_green" />
 
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:id="@+id/scroll_view">
 
                 <LinearLayout
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -187,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
                     android:animateLayoutChanges="true" />
 
                 </LinearLayout>

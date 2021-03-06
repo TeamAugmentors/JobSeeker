@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,6 +31,7 @@ import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.ncorti.slidetoact.SlideToActView;
+import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -61,7 +61,13 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     }
 
     private void fetchData() {
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
+        query.include("applied");
+        query.whereNotEqualTo("applied", ParseUser.getCurrentUser());
+        query.whereNotEqualTo("createdBy", ParseUser.getCurrentUser());
+        query.orderByDescending("createdAt");
+
         query.findInBackground((objects, e) -> {
             if (e == null) {
                 parseObjects = (ArrayList<ParseObject>) objects;
@@ -72,6 +78,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 Toast.makeText(JobBoard.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @SuppressLint("RestrictedApi")
@@ -97,7 +104,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 } else {
                     searchItem.setVisible(true);
                     searchView.setVisibility(View.VISIBLE);
-
                 }
             }
         });
@@ -205,36 +211,50 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         //---------------------->
 
-        //apply
-
         ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setOnSlideCompleteListener(slideToActView -> {
-            parseObjects.get(position).add("applied", ParseUser.getCurrentUser());
 
-            parseObjects.get(position).saveInBackground(e -> {
-                if (e == null) {
-                    Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
+            //apply
+            if (ParseUser.getCurrentUser().getString("firstName") != null){
+                parseObjects.get(position).add("applied", ParseUser.getCurrentUser());
 
-                    ParseUser.getCurrentUser().add("appliedPosts", parseObjects.get(position));
+                parseObjects.get(position).saveInBackground(e -> {
+                    if (e == null) {
+                        Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
 
-                    ParseUser.getCurrentUser().saveEventually();
-                    dialog.dismiss();
-                } else {
-                    Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    slideToActView.resetSlider();
-                }
-            });
+                        ParseUser.getCurrentUser().add("appliedPosts", parseObjects.get(position));
+                        ParseUser.getCurrentUser().saveEventually();
+
+                        removeJob(parseObjects,position);
+
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        slideToActView.resetSlider();
+                    }
+                });
+
+            } else {
+                Toast.makeText(this, "Please create an account first", Toast.LENGTH_SHORT).show();
+                slideToActView.resetSlider();
+            }
         });
     }
 
-    @Override
+    private void removeJob(List<ParseObject> parseObjects,int pos) {
+        parseObjects.remove(pos);
+        adapter.notifyItemRemoved(pos);
+        adapter.notifyItemRangeChanged(pos, parseObjects.size());
+    }
+
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
 
         searchItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint("Search Jobs");
-
         searchView.setOnQueryTextListener(onQueryTextListener);
+
         return super.onCreateOptionsMenu(menu);
     }
 

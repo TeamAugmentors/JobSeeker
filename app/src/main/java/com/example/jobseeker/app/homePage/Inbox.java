@@ -1,0 +1,61 @@
+package com.example.jobseeker.app.homePage;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TableLayout;
+
+import com.example.jobseeker.app.homePage.adapters.inbox.InboxAdapter;
+import com.example.jobseeker.app.homePage.adapters.inbox.InboxViewPager2Adapter;
+import com.example.jobseeker.databinding.ActivityInboxBinding;
+import com.example.jobseeker.utils.ToolbarHelper;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+public class Inbox extends AppCompatActivity {
+    ActivityInboxBinding binding;
+    InboxViewPager2Adapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        binding = ActivityInboxBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        init();
+    }
+
+
+    private void init() {
+        ToolbarHelper.create(binding.toolbar, this, "Inbox");
+
+        binding.viewPager2.setAdapter(adapter = new InboxViewPager2Adapter(this));
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position){
+                    case 0:
+                        tab.setText("Applied Jobs");
+                        break;
+                    case 1:
+                        tab.setText("Created Jobs");
+                        break;
+                }
+            }
+        }).attach();
+
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            adapter.getAppliedInbox().fetchData(binding.swipeRefresh);
+            adapter.getCreatedJobInbox().fetchData(binding.swipeRefresh);
+        });
+    }
+
+    public void compose(View view) {
+        if (binding.extendedFab.isExtended())
+            binding.extendedFab.shrink();
+        else
+            binding.extendedFab.extend();
+    }
+}

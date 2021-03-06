@@ -23,6 +23,7 @@ import com.example.jobseeker.databinding.ActivityAppliedPostBinding;
 import com.example.jobseeker.databinding.ActivityCreatedPostBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.ncorti.slidetoact.SlideToActView;
+import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -48,6 +49,7 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
 
     private void fetchData() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
+        query.include("applied");
         query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 
         query.findInBackground((objects, e) -> {
@@ -58,7 +60,6 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
                 binding.recyclerView.setAdapter(adapter);
 
                 binding.chip.setText("Created " + parseObjects.size() + " Jobs");
-
             } else {
                 Toast.makeText(CreatedPosts.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -101,6 +102,7 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
 
         Dialog dialog = new Dialog(this, R.style.Dialog);
         dialog.setContentView(R.layout.dialog_layout);
+
         //delete confirmation dialog
         Dialog confirmationDialog = new Dialog(this, R.style.Dialog);
         confirmationDialog.setContentView(R.layout.dialog_delete_confirmation);
@@ -109,7 +111,6 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
 
         View dialogView = dialog.getWindow().getDecorView();
         View confirmationDialogView = confirmationDialog.getWindow().getDecorView();
-
 
         dialogView.findViewById(R.id.close).setOnClickListener(v -> {
             dialog.dismiss();
@@ -120,7 +121,6 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
 
             confirmationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             confirmationDialog.show();
-
         });
 
         //delete confirmation dialog
@@ -129,6 +129,16 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         });
 
         confirmationDialogView.findViewById(R.id.yesButton).setOnClickListener(v1 -> {
+
+            parseObjects.get(position).deleteInBackground(e -> {
+                if (e == null){
+                    Toast.makeText(this, "Successful!", Toast.LENGTH_SHORT).show();
+                    removeJob(parseObjects, position);
+                }else{
+                    Toast.makeText(this, "Error! " +  e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
             confirmationDialog.dismiss();
         });
 
@@ -162,6 +172,14 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         scrollView.setLayoutParams(params);
 
         ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setVisibility(View.GONE);
+    }
+
+    private void removeJob(List<ParseObject> parseObjects,int pos) {
+        parseObjects.remove(pos);
+        adapter.notifyItemRemoved(pos);
+        adapter.notifyItemRangeChanged(pos, parseObjects.size());
+
+        binding.chip.setText("Created " + parseObjects.size() + " Jobs");
     }
 
 }

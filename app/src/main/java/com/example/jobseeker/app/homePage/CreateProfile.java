@@ -3,8 +3,6 @@ package com.example.jobseeker.app.homePage;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -21,14 +19,11 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -41,8 +36,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.homePage.adapters.CreateProfileInfoViewPagerAdapter;
-import com.example.jobseeker.app.homePage.adapters.CreateProfileViewPager2Adapter;
+import com.example.jobseeker.app.homePage.adapters.createProfile.CreateProfileInfoViewPagerAdapter;
+import com.example.jobseeker.app.homePage.adapters.createProfile.CreateProfileViewPager2Adapter;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
 import com.example.jobseeker.utils.ChipHelper;
 import com.example.jobseeker.utils.HideKeyboard;
@@ -52,12 +47,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.yalantis.ucrop.UCrop;
-import com.yalantis.ucrop.UCropActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-
-import static androidx.core.content.FileProvider.getUriForFile;
 
 
 public class CreateProfile extends AppCompatActivity {
