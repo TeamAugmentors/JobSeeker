@@ -19,7 +19,7 @@
         app:cardElevation="@dimen/_2sdp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/backgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_light"
                 android:text="Hello! I would like to contact you"
-                android:textColor="@color/black"
+                android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp"
                 android:lineSpacingExtra="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_6sdp"
@@ -74,7 +74,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:text="2:15 PM"
-                android:textColor="@color/hint_black"
+                android:textColor="@color/textColor"
                 android:alpha="0.7"
                 android:textAlignment="textEnd"
                 android:layout_marginStart="@dimen/_30sdp"
@@ -92,7 +92,7 @@
             app:trackThickness="@dimen/_4sdp"
             android:layout_gravity="bottom"
             app:indicatorColor="@color/job_seeker_logo_green"
-            app:trackColor="@color/white"
+            app:trackColor="@color/backgroundColor"
             />
 
     </androidx.cardview.widget.CardView>

@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:paddingBottom="@dimen/_50sdp"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout

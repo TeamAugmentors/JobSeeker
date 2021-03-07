@@ -9,6 +9,8 @@ import androidx.core.view.GravityCompat;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -39,12 +42,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     ActivityHomepageBinding binding;
     SwitchMaterial switch_id;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        switch_id = findViewById(R.id.switch_id);
         init();
         fetchData();
 
@@ -84,6 +87,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerLayout,binding.toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
 
         binding.navView.setNavigationItemSelectedListener(this);
     }
@@ -214,19 +218,27 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         }
         else if(item.getItemId()==R.id.nav_switch){
-            switch_id =  findViewById(R.id.switch_id);
+            SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+            final SharedPreferences.Editor editor = sharedPreferences.edit();
+            switch_id = findViewById(R.id.switch_id);
+            //menu item-theme
             if(switch_id.isChecked()) {
+                editor.putBoolean("isDarkModeOn", false);
+                editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 switch_id.setChecked(false);
             }
             else
             {
+                editor.putBoolean("isDarkModeOn", true);
+                editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 switch_id.setChecked(true);
             }
             switch_id.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(HomePage.this, "1", Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -34,7 +34,7 @@
         android:translationZ="5dp"
         android:clickable="true"
         android:focusableInTouchMode="true"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/backgroundColor"
         app:cardCornerRadius="@dimen/_4sdp">
 
         <LinearLayout
@@ -52,7 +52,7 @@
                 android:layout_width="@dimen/_13sdp"
                 android:layout_height="@dimen/_13sdp"
                 android:layout_gravity="end"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/backgroundColor"
                 android:elevation="0dp"
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
@@ -88,7 +88,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textAppearance="@style/textChipStyle."
-                android:textColor="@color/white"
+                android:textColor="@color/textColor"
                 app:chipBackgroundColor="@color/job_seeker_logo_green"
                 app:chipIcon="@drawable/ic_phone_call_1"
                 app:chipIconSize="@dimen/_16sdp"

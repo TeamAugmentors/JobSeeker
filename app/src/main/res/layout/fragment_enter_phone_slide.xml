@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context=".app.startScreen.WelcomeScreen">
 
     <TextView
@@ -28,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enter_phone_no"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:fontFamily="@font/roboto_light"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"

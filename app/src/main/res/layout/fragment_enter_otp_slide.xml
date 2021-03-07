@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context=".app.startScreen.WelcomeScreen">
 
 
@@ -34,7 +33,7 @@
         android:lineSpacingExtra="@dimen/_6sdp"
         android:text="@string/enter_one_time_password_we_just_sent"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -4,7 +4,7 @@
     android:id="@+id/root"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/backgroundColor"
     app:cardCornerRadius="@dimen/_4sdp">
 
     <LinearLayout
@@ -48,7 +48,7 @@
                     android:layout_width="@dimen/_13sdp"
                     android:layout_height="@dimen/_13sdp"
                     android:layout_gravity="end"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/backgroundColor"
                     android:elevation="0dp"
                     android:insetLeft="0dp"
                     android:insetTop="0dp"
@@ -251,7 +251,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:text="Need an android"
                 android:textAlignment="textStart"
-                android:textColor="@color/black"
+                android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp" />
 
         </ScrollView>
@@ -272,7 +272,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:background="@drawable/button_background"
             android:drawablePadding="@dimen/_6sdp"
-            android:drawableTint="@color/white"
+            android:drawableTint="@color/backgroundColor"
             android:fontFamily="@font/roboto_light"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -295,7 +295,7 @@
             android:background="@drawable/button_background"
             android:drawablePadding="@dimen/_6sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:drawableTint="@color/white"
+            android:drawableTint="@color/backgroundColor"
             android:fontFamily="@font/roboto_light"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -315,7 +315,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:background="@drawable/delete_button_background"
             android:drawablePadding="@dimen/_6sdp"
-            android:drawableTint="@color/white"
+            android:drawableTint="@color/backgroundColor"
             android:fontFamily="@font/roboto_light"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -343,11 +343,12 @@
             app:bump_vibration="60"
             app:complete_icon="@drawable/anim_loading_spinner"
             app:icon_margin="@dimen/_5sdp"
-            app:inner_color="@color/white"
+            app:inner_color="@color/backgroundColor"
             app:outer_color="@color/job_seeker_logo_green"
             app:slider_height="@dimen/_35sdp"
             app:slider_icon="@drawable/ic_next_arrow"
-            app:text="Slide to Apply" />
+            app:text="Slide to Apply"
+            app:text_color="@color/white"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

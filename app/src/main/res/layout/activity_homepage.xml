@@ -5,7 +5,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
@@ -21,6 +20,7 @@
             android:background="@color/job_seeker_logo_green"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
+            app:titleTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/roboto_regular"
             android:text="For you"
-            android:textColor="#C3000000"
+            android:textColor="@color/textColor"
             android:textSize="@dimen/_50sdp" />
 
         <LinearLayout
@@ -54,7 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:src="@drawable/ic_right_arrow" />
+                android:src="@drawable/ic_right_arrow"
+                app:tint="@color/textColor"/>
 
         </LinearLayout>
 
@@ -129,7 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/white"
+        android:background="@color/backgroundColor"
         app:itemBackground="@drawable/custom_ripple"
         android:theme="@style/Navigation"
         app:headerLayout="@layout/nav_header"
