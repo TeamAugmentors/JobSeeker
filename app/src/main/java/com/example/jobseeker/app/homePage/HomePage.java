@@ -3,8 +3,10 @@ package com.example.jobseeker.app.homePage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +31,15 @@ import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.example.jobseeker.utils.ChipHelper;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ActivityHomepageBinding binding;
+    SwitchMaterial switch_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,6 +212,23 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 });
 
             }
+        }
+        else if(item.getItemId()==R.id.nav_switch){
+            switch_id =  findViewById(R.id.switch_id);
+            if(switch_id.isChecked()) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                switch_id.setChecked(false);
+            }
+            else
+            {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                switch_id.setChecked(true);
+            }
+            switch_id.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
         }
         return true;
     }

@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#9F2626</color>
     <color name="search_bar_background">#19711C</color>
-    <color name="backgroundColor">#FCFCFC</color>
-    <color name="textColor">#000000</color>
+    <color name="backgroundColor">#212121</color>
+    <color name="textColor">#FFFFFF</color>
 
 <!--    Theme colors-->
     <color name="job_seeker_logo_green">#01A514</color>

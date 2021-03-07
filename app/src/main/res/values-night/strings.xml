@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Job Seeker</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">CLose navigation drawer</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="message">Message</string>
+    <string name="login">Login</string>
+    <string name="picture">Picture</string>
+    <string name="search">Search</string>
+    <string name="enter_phone_no">Enter your phone number</string>
+    <string name="phone_no">Phone Number</string>
+    <string name="register_phone_number">Register Phone Number</string>
+    <string name="enter_one_time_password_we_just_sent">Enter one time password we just sent</string>
+    <string name="job_seeker">JobSeeker</string>
+    <string name="skip">SKIP</string>
+    <string name="next">next</string>
+    <string name="verification">Verification</string>
+    <string name="verify">Verify</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="address">Address</string>
+    <string-array name="country_list">
+        <item>+880</item>
+    </string-array>
+    <string-array name="job_list">
+        <item>Job1</item>
+        <item>Job2</item>
+        <item>Job3</item>
+        <item>Job4</item>
+        <item>Job5</item>
+        <item>Job6</item>
+        <item>Job7</item>
+        <item>Job8</item>
+        <item>Job9</item>
+        <item>Job10</item>
+        <item>Job11</item>
+        <item>Job12</item>
+    </string-array>
+    <string-array name="description">
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+        <item> This is random </item>
+    </string-array>
+    <string-array name="interest">
+        <item>C++</item>
+        <item>Java</item>
+        <item>Python</item>
+        <item>Java Script</item>
+    </string-array>
+    <string name="title_activity_create_job">CreateJob</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="title_activity_live_chat">LiveChat</string>
+</resources>
