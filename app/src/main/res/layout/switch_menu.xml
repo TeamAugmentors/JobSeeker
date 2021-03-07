@@ -6,6 +6,6 @@
     app:useMaterialThemeColors="true"
     app:thumbTint="@color/job_seeker_logo_green"
     app:trackTint="@color/track_color"
-
+    android:onClick="darkMode"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" />

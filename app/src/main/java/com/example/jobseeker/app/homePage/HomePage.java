@@ -221,31 +221,44 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         }
         else if(item.getItemId()==R.id.nav_switch){
-            SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-            final SharedPreferences.Editor editor = sharedPreferences.edit();
-            switch_id = findViewById(R.id.switch_id);
-            //menu item-theme
+           setDarkMode(true);
+        }
+        return true;
+    }
+
+    private void setDarkMode(Boolean flag) {
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        switch_id = findViewById(R.id.switch_id);
+
+        //menu item-theme
+        if (flag){
             if(switch_id.isChecked()) {
                 editor.putBoolean("isDarkModeOn", false);
                 editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 switch_id.setChecked(false);
             }
-            else
-            {
+            else {
                 editor.putBoolean("isDarkModeOn", true);
                 editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 switch_id.setChecked(true);
             }
-            switch_id.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(HomePage.this, "1", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
-        return true;
+
+        else{
+            if(!switch_id.isChecked()) {
+                editor.putBoolean("isDarkModeOn", false);
+                editor.apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            else {
+                editor.putBoolean("isDarkModeOn", true);
+                editor.apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+        }
     }
 
     public void jobBoard(View view) {
@@ -258,5 +271,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void liveChat(View view) {
         startActivity(new Intent(this, Inbox.class));
+    }
+
+    public void darkMode(View view) {
+        setDarkMode(false);
     }
 }
