@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -16,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,22 +45,23 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     ActivityHomepageBinding binding;
     SwitchMaterial switch_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        switch_id = findViewById(R.id.switch_id);
         init();
         fetchData();
 
     }
 
+
     private void fetchData() {
-        if (ParseUser.getCurrentUser().get("firstName") != null){
+        if (ParseUser.getCurrentUser().get("firstName") != null) {
             binding.navView.getMenu().getItem(0).setTitle("Edit Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_edit_profile);
-            ((TextView)binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().getString("firstName") + "!");
+            ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().getString("firstName") + "!");
 
             ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
             imageFile.getDataInBackground((data, e) -> {
@@ -67,7 +70,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     Glide.with(this)
                             .asBitmap()
                             .load(data)
-                            .override(500,500)
+                            .override(500, 500)
                             .transform(new CircleCrop())
                             .into((ImageView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.proPic));
 
@@ -76,7 +79,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 }
             });
         } else {
-            ((TextView)binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
+            ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
             binding.navView.getMenu().getItem(0).setTitle("Create Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
         }
@@ -85,12 +88,41 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private void init() {
         setSupportActionBar(binding.toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerLayout,binding.toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);
+        binding.drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            boolean bool = false;
+
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                if (!bool) {
+                    switch_id = findViewById(R.id.switch_id);
+                    resetSwitch();
+                    bool = true;
+                }
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                //check for dark mode and set toggle accordingly
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
         toggle.getDrawerArrowDrawable().setColor(getColor(R.color.white));
         toggle.syncState();
 
         binding.navView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -101,37 +133,32 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public void onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else{
+        } else {
             super.onBackPressed();
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.nav_logout){
+        if (item.getItemId() == R.id.nav_logout) {
             ParseUser.logOutInBackground(e -> {
-                if (e==null) {
+                if (e == null) {
                     Toast.makeText(this, "logged out successfully!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, WelcomeScreen.class));
                     finish();
                 } else
                     Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
-        }
-        else if(item.getItemId()==R.id.nav_profile){
-                startActivity(new Intent(this, CreateProfile.class));
-        }
-        else if(item.getItemId()==R.id.nav_created_jobs){
+        } else if (item.getItemId() == R.id.nav_profile) {
+            startActivity(new Intent(this, CreateProfile.class));
+        } else if (item.getItemId() == R.id.nav_created_jobs) {
             startActivity(new Intent(this, CreatedPosts.class));
-        }
-        else if(item.getItemId()==R.id.nav_applied_jobs){
+        } else if (item.getItemId() == R.id.nav_applied_jobs) {
             startActivity(new Intent(this, AppliedPosts.class));
-        }
-        else if(item.getItemId()==R.id.nav_view_profile){
-            if (ParseUser.getCurrentUser().get("firstName") != null){
+        } else if (item.getItemId() == R.id.nav_view_profile) {
+            if (ParseUser.getCurrentUser().get("firstName") != null) {
 
                 Dialog dialog = new Dialog(this, R.style.Dialog);
                 dialog.setContentView(R.layout.dialog_view_profile);
@@ -145,7 +172,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                         Glide.with(this)
                                 .asBitmap()
                                 .load(data)
-                                .override(500,500)
+                                .override(500, 500)
                                 .transform(new CircleCrop())
                                 .into((ImageView) dialog.findViewById(R.id.view_profile_Image));
 
@@ -155,42 +182,38 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 });
 
                 //fetching userinfo
-                ((TextView)dialog.findViewById(R.id.view_profile_picture_text_view)).setText(ParseUser.getCurrentUser().get("firstName").toString());
-                ((TextView)dialog.findViewById(R.id.phone_chip)).setText(ParseUser.getCurrentUser().get("username").toString());
-                ((TextView)dialog.findViewById(R.id.bkash_chip)).setText(ParseUser.getCurrentUser().get("bkashNo").toString());
+                ((TextView) dialog.findViewById(R.id.view_profile_picture_text_view)).setText(ParseUser.getCurrentUser().get("firstName").toString());
+                ((TextView) dialog.findViewById(R.id.phone_chip)).setText(ParseUser.getCurrentUser().get("username").toString());
+                ((TextView) dialog.findViewById(R.id.bkash_chip)).setText(ParseUser.getCurrentUser().get("bkashNo").toString());
 
-                double temp=ParseUser.getCurrentUser().getInt("totalEarned");
-                if(temp>1000)
-                {
-                    temp/=1000;
-                    int flag = (int)((temp*10)%10);
-                    int temp2 = (int)(temp);
+                double temp = ParseUser.getCurrentUser().getInt("totalEarned");
+                if (temp > 1000) {
+                    temp /= 1000;
+                    int flag = (int) ((temp * 10) % 10);
+                    int temp2 = (int) (temp);
 
-                    if(flag==0)
-                        ((TextView)dialog.findViewById(R.id.earn)).setText(temp2+"K earned");
-                    else{
-                        ((TextView)dialog.findViewById(R.id.earn)).setText(String.format("%.1f",temp)+"K earned");
+                    if (flag == 0)
+                        ((TextView) dialog.findViewById(R.id.earn)).setText(temp2 + "K earned");
+                    else {
+                        ((TextView) dialog.findViewById(R.id.earn)).setText(String.format("%.1f", temp) + "K earned");
                     }
-                }
-                else{
-                    ((TextView)dialog.findViewById(R.id.earn)).setText(String.valueOf(temp)+" earned");
+                } else {
+                    ((TextView) dialog.findViewById(R.id.earn)).setText(String.valueOf(temp) + " earned");
                 }
 
                 int jobs = ParseUser.getCurrentUser().getInt("jobsCompleted");
-                if(jobs>1000)
-                {
-                    jobs/=1000;
-                    ((TextView)dialog.findViewById(R.id.job_complete)).setText(String.format("%.1f",jobs)+" jobs completed");
-                }
-                else {
-                    ((TextView) dialog.findViewById(R.id.job_complete)).setText(String.valueOf(jobs)+ " jobs completed");
+                if (jobs > 1000) {
+                    jobs /= 1000;
+                    ((TextView) dialog.findViewById(R.id.job_complete)).setText(String.format("%.1f", jobs) + " jobs completed");
+                } else {
+                    ((TextView) dialog.findViewById(R.id.job_complete)).setText(String.valueOf(jobs) + " jobs completed");
                 }
 
                 if (ParseUser.getCurrentUser().getString("skillSet") != null) {
                     ChipHelper.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false, ParseUser.getCurrentUser().getString("skillSet").split(","));
                 }
 
-                ScrollView scrollView=dialog.findViewById(R.id.scroll_view);
+                ScrollView scrollView = dialog.findViewById(R.id.scroll_view);
                 ChipGroup chipGroup = dialog.findViewById(R.id.skill_chip_group);
                 int chipCount = chipGroup.getChildCount();
                 DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -216,13 +239,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                         dialog.dismiss();
                 });
 
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Please create a profile", Toast.LENGTH_SHORT).show();
             }
-        }
-        else if(item.getItemId()==R.id.nav_switch){
-           setDarkMode(true);
+        } else if (item.getItemId() == R.id.nav_switch) {
+            setDarkMode(true);
         }
         return true;
     }
@@ -233,28 +254,24 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         switch_id = findViewById(R.id.switch_id);
 
         //menu item-theme
-        if (flag){
-            if(switch_id.isChecked()) {
+        if (flag) {
+            if (switch_id.isChecked()) {
                 editor.putBoolean("isDarkModeOn", false);
                 editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 switch_id.setChecked(false);
-            }
-            else {
+            } else {
                 editor.putBoolean("isDarkModeOn", true);
                 editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 switch_id.setChecked(true);
             }
-        }
-
-        else{
-            if(!switch_id.isChecked()) {
+        } else {
+            if (!switch_id.isChecked()) {
                 editor.putBoolean("isDarkModeOn", false);
                 editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-            else {
+            } else {
                 editor.putBoolean("isDarkModeOn", true);
                 editor.apply();
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -262,17 +279,18 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }
     }
 
-//    public void resetSwitch(){
-//        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-//        final boolean isButtonChecked = sharedPreferences.getBoolean("isDarkModeOn",false);
-//        switch_id.setChecked(isButtonChecked);
-//    }
-
-    public void jobBoard(View view) {
-        startActivity (new Intent(this, JobBoard.class));
+    public void resetSwitch() {
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        final boolean isButtonChecked = sharedPreferences.getBoolean("isDarkModeOn", false);
+        switch_id.setChecked(isButtonChecked);
     }
 
-    public void createJob(View view){
+
+    public void jobBoard(View view) {
+        startActivity(new Intent(this, JobBoard.class));
+    }
+
+    public void createJob(View view) {
         startActivity(new Intent(this, CreateJob.class));
     }
 
