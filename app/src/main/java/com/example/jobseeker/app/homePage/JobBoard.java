@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -215,7 +216,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setOnSlideCompleteListener(slideToActView -> {
 
             //apply
-            if (ParseUser.getCurrentUser().getString("firstName") != null){
+            if (ParseUser.getCurrentUser().getString("firstName") != null) {
                 parseObjects.get(position).add("applied", ParseUser.getCurrentUser());
 
                 parseObjects.get(position).saveInBackground(e -> {
@@ -225,7 +226,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                         ParseUser.getCurrentUser().add("appliedPosts", parseObjects.get(position));
                         ParseUser.getCurrentUser().saveEventually();
 
-                        removeJob(parseObjects,position);
+                        removeJob(parseObjects, position);
 
                         dialog.dismiss();
                     } else {
@@ -241,13 +242,13 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         });
     }
 
-    private void removeJob(List<ParseObject> parseObjects,int pos) {
+    private void removeJob(List<ParseObject> parseObjects, int pos) {
         parseObjects.remove(pos);
         adapter.notifyItemRemoved(pos);
         adapter.notifyItemRangeChanged(pos, parseObjects.size());
     }
 
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
 
@@ -255,6 +256,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint("Search Jobs");
         searchView.setOnQueryTextListener(onQueryTextListener);
+
 
         return super.onCreateOptionsMenu(menu);
     }

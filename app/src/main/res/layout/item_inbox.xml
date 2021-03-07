@@ -7,17 +7,7 @@
     android:id="@+id/layout"
     android:orientation="vertical"
     android:layout_marginTop="@dimen/_10sdp">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/job_seeker_logo_green"
-        android:theme="@style/Theme.MaterialComponents.Light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:titleTextColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/view_pager_job"
-        app:layout_constraintTop_toTopOf="parent" />
+    
 
     <androidx.cardview.widget.CardView
         android:foreground="@drawable/custom_ripple"

@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -260,6 +261,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         }
     }
+
+//    public void resetSwitch(){
+//        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+//        final boolean isButtonChecked = sharedPreferences.getBoolean("isDarkModeOn",false);
+//        switch_id.setChecked(isButtonChecked);
+//    }
 
     public void jobBoard(View view) {
         startActivity (new Intent(this, JobBoard.class));
