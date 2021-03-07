@@ -57,6 +57,8 @@ public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapte
             this.context = context;
             this.onJobBoardListener = onJobBoardListener;
             b.getRoot().setOnClickListener(this);
+
+
         }
 
         @Override
@@ -81,8 +83,9 @@ public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapte
 
             if(flag==0)
                 holder.binding.salary.setText(temp2+"K");
-            else
-                holder.binding.salary.setText(temp+"K");
+            else{
+                holder.binding.salary.setText(String.format("%.1f",temp)+"K");
+            }
         }
         else
             holder.binding.salary.setText(parseObjects.get(pos).getInt("budget") + "");

@@ -3,11 +3,15 @@ package com.example.jobseeker.utils;
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.jobseeker.R;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 public class ProgressBarStatus {
-    public static void errorFlash(LinearProgressIndicator linearProgressIndicator){
+    public static void errorFlash(LinearProgressIndicator linearProgressIndicator, Context context){
         ValueAnimator valueAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), ColorEx.RED, ColorEx.WHITE,
                 ColorEx.RED, ColorEx.WHITE);
 
@@ -26,6 +30,7 @@ public class ProgressBarStatus {
             @Override
             public void onAnimationEnd(Animator animation) {
                 linearProgressIndicator.setIndicatorColor(ColorEx.JOB_SEEKER_GREEN);
+                linearProgressIndicator.setTrackColor(ContextCompat.getColor(context, R.color.backgroundColor));
             }
 
             @Override
@@ -42,14 +47,16 @@ public class ProgressBarStatus {
         valueAnimator.start();
     }
 
-    public static void successFlash(LinearProgressIndicator linearProgressIndicator){
+    public static void successFlash(LinearProgressIndicator linearProgressIndicator, Context context){
         ValueAnimator valueAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), ColorEx.JOB_SEEKER_GREEN, ColorEx.WHITE,
                 ColorEx.JOB_SEEKER_GREEN, ColorEx.WHITE);
 
         valueAnimator.setDuration(1000);
         valueAnimator.addUpdateListener(animation -> {
+
             linearProgressIndicator.setTrackColor((int)animation.getAnimatedValue());
             linearProgressIndicator.setIndicatorColor((int)animation.getAnimatedValue());
+
         });
 
         valueAnimator.start();
@@ -63,6 +70,7 @@ public class ProgressBarStatus {
             @Override
             public void onAnimationEnd(Animator animation) {
                 linearProgressIndicator.setIndicatorColor(ColorEx.JOB_SEEKER_GREEN);
+                linearProgressIndicator.setTrackColor(ContextCompat.getColor(context, R.color.backgroundColor));
             }
 
             @Override

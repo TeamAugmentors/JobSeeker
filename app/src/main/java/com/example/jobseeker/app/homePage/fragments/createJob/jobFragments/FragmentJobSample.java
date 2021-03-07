@@ -18,19 +18,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.databinding.FragmentCreateJobSampleBinding;
 import com.example.jobseeker.utils.ProgressBarStatus;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ProgressCallback;
-import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
@@ -49,54 +42,26 @@ public class FragmentJobSample extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         parseFiles[0] = null;
         parseFiles[1] = null;
         parseFiles[2] = null;
 
         //Files
-        String fileTypes[] = {"image/*", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
+        setFileIntent();
 
-        binding.addFile1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                myFileIntent.setType("*/*");
-                myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES, fileTypes);
-                startActivityForResult(myFileIntent, 1);
-
-            }
-        });
-
-        binding.addFile2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                myFileIntent.setType("*/*");
-                myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES, fileTypes);
-                startActivityForResult(myFileIntent, 2);
-            }
-        });
-        binding.addFile3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                myFileIntent.setType("*/*");
-                myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES, fileTypes);
-                startActivityForResult(myFileIntent, 3);
-            }
-        });
+        binding.addFile1.setOnClickListener(v -> startActivityForResult(myFileIntent, 1));
+        binding.addFile2.setOnClickListener(v -> startActivityForResult(myFileIntent, 2));
+        binding.addFile3.setOnClickListener(v -> startActivityForResult(myFileIntent, 3));
 
     }
 
-    public byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
+    private void setFileIntent() {
+        String fileTypes[] = {"image/*", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
+
+        myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        myFileIntent.setType("*/*");
+        myFileIntent.putExtra(Intent.EXTRA_MIME_TYPES, fileTypes);
     }
 
     @Override
@@ -144,15 +109,13 @@ public class FragmentJobSample extends Fragment {
                         extension.insert(0, displayName.charAt(i));
                     }
 
-                    Log.d("gawgaw", "SampleFile1." + extension);
-
                     parseFiles[0] = new ParseFile("SampleFile1." + extension, inputData);
 
                     parseFiles[0].saveInBackground(e -> {
                         if (e!=null){
                             Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                            ProgressBarStatus.errorFlash(binding.progressOne);
+                            ProgressBarStatus.errorFlash(binding.progressOne, getContext());
 
                             new Handler().postDelayed(() -> {
                                 binding.progressOne.setVisibility(GONE);
@@ -166,7 +129,7 @@ public class FragmentJobSample extends Fragment {
                             }
                             binding.progressOne.setProgress(percentDone, true);
                         } else {
-                            ProgressBarStatus.successFlash(binding.progressOne);
+                            ProgressBarStatus.successFlash(binding.progressOne, getContext());
 
                             new Handler().postDelayed(() -> {
                                 binding.progressOne.setVisibility(GONE);
@@ -175,7 +138,6 @@ public class FragmentJobSample extends Fragment {
                                 binding.cross1.setVisibility(View.VISIBLE);
                             }, 1000);
                         }
-
                     });
 
                     binding.file1.setText(displayName);
@@ -231,7 +193,7 @@ public class FragmentJobSample extends Fragment {
                         if (e!=null){
                             Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                            ProgressBarStatus.errorFlash(binding.progressTwo);
+                            ProgressBarStatus.errorFlash(binding.progressTwo, getContext());
 
                             new Handler().postDelayed(() -> {
                                 binding.progressTwo.setVisibility(GONE);
@@ -245,7 +207,7 @@ public class FragmentJobSample extends Fragment {
                             }
                             binding.progressTwo.setProgress(percentDone, true);
                         } else {
-                            ProgressBarStatus.successFlash(binding.progressTwo);
+                            ProgressBarStatus.successFlash(binding.progressTwo, getContext());
 
                             new Handler().postDelayed(() -> {
                                 binding.progressTwo.setVisibility(GONE);
@@ -310,7 +272,7 @@ public class FragmentJobSample extends Fragment {
                         if (e!=null){
                             Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                            ProgressBarStatus.errorFlash(binding.progressThree);
+                            ProgressBarStatus.errorFlash(binding.progressThree, getContext());
 
                             new Handler().postDelayed(() -> {
                                 binding.progressThree.setVisibility(GONE);
@@ -324,7 +286,7 @@ public class FragmentJobSample extends Fragment {
                             }
                             binding.progressThree.setProgress(percentDone, true);
                         } else {
-                            ProgressBarStatus.successFlash(binding.progressThree);
+                            ProgressBarStatus.successFlash(binding.progressThree, getContext());
 
                             new Handler().postDelayed(() -> {
                                 binding.progressThree.setVisibility(GONE);
@@ -342,6 +304,16 @@ public class FragmentJobSample extends Fragment {
         }
     }
 
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
     public FragmentCreateJobSampleBinding getBinding() {
         return binding;
     }

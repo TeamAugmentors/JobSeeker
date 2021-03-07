@@ -86,6 +86,7 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         }
         else
             holder.binding.salary.setText(parseObjects.get(pos).getInt("budget") + "");
+
         /*a function that displays text upto 25 characters from description and puts "..." at the end if its greater than 25 characters, set it to holder.biding.description*/
         String test = holder.binding.description.getText().toString();
         if(test.length()>74)
