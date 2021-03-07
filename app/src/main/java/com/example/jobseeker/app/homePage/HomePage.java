@@ -89,7 +89,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         toggle.getDrawerArrowDrawable().setColor(getColor(R.color.white));
         toggle.syncState();
 
-
         binding.navView.setNavigationItemSelectedListener(this);
     }
 

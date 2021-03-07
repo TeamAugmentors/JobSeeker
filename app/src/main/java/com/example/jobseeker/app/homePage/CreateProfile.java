@@ -203,7 +203,7 @@ public class CreateProfile extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-        ToolbarHelper.create(binding.toolbar, this, "Create Profile");
+        ToolbarHelper.create(binding.toolbar, null, this, "Create Profile");
 
         adapter = new CreateProfileViewPager2Adapter(this);
 

@@ -69,7 +69,8 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
     }
 
     private void init() {
-        ToolbarHelper.create(binding.toolbar, this, "Created Jobs");
+        ToolbarHelper.create(binding.toolbar, binding
+                .collapsingToolbar, this, "Created Jobs");
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemViewCacheSize(1);
@@ -131,11 +132,11 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         confirmationDialogView.findViewById(R.id.yesButton).setOnClickListener(v1 -> {
 
             parseObjects.get(position).deleteInBackground(e -> {
-                if (e == null){
+                if (e == null) {
                     Toast.makeText(this, "Successful!", Toast.LENGTH_SHORT).show();
                     removeJob(parseObjects, position);
-                }else{
-                    Toast.makeText(this, "Error! " +  e.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -174,7 +175,7 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setVisibility(View.GONE);
     }
 
-    private void removeJob(List<ParseObject> parseObjects,int pos) {
+    private void removeJob(List<ParseObject> parseObjects, int pos) {
         parseObjects.remove(pos);
         adapter.notifyItemRemoved(pos);
         adapter.notifyItemRangeChanged(pos, parseObjects.size());

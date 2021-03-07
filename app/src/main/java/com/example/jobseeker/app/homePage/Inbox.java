@@ -29,7 +29,7 @@ public class Inbox extends AppCompatActivity {
 
 
     private void init() {
-        ToolbarHelper.create(binding.toolbar, this, "Inbox");
+        ToolbarHelper.create(binding.toolbar, null, this, "Inbox");
 
         binding.viewPager2.setAdapter(adapter = new InboxViewPager2Adapter(this));
         new TabLayoutMediator(binding.tabLayout, binding.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {

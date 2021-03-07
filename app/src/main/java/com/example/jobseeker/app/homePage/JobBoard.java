@@ -2,6 +2,7 @@ package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import androidx.appcompat.widget.SearchView;
@@ -83,7 +84,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
     @SuppressLint("RestrictedApi")
     private void init() {
-        ToolbarHelper.create(binding.toolbar, this, "Job Board");
+        ToolbarHelper.create(binding.toolbar, binding.collapsingToolbar, this, "Job Board");
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemViewCacheSize(1);

@@ -72,7 +72,7 @@ public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapt
     }
 
     private void init() {
-        ToolbarHelper.create(binding.toolbar, this, "Applied Jobs");
+        ToolbarHelper.create(binding.toolbar, binding.collapsingToolbar, this, "Applied Jobs");
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemViewCacheSize(1);

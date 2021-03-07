@@ -17,8 +17,12 @@ import com.example.jobseeker.app.homePage.adapters.createJob.CreateJobViewPagerA
 import com.example.jobseeker.databinding.ActivityCreateJobBinding;
 import com.example.jobseeker.utils.ChipHelper;
 import com.example.jobseeker.utils.ToolbarHelper;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
 
 import static android.view.View.GONE;
 
@@ -39,11 +43,7 @@ public class CreateJob extends AppCompatActivity {
 
 
     private void init() {
-        ToolbarHelper.create(binding.toolbar, this, "Create Job");
-        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
-        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
-
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        ToolbarHelper.create(binding.toolbar, null, this, "Create Job");
 
         adapter = new CreateJobViewPagerAdapter(this);
 
@@ -191,7 +191,7 @@ public class CreateJob extends AppCompatActivity {
             //No errors found! Lets post this to the jobboard
             Toast.makeText(this, "Please create a profile first!", Toast.LENGTH_SHORT).show();
         } else{
-             ParseObject entity = new ParseObject("JobBoard");
+            ParseObject entity = new ParseObject("JobBoard");
             entity.put("title", adapter.getFragmentJobTitle().getBinding().jobTitleLayout.getEditText().getText().toString());
             entity.put("description", adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString());
             entity.put("budget", Integer.parseInt(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString()));
@@ -205,27 +205,23 @@ public class CreateJob extends AppCompatActivity {
 
             entity.put("createdBy", ParseUser.getCurrentUser());
 
-//            parseFiles = new ArrayList<>();
+            ArrayList<ParseFile> parseFiles = new ArrayList<>();
+            for (int i = 0; i < adapter.getFragmentJobSample().getParseFiles().length; i++) {
+                if (adapter.getFragmentJobSample().getParseFiles()[i] != null){
+                    parseFiles.add(adapter.getFragmentJobSample().getParseFiles()[i]);
+                }
+            }
+            entity.put("fileOne", parseFiles.get(0));
+            entity.put("fileTwo", parseFiles.get(1));
+            entity.put("fileThree", parseFiles.get(2));
 
-//
-//            for (int i = 0; i < adapter.getFragmentJobSample().getParseFiles().length; i++) {
-//                if (adapter.getFragmentJobSample().getParseFiles()[i] != null){
-//                    parseFiles.add(adapter.getFragmentJobSample().getParseFiles()[i]);
-//                }
-//            }
-//
-//
-//            entity.put("fileOne", parseFiles.get(0));
-//            entity.put("fileTwo", parseFiles.get(1));
-//            entity.put("fileThree", parseFiles.get(2));
-
-//            for (int i = 0; i < parseFiles.size(); i++) {
-//                try {
-//                    parseFiles.get(i).save();
-//                } catch (ParseException e) {
-//                    Toast.makeText(this, "e" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
+            for (int i = 0; i < parseFiles.size(); i++) {
+                try {
+                    parseFiles.get(i).save();
+                } catch (ParseException e) {
+                    Toast.makeText(this, "e" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
             // Saves the new object.
             // Notice that the SaveCallback is totally optional!
