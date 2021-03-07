@@ -20,6 +20,8 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/job_seeker_logo_green"
+            app:expandedTitleTextAppearance="@color/backgroundColor"
+            app:collapsedTitleTextAppearance="@color/backgroundColor"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
 
@@ -46,6 +48,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="@color/backgroundColor"
                 app:layout_collapseMode="pin"
                 />
 

@@ -16,7 +16,7 @@
         app:titleTextColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/view_pager_job"
         app:layout_constraintTop_toTopOf="parent" />
-
+    
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"

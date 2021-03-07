@@ -86,6 +86,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerLayout,binding.toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);
+        toggle.getDrawerArrowDrawable().setColor(getColor(R.color.white));
         toggle.syncState();
 
 
