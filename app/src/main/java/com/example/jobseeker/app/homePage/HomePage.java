@@ -216,6 +216,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 });
 
             }
+            else{
+                Toast.makeText(this, "Please create a profile", Toast.LENGTH_SHORT).show();
+            }
         }
         else if(item.getItemId()==R.id.nav_switch){
             SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
