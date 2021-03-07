@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
     android:paddingBottom="@dimen/_50sdp">
 
     <TextView
-        android:fontFamily="@font/roboto_light"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:layout_width="wrap_content"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:fontFamily="@font/roboto_light"
         android:lineSpacingExtra="@dimen/_3sdp"
         android:text="You can add some sample files for reference. This step is optional."
         android:textAlignment="textStart"
@@ -20,68 +21,91 @@
         android:textSize="@dimen/_15sdp" />
 
     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent">
+        android:orientation="horizontal"
+        android:layout_marginEnd="@dimen/_30sdp">
+
 
         <androidx.appcompat.widget.AppCompatButton
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:background="@drawable/button_background_filled"
-            android:drawablePadding="@dimen/_10sdp"
-            android:drawableStart="@drawable/ic_add_filled"
-            android:drawableTint="@color/white"
-            android:fontFamily="@font/roboto_regular"
             android:id="@+id/addFile1"
-            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:minHeight="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background_filled"
+            android:drawableStart="@drawable/ic_add_filled"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_regular"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_5sdp"
             android:text="Add file"
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp" />
 
+
         <TextView
-            android:fontFamily="@font/roboto_light"
-            android:layout_gravity="center"
             android:id="@+id/file_1"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="@dimen/_35sdp"
-            android:layout_width="@dimen/_120sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_light"
+            android:maxLines="1"
             android:text=".pdf/.doc/.png/.jpeg"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_14sdp" />
+
         <ImageView
-            android:layout_width="@dimen/_10sdp"
-            android:layout_height="@dimen/_10sdp"
             android:id="@+id/cross1"
-            android:src="@drawable/ic_round_clear_24"
-            app:tint="@color/job_seeker_red"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
             android:onClick="fileRemove1"
-            android:visibility="gone"/>
+            android:src="@drawable/ic_round_clear_24"
+            android:visibility="gone"
+            app:tint="@color/job_seeker_red" />
     </LinearLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:id="@+id/progressOne"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        app:trackThickness="@dimen/_4sdp"
+        app:trackCornerRadius="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_gravity="bottom"
+        app:indicatorColor="@color/job_seeker_logo_green"
+        app:trackColor="@color/backgroundColor"
+        />
+
     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent">
+        android:layout_marginEnd="@dimen/_30sdp">
+
         <androidx.appcompat.widget.AppCompatButton
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:background="@drawable/button_background_filled"
-            android:drawablePadding="@dimen/_10sdp"
-            android:drawableStart="@drawable/ic_add_filled"
-            android:drawableTint="@color/white"
-            android:fontFamily="@font/roboto_regular"
             android:id="@+id/addFile2"
-            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:minHeight="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background_filled"
+            android:drawableStart="@drawable/ic_add_filled"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/roboto_regular"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_5sdp"
             android:text="Add file"
@@ -89,46 +113,65 @@
             android:textSize="@dimen/_13sdp" />
 
         <TextView
-            android:fontFamily="@font/roboto_light"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
             android:id="@+id/file_2"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="@dimen/_35sdp"
-            android:layout_width="@dimen/_120sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_light"
+            android:maxLines="1"
             android:text=".pdf/.doc/.png/.jpeg"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_14sdp" />
+
         <ImageView
+            android:id="@+id/cross2"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
-            android:id="@+id/cross2"
-            android:src="@drawable/ic_round_clear_24"
-            app:tint="@color/job_seeker_red"
             android:onClick="fileRemove2"
-            android:visibility="gone"/>
+            android:src="@drawable/ic_round_clear_24"
+            android:visibility="gone"
+            app:tint="@color/job_seeker_red" />
 
     </LinearLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:id="@+id/progressTwo"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        app:trackThickness="@dimen/_4sdp"
+        app:trackCornerRadius="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_gravity="bottom"
+        app:indicatorColor="@color/job_seeker_logo_green"
+        app:trackColor="@color/backgroundColor"
+        />
+
     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent">
+
+        android:layout_marginEnd="@dimen/_30sdp">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addFile3"
             style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/button_background_filled"
-            android:drawablePadding="@dimen/_10sdp"
             android:drawableStart="@drawable/ic_add_filled"
+            android:drawablePadding="@dimen/_10sdp"
             android:drawableTint="@color/white"
             android:fontFamily="@font/roboto_regular"
-            android:id="@+id/addFile3"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_5sdp"
             android:text="Add file"
@@ -137,47 +180,64 @@
 
 
         <TextView
-            android:fontFamily="@font/roboto_light"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
             android:id="@+id/file_3"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="@dimen/_35sdp"
-            android:layout_width="@dimen/_120sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_light"
+            android:maxLines="1"
             android:text=".pdf/.doc/.png/.jpeg"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_14sdp" />
+
         <ImageView
+            android:id="@+id/cross3"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
-            android:id="@+id/cross3"
-            android:src="@drawable/ic_round_clear_24"
-            app:tint="@color/job_seeker_red"
             android:onClick="fileRemove3"
-            android:visibility="gone"/>
+            android:src="@drawable/ic_round_clear_24"
+            android:visibility="gone"
+            app:tint="@color/job_seeker_red" />
     </LinearLayout>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:id="@+id/progressThree"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        app:trackThickness="@dimen/_4sdp"
+        app:trackCornerRadius="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_gravity="bottom"
+        app:indicatorColor="@color/job_seeker_logo_green"
+        app:trackColor="@color/backgroundColor"
+        />
 
 
     <androidx.appcompat.widget.AppCompatButton
-        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/create_job"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_60sdp"
         android:background="@drawable/button_background"
         android:drawablePadding="@dimen/_6sdp"
         android:drawableTint="@color/backgroundColor"
         android:fontFamily="@font/roboto_light"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:minHeight="0dp"
         android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:onClick="createJob"
         android:paddingHorizontal="@dimen/_25sdp"
         android:paddingVertical="@dimen/_6sdp"
         android:text="Create Job"
-        android:onClick="createJob"
         android:textAllCaps="false"
         android:textColor="@color/job_seeker_logo_green"
-        android:textSize="@dimen/_16sdp"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_60sdp"/>
+        android:textSize="@dimen/_16sdp" />
 </LinearLayout>
 
