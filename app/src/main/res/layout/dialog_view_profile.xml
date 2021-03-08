@@ -88,7 +88,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textAppearance="@style/textChipStyle."
-                android:textColor="@color/textColor"
+                android:textColor="@color/white"
                 app:chipBackgroundColor="@color/job_seeker_logo_green"
                 app:chipIcon="@drawable/ic_phone_call_1"
                 app:chipIconSize="@dimen/_16sdp"

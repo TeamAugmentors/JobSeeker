@@ -1,12 +1,17 @@
 package com.example.jobseeker.utils;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.jobseeker.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.textfield.TextInputLayout;
 
 public class ChipHelper {
 
@@ -22,7 +27,7 @@ public class ChipHelper {
         return result.toString();
     }
 
-    public static void addChipIntoChipGroup(ChipGroup chipGroup, Context context, boolean isCloseIcon, String... texts) {
+    public static void addChipIntoChipGroup(ChipGroup chipGroup, Context context, boolean isCloseIcon, boolean isDarkModeOn, String... texts) {
         for (String text : texts) {
             Chip chip = new Chip(context);
             ChipDrawable chipDrawable = ChipDrawable.createFromResource(context, R.xml.chip);
@@ -31,16 +36,22 @@ public class ChipHelper {
             chip.setCheckable(false);
             chip.setClickable(true);
 
-            if(!isCloseIcon) {
+            if (!isCloseIcon) {
                 chip.setCloseIcon(null);
-            }else{
+            } else {
                 chip.setOnCloseIconClickListener(v -> {
                     chipGroup.removeView(chip);
                 });
             }
-
+            if (isDarkModeOn) {
+                chip.setTextColor(Color.BLACK);
+                chip.setCloseIconTint(ColorStateList.valueOf(Color.BLACK));
+            }
+            else {
+                chip.setTextColor(Color.WHITE);
+                chip.setCloseIconTint(ColorStateList.valueOf(Color.WHITE));
+            }
             chip.setText(text.toUpperCase());
-
             chipGroup.addView(chip);
         }
     }
@@ -54,7 +65,7 @@ public class ChipHelper {
         return null;
     }
 
-    public static boolean findMatch(ChipGroup chipGroup, String s){
+    public static boolean findMatch(ChipGroup chipGroup, String s) {
         for (int i = 0; i < chipGroup.getChildCount(); i++) {
             if (((Chip) chipGroup.getChildAt(i)).getText().toString().toLowerCase().equals(s)) {
                 return true;

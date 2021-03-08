@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -65,6 +66,7 @@ public class CreateProfile extends AppCompatActivity {
     private boolean isImageSelected = false;
     CreateProfileViewPager2Adapter adapter;
     ChipGroup skillChipGroup;
+    boolean isDarkModeOn=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,8 @@ public class CreateProfile extends AppCompatActivity {
             fetchData();
             errorTextControl();
         }, 1000);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
     }
 
 
@@ -190,7 +193,7 @@ public class CreateProfile extends AppCompatActivity {
             });
 
             if (ParseUser.getCurrentUser().getString("skillSet") != null) {
-                ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true, ParseUser.getCurrentUser().getString("skillSet").split(","));
+                ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true, isDarkModeOn,ParseUser.getCurrentUser().getString("skillSet").split(","));
             }
 
             ((Button) findViewById(R.id.createProfile)).setText("Update Profile");
@@ -493,7 +496,7 @@ public class CreateProfile extends AppCompatActivity {
 
         String skills = ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().getText().toString().toLowerCase();
         if (!ChipHelper.findMatch(skillChipGroup, skills)) {
-            ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true,skills);
+            ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true,isDarkModeOn,skills);
             ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().setText("");
         } else {
             Toast.makeText(this, "Skill already exists!", Toast.LENGTH_SHORT).show();

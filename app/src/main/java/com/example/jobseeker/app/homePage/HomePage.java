@@ -45,12 +45,15 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     ActivityHomepageBinding binding;
     SwitchMaterial switch_id;
+    boolean isDarkModeOn=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
         init();
         fetchData();
 
@@ -210,7 +213,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 }
 
                 if (ParseUser.getCurrentUser().getString("skillSet") != null) {
-                    ChipHelper.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false, ParseUser.getCurrentUser().getString("skillSet").split(","));
+                    ChipHelper.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false,isDarkModeOn, ParseUser.getCurrentUser().getString("skillSet").split(","));
                 }
 
                 ScrollView scrollView = dialog.findViewById(R.id.scroll_view);

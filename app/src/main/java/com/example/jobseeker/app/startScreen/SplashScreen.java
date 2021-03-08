@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.HomePage;
 import com.example.jobseeker.databinding.ActivitySplashScreenBinding;
 import com.parse.ParseUser;

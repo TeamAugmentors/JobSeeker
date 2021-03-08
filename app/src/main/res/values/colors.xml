@@ -23,4 +23,5 @@
     <color name="job_black">#92000000</color>
     <color name="color_transparent">#00FFFFFF</color>
     <color name="bkash_color">#df146e</color>
+    <color name="dark_green">#028801</color>
 </resources>

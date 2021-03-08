@@ -9,12 +9,14 @@ import androidx.appcompat.widget.SearchView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +24,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -38,6 +43,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +63,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         super.onCreate(savedInstanceState);
         binding = ActivityJobBoardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         init();
         fetchData();
     }
@@ -85,6 +90,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
     @SuppressLint("RestrictedApi")
     private void init() {
+
         ToolbarHelper.create(binding.toolbar, binding.collapsingToolbar, this, "Job Board");
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -148,6 +154,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         };
 
         binding.search.addTextChangedListener(textWatcher);
+
     }
 
     private void filter(String text) {
@@ -247,16 +254,19 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         adapter.notifyItemRemoved(pos);
         adapter.notifyItemRangeChanged(pos, parseObjects.size());
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setQueryHint("Search Job");
+        searchView.setBackground(getDrawable(R.drawable.search_bar_background1));
 
-        searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Search Jobs");
-        searchView.setOnQueryTextListener(onQueryTextListener);
-
+        EditText txtSearch = ((EditText)searchView.findViewById(androidx.appcompat.R.id.search_src_text));
+        ImageView closeBtn = ((ImageView)searchView.findViewById(androidx.appcompat.R.id.search_close_btn));
+        closeBtn.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+        txtSearch.setHint(getResources().getString(R.string.app_name));
+        txtSearch.setHintTextColor(Color.LTGRAY);
+        txtSearch.setTextColor(Color.WHITE);
 
         return super.onCreateOptionsMenu(menu);
     }
