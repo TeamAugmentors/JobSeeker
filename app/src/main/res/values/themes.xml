@@ -39,6 +39,7 @@
     </style>
 
     <style name="CreateJobTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
         <item name="boxStrokeColor">@color/job_input_etext_outline_color</item>
     </style>
 
@@ -62,7 +63,7 @@
         <item name="colorPrimary">@color/job_seeker_logo_green</item>
         <!-- Secondary brand color. -->
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Status bar color. -->
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/job_seeker_logo_green</item>

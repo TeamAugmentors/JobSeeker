@@ -92,19 +92,18 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     private void init() {
 
         ToolbarHelper.create(binding.toolbar, binding.collapsingToolbar, this, "Job Board");
-
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemViewCacheSize(1);
 
         binding.appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
             verticalOffset = verticalOffset * -1;
-            Log.d("AWOFJAWOF", verticalOffset + "");
             float x = (float) (binding.appBar.getTotalScrollRange() / 2.0);
             if (verticalOffset <= x) {
                 binding.search.setAlpha((float) (1.0 - (verticalOffset / x)));
             }
 
             if (searchItem != null) {
+                Log.d("AWOFJAWOF", verticalOffset + "");
                 if (verticalOffset / x < 1) {
                     searchItem.setVisible(false);
                     searchView.setVisibility(View.GONE);
@@ -267,7 +266,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         closeBtn.setImageTintList(ColorStateList.valueOf(Color.WHITE));
         txtSearch.setTextColor(Color.WHITE);
         txtSearch.setTextCursorDrawable(R.drawable.cursor);
-        searchView.setIconified(false);
         return super.onCreateOptionsMenu(menu);
     }
 
