@@ -429,7 +429,7 @@ public class CreateProfile extends AppCompatActivity {
 
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(this.getCacheDir(), "U_Crop_Image_" + System.currentTimeMillis() + ".jpeg")));
 
-        uCrop.withAspectRatio(1, 1).withAspectRatio(1, 1).withOptions(getCropOption()).start(CreateProfile.this);
+        uCrop.withOptions(getCropOption()).start(CreateProfile.this);
     }
 
     private UCrop.Options getCropOption() {
@@ -437,13 +437,13 @@ public class CreateProfile extends AppCompatActivity {
         options.setCompressionQuality(100);
         options.setHideBottomControls(false);
         options.setFreeStyleCropEnabled(true);
-        options.setCropGridColor(getColor(R.color.job_seeker_red));
         options.setStatusBarColor(getColor(R.color.job_seeker_logo_green));
         options.setToolbarColor(getColor(R.color.job_seeker_logo_green));
         options.setActiveControlsWidgetColor(getColor(R.color.job_seeker_logo_green));
         options.setCircleDimmedLayer(true);
-        options.setCropGridRowCount(3);
-        options.setCropGridColumnCount(3);
+        options.setShowCropGrid(false);
+        options.withAspectRatio(1,1);
+
         return options;
     }
 

@@ -25,7 +25,7 @@ public class CreateJobViewPagerAdapter  extends FragmentStateAdapter {
             case 0:
                 return fragmentJobTitle;
             case 1:
-                return  fragmentJobBudget;
+                return fragmentJobBudget;
             case 2:
                 return fragmentJobSample;
         }

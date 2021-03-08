@@ -3,6 +3,7 @@ package com.example.jobseeker.app.homePage;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 
@@ -126,6 +128,7 @@ public class CreateJob extends AppCompatActivity {
         binding.dotsIndicator.setViewPager2(binding.viewPager2);
 
     }
+
     public void next(View view) {
         goToNextSlide();
     }
@@ -159,7 +162,7 @@ public class CreateJob extends AppCompatActivity {
     }
 
     public void createJob(View v) {
-        //Check for errors
+//        Check for errors
         String checkBudget = adapter.getFragmentJobBudget().getBudget();
         if (adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString().length() < 50 || adapter.getFragmentJobTitle().getBinding().jobTitleLayout.getEditText().getText().toString().length() == 0) {
             binding.viewPager2.setCurrentItem(0);
@@ -187,10 +190,10 @@ public class CreateJob extends AppCompatActivity {
                 adapter.getFragmentJobBudget().getBinding().dateTextView.setText("Please select a date");
                 adapter.getFragmentJobBudget().getBinding().dateTextView.setTextSize(17);
             }
-        } else if(ParseUser.getCurrentUser().get("firstName") == null) {
+        } else if (ParseUser.getCurrentUser().get("firstName") == null) {
             //No errors found! Lets post this to the jobboard
             Toast.makeText(this, "Please create a profile first!", Toast.LENGTH_SHORT).show();
-        } else{
+        } else {
             ParseObject entity = new ParseObject("JobBoard");
             entity.put("title", adapter.getFragmentJobTitle().getBinding().jobTitleLayout.getEditText().getText().toString());
             entity.put("description", adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString());
@@ -205,36 +208,37 @@ public class CreateJob extends AppCompatActivity {
 
             entity.put("createdBy", ParseUser.getCurrentUser());
 
-            ArrayList<ParseFile> parseFiles = new ArrayList<>();
-            for (int i = 0; i < adapter.getFragmentJobSample().getParseFiles().length; i++) {
-                if (adapter.getFragmentJobSample().getParseFiles()[i] != null){
-                    parseFiles.add(adapter.getFragmentJobSample().getParseFiles()[i]);
-                }
-            }
-            entity.put("fileOne", parseFiles.get(0));
-            entity.put("fileTwo", parseFiles.get(1));
-            entity.put("fileThree", parseFiles.get(2));
-
-            for (int i = 0; i < parseFiles.size(); i++) {
-                try {
-                    parseFiles.get(i).save();
-                } catch (ParseException e) {
-                    Toast.makeText(this, "e" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            for (int i = 0; i < 3; i++) {
+                if (adapter.getFragmentJobSample().getParseFiles()[i] != null) {
+                    entity.put("file" + (i + 1), adapter.getFragmentJobSample().getParseFiles()[i]);
                 }
             }
 
-            // Saves the new object.
-            // Notice that the SaveCallback is totally optional!
-            entity.saveInBackground(e -> {
-                if (e == null) {
-                    //Save was done
-                    Toast.makeText(this, "success!", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    //Something went wrong
-                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            //Dirty check, to see if all files have finished uploading
+            boolean dirty = false;
+            for (int i = 0; i < 3; i++) {
+                if (adapter.getFragmentJobSample().getParseFiles()[i] != null) {
+                    if (adapter.getFragmentJobSample().getParseFiles()[i].isDirty()) {
+                        dirty = true;
+                    }
                 }
-            });
+            }
+
+            if (!dirty) {
+                entity.saveInBackground(e -> {
+                    if (e == null) {
+                        //Save was done
+                        Toast.makeText(this, "success!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        //Something went wrong
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Please wait for your files to finish uploading!", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -248,6 +252,7 @@ public class CreateJob extends AppCompatActivity {
         view.setVisibility(GONE);
         adapter.getFragmentJobSample().getBinding().file1.setText(".pdf/.doc/.png/.jpeg");
         (adapter.getFragmentJobSample().getParseFiles())[0] = null;
+
     }
 
     public void fileRemove2(View view) {
