@@ -53,6 +53,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:titleTextColor="@color/backgroundColor"
                 app:layout_collapseMode="pin"
+                app:collapseIcon="@drawable/ic_back_arrow"
                 />
 
 

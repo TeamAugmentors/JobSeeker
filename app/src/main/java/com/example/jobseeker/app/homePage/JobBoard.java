@@ -254,20 +254,20 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         adapter.notifyItemRemoved(pos);
         adapter.notifyItemRangeChanged(pos, parseObjects.size());
     }
+    @SuppressLint("NewApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQueryHint("Search Job");
-        searchView.setBackground(getDrawable(R.drawable.search_bar_background1));
-
-        EditText txtSearch = ((EditText)searchView.findViewById(androidx.appcompat.R.id.search_src_text));
-        ImageView closeBtn = ((ImageView)searchView.findViewById(androidx.appcompat.R.id.search_close_btn));
+        searchView.setAlpha((float) 0.9);
+        EditText txtSearch = (searchView.findViewById(androidx.appcompat.R.id.search_src_text));
+        ImageView closeBtn = (searchView.findViewById(androidx.appcompat.R.id.search_close_btn));
+        txtSearch.setHintTextColor(getResources().getColor(R.color.hintColor));
         closeBtn.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-        txtSearch.setHint(getResources().getString(R.string.app_name));
-        txtSearch.setHintTextColor(Color.LTGRAY);
         txtSearch.setTextColor(Color.WHITE);
-
+        txtSearch.setTextCursorDrawable(R.drawable.cursor);
+        searchView.setIconified(false);
         return super.onCreateOptionsMenu(menu);
     }
 
