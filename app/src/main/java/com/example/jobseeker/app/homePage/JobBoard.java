@@ -103,7 +103,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
             }
 
             if (searchItem != null) {
-                Log.d("AWOFJAWOF", verticalOffset + "");
                 if (verticalOffset / x < 1) {
                     searchItem.setVisible(false);
                     searchView.setVisibility(View.GONE);
@@ -111,6 +110,21 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 } else {
                     searchItem.setVisible(true);
                     searchView.setVisibility(View.VISIBLE);
+                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                        @Override
+                        public boolean onQueryTextSubmit(String query) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText) {
+                            binding.search.removeTextChangedListener(textWatcher);
+                            binding.search.setText(newText);
+                            binding.search.addTextChangedListener(textWatcher);
+                            filter(newText);
+                            return false;
+                        }
+                    });
                 }
             }
         });
@@ -126,29 +140,10 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 searchView.setOnQueryTextListener(null);
                 searchView.setQuery(s.toString(), false);
                 searchView.setOnQueryTextListener(onQueryTextListener);
-
                 filter(s.toString());
-            }
-        };
-
-        onQueryTextListener = new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                binding.search.removeTextChangedListener(textWatcher);
-                binding.search.setText(newText);
-                binding.search.addTextChangedListener(textWatcher);
-
-                filter(newText);
-                return true;
             }
         };
 
@@ -253,10 +248,12 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         adapter.notifyItemRemoved(pos);
         adapter.notifyItemRangeChanged(pos, parseObjects.size());
     }
+
     @SuppressLint("NewApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
+        searchItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQueryHint("Search Job");
         searchView.setAlpha((float) 0.9);
@@ -266,6 +263,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         closeBtn.setImageTintList(ColorStateList.valueOf(Color.WHITE));
         txtSearch.setTextColor(Color.WHITE);
         txtSearch.setTextCursorDrawable(R.drawable.cursor);
+
         return super.onCreateOptionsMenu(menu);
     }
 

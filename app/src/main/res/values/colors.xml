@@ -12,6 +12,7 @@
     <color name="backgroundColor">#FCFCFC</color>
     <color name="textColor">#000000</color>
     <color name="hintColor">#F1F1F1</color>
+    <color name="chipTextColor">#FFFFFF</color>
 
 <!--    Theme colors-->
     <color name="job_seeker_logo_green">#01A514</color>

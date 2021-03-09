@@ -11,6 +11,7 @@
     <color name="search_bar_background">#19711C</color>
     <color name="backgroundColor">#212121</color>
     <color name="textColor">#FFFFFF</color>
+    <color name="chipTextColor">#000000</color>
 
 <!--    Theme colors-->
     <color name="job_seeker_logo_green">#01A514</color>
