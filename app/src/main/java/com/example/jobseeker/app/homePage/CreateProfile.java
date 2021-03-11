@@ -422,7 +422,6 @@ public class CreateProfile extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void startCrop(@NonNull Uri uri) {

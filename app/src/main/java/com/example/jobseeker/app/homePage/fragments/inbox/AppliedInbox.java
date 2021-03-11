@@ -19,6 +19,7 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.AppliedPosts;
 import com.example.jobseeker.app.homePage.CreateProfile;
 import com.example.jobseeker.app.homePage.CreatedPostsAdapter;
+import com.example.jobseeker.app.homePage.Inbox;
 import com.example.jobseeker.app.homePage.JobBoard;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.app.homePage.adapters.inbox.InboxAdapter;
@@ -59,14 +60,22 @@ public class AppliedInbox extends Fragment {
     }
 
     public void fetchData(SwipeRefreshLayout swipeRefreshLayout) {
+        if (swipeRefreshLayout == null){
+            //first time
+            ((Inbox) getActivity()).getBinding().swipeRefresh.setEnabled(false);
+        }
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.include("appliedPosts.createdBy");
 
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (object, e) -> {
             if (e == null) {
+
                 if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setRefreshing(false);
+                } else{
+                    ((Inbox) getActivity()).getBinding().swipeRefresh.setEnabled(true);
                 }
+
                 HashMap<String, ParseObject> createdBys = new HashMap<>();
                 parseObjects = object.getList("appliedPosts");
                 if (parseObjects != null) {
