@@ -48,7 +48,6 @@ public class CreatedJobInbox extends Fragment {
 
     public void fetchData(SwipeRefreshLayout swipeRefreshLayout) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
-        //headphone namalam, kaan betha
         query.include("applied");
         query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 

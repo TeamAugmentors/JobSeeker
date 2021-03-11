@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage.fragments.inbox;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.style.ImageSpan;
 import android.util.Log;

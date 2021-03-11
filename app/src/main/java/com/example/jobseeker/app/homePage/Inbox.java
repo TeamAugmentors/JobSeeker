@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TableLayout;
 
+import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.inbox.InboxAdapter;
 import com.example.jobseeker.app.homePage.adapters.inbox.InboxViewPager2Adapter;
 import com.example.jobseeker.databinding.ActivityInboxBinding;
@@ -46,9 +47,13 @@ public class Inbox extends AppCompatActivity {
             }
         }).attach();
 
+        binding.swipeRefresh.setColorSchemeResources(R.color.job_seeker_logo_green);
+
         binding.swipeRefresh.setOnRefreshListener(() -> {
+
             adapter.getAppliedInbox().fetchData(binding.swipeRefresh);
             adapter.getCreatedJobInbox().fetchData(binding.swipeRefresh);
+
         });
     }
 
