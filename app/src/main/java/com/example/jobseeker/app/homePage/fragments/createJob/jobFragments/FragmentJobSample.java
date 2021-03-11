@@ -66,245 +66,12 @@ public class FragmentJobSample extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    String uriString = uri.toString();
-
-                    InputStream iStream;
-
-                    byte[] inputData = null;
-                    try {
-                        iStream = getActivity().getContentResolver().openInputStream(uri);
-                        inputData = getBytes(iStream);
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    File myFile = new File(uriString);
-
-                    StringBuilder extension = new StringBuilder();
-
-                    String displayName = null;
-
-                    if (uriString.startsWith("content://")) {
-                        Cursor cursor = null;
-                        try {
-                            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-                            if (cursor != null && cursor.moveToFirst()) {
-                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                            }
-                        } finally {
-                            cursor.close();
-                        }
-                    } else if (uriString.startsWith("file://")) {
-                        displayName = myFile.getName();
-                    }
-
-                    for (int i = displayName.length() - 1; i >= 0; i--) {
-                        if (displayName.charAt(i) == '.') {
-                            break;
-                        }
-                        extension.insert(0, displayName.charAt(i));
-                    }
-
-                    parseFiles[0] = new ParseFile("SampleFile1." + extension, inputData);
-
-                    parseFiles[0].saveInBackground(e -> {
-                        if (e != null) {
-                            Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            ProgressBarStatus.errorFlash(binding.progressOne, getContext());
-
-                            new Handler().postDelayed(() -> {
-                                binding.progressOne.setVisibility(GONE);
-                                binding.progressOne.setProgress(0, true);
-                            }, 1000);
-                        }
-                    }, percentDone -> {
-                        if (percentDone != 100) {
-                            if (binding.progressOne.getVisibility() == GONE) {
-                                binding.progressOne.setVisibility(View.VISIBLE);
-                            }
-                            binding.progressOne.setProgress(percentDone, true);
-                        } else {
-                            ProgressBarStatus.successFlash(binding.progressOne, getContext());
-
-                            new Handler().postDelayed(() -> {
-                                binding.progressOne.setVisibility(GONE);
-                                binding.progressOne.setProgress(0, true);
-
-                                binding.cross1.setVisibility(View.VISIBLE);
-                            }, 1000);
-                        }
-                    });
-
-                    binding.file1.setText(displayName);
-                }
-                break;
-            case 2:
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    String uriString = uri.toString();
-
-                    InputStream iStream = null;
-
-                    byte[] inputData = null;
-                    try {
-                        iStream = getActivity().getContentResolver().openInputStream(uri);
-                        inputData = getBytes(iStream);
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    File myFile = new File(uriString);
-
-                    StringBuilder extension = new StringBuilder();
-
-                    String displayName = null;
-
-                    if (uriString.startsWith("content://")) {
-                        Cursor cursor = null;
-                        try {
-                            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-                            if (cursor != null && cursor.moveToFirst()) {
-                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                            }
-                        } finally {
-                            cursor.close();
-                        }
-                    } else if (uriString.startsWith("file://")) {
-                        displayName = myFile.getName();
-                    }
-
-                    for (int i = displayName.length() - 1; i >= 0; i--) {
-                        if (displayName.charAt(i) == '.') {
-                            break;
-                        }
-                        extension.insert(0, displayName.charAt(i));
-                    }
-
-                    Log.d("gawgaw", "SampleFile1." + extension);
-
-                    parseFiles[1] = new ParseFile("SampleFile2." + extension, inputData);
-
-                    parseFiles[1].saveInBackground(e -> {
-                        if (e != null) {
-                            Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            ProgressBarStatus.errorFlash(binding.progressTwo, getContext());
-
-                            new Handler().postDelayed(() -> {
-                                binding.progressTwo.setVisibility(GONE);
-                                binding.progressTwo.setProgress(0, true);
-                            }, 1000);
-                        }
-                    }, percentDone -> {
-                        if (percentDone != 100) {
-                            if (binding.progressTwo.getVisibility() == GONE) {
-                                binding.progressTwo.setVisibility(View.VISIBLE);
-                            }
-                            binding.progressTwo.setProgress(percentDone, true);
-                        } else {
-                            ProgressBarStatus.successFlash(binding.progressTwo, getContext());
-
-                            new Handler().postDelayed(() -> {
-                                binding.progressTwo.setVisibility(GONE);
-                                binding.progressTwo.setProgress(0, true);
-
-                                binding.cross2.setVisibility(View.VISIBLE);
-                            }, 1000);
-                        }
-
-                    });
-
-                    binding.file2.setText(displayName);
-                }
-                break;
-            case 3:
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    String uriString = uri.toString();
-
-                    InputStream iStream = null;
-
-                    byte[] inputData = null;
-                    try {
-                        iStream = getActivity().getContentResolver().openInputStream(uri);
-                        inputData = getBytes(iStream);
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    File myFile = new File(uriString);
-
-                    StringBuilder extension = new StringBuilder();
-
-                    String displayName = null;
-
-                    if (uriString.startsWith("content://")) {
-                        Cursor cursor = null;
-                        try {
-                            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-                            if (cursor != null && cursor.moveToFirst()) {
-                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                            }
-                        } finally {
-                            cursor.close();
-                        }
-                    } else if (uriString.startsWith("file://")) {
-                        displayName = myFile.getName();
-                    }
-
-                    for (int i = displayName.length() - 1; i >= 0; i--) {
-                        if (displayName.charAt(i) == '.') {
-                            break;
-                        }
-                        extension.insert(0, displayName.charAt(i));
-                    }
-
-                    Log.d("gawgaw", "SampleFile1." + extension);
-
-                    parseFiles[2] = new ParseFile("SampleFile1." + extension, inputData);
-
-                    parseFiles[2].saveInBackground(e -> {
-                        if (e != null) {
-                            Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            ProgressBarStatus.errorFlash(binding.progressThree, getContext());
-
-                            new Handler().postDelayed(() -> {
-                                binding.progressThree.setVisibility(GONE);
-                                binding.progressThree.setProgress(0, true);
-                            }, 1000);
-                        }
-                    }, percentDone -> {
-                        if (percentDone != 100) {
-                            if (binding.progressThree.getVisibility() == GONE) {
-                                binding.progressThree.setVisibility(View.VISIBLE);
-                            }
-                            binding.progressThree.setProgress(percentDone, true);
-                        } else {
-                            ProgressBarStatus.successFlash(binding.progressThree, getContext());
-
-                            new Handler().postDelayed(() -> {
-                                binding.progressThree.setVisibility(GONE);
-                                binding.progressThree.setProgress(0, true);
-
-                                binding.cross3.setVisibility(View.VISIBLE);
-                            }, 1000);
-                        }
-
-                    });
-
-                    binding.file3.setText(displayName);
-                }
-                break;
+        if (resultCode == RESULT_OK) {
+            fileHandler(data, requestCode);
         }
     }
 
-    public void fileHandler(Intent data, int requestCode) {
+    public void fileHandler(@Nullable Intent data, int requestCode) {
         Uri uri = data.getData();
         String uriString = uri.toString();
 
@@ -351,7 +118,12 @@ public class FragmentJobSample extends Fragment {
             if (e != null) {
                 Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                ProgressBarStatus.errorFlash(binding.progressOne, getContext());
+                if (requestCode == 1)
+                    ProgressBarStatus.errorFlash(binding.progressOne, getContext());
+                else if (requestCode == 2)
+                    ProgressBarStatus.errorFlash(binding.progressTwo, getContext());
+                else if (requestCode == 3)
+                    ProgressBarStatus.errorFlash(binding.progressThree, getContext());
 
                 new Handler().postDelayed(() -> {
                     if (requestCode == 1) {
@@ -385,7 +157,13 @@ public class FragmentJobSample extends Fragment {
                     binding.progressThree.setProgress(percentDone, true);
                 }
             } else {
-                ProgressBarStatus.successFlash(binding.progressOne, getContext());
+                if (requestCode == 1) {
+                    ProgressBarStatus.successFlash(binding.progressOne, getContext());
+                } else if (requestCode == 2) {
+                    ProgressBarStatus.successFlash(binding.progressTwo, getContext());
+                } else if (requestCode == 3) {
+                    ProgressBarStatus.successFlash(binding.progressThree, getContext());
+                }
 
                 new Handler().postDelayed(() -> {
                     if (requestCode == 1) {
@@ -407,8 +185,12 @@ public class FragmentJobSample extends Fragment {
                 }, 1000);
             }
         });
-
-        binding.file1.setText(displayName);
+        if (requestCode == 1)
+            binding.file1.setText(displayName);
+        else if (requestCode == 2)
+            binding.file2.setText(displayName);
+        else if (requestCode == 3)
+            binding.file3.setText(displayName);
     }
 
 
