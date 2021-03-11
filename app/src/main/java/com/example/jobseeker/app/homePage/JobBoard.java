@@ -2,7 +2,6 @@ package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import androidx.appcompat.widget.SearchView;
@@ -16,16 +15,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +31,7 @@ import android.widget.Toast;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
+import com.example.jobseeker.databinding.DialogLayoutBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.ncorti.slidetoact.SlideToActView;
 import com.parse.Parse;
@@ -43,7 +39,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,40 +158,40 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         adapter.filter(filteredList);
     }
-
+    DialogLayoutBinding bindingDialog;
     @Override
     public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
 
         Dialog dialog = new Dialog(this, R.style.Dialog);
-        dialog.setContentView(R.layout.dialog_layout);
+        bindingDialog = DialogLayoutBinding.inflate(getLayoutInflater());
+
+        dialog.setContentView(bindingDialog.getRoot());
+
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
-        View dialogView = dialog.getWindow().getDecorView();
-
-
-        dialogView.findViewById(R.id.close).setOnClickListener(v -> {
+        bindingDialog.close.setOnClickListener(v -> {
             dialog.dismiss();
         });
 
-        ((TextView) dialogView.findViewById(R.id.title)).setText(parseObjects.get(position).getString("title"));
-        ((TextView) dialogView.findViewById(R.id.description)).setText(parseObjects.get(position).getString("description"));
-        ((TextView) dialogView.findViewById(R.id.budget)).setText(parseObjects.get(position).getInt("budget") + "");
-        ((TextView) dialogView.findViewById(R.id.duration)).setText(parseObjects.get(position).getString("duration"));
-        ((TextView) dialogView.findViewById(R.id.revisions)).setText(parseObjects.get(position).getInt("revisions") + "");
-        dialogView.findViewById(R.id.seeFreelancerButton).setVisibility(View.GONE);
-        dialogView.findViewById(R.id.deleteButton).setVisibility(View.GONE);
+        ParseObject currentObject = parseObjects.get(position);
 
-        if (parseObjects.get(position).getBoolean("negotiable"))
-            ((TextView) dialogView.findViewById(R.id.negotiable)).setText("Yes");
+        bindingDialog.title.setText(currentObject.getString("title"));
+        bindingDialog.description.setText(currentObject.getString("description"));
+        bindingDialog.budget.setText(currentObject.getInt("budget") + "");
+        bindingDialog.duration.setText(currentObject.getString("duration"));
+        bindingDialog.revisions.setText(currentObject.getInt("revisions") + "");
+        bindingDialog.seeFreelancerButton.setVisibility(View.GONE);
+        bindingDialog.deleteButton.setVisibility(View.GONE);
+
+        if (currentObject.getBoolean("negotiable"))
+            bindingDialog.negotiable.setText("Yes");
         else
-            ((TextView) dialogView.findViewById(R.id.negotiable)).setText("No");
+            bindingDialog.negotiable.setText("No");
 
         //Dynamic scroll view height
 
-        ScrollView scrollView = dialogView.findViewById(R.id.scrollView);
-
-        String text = ((TextView) dialogView.findViewById(R.id.description)).getText().toString();
+        String text = bindingDialog.description.getText().toString();
 
         int charCount = text.length();
 
@@ -204,28 +199,29 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
 
+        LinearLayout.LayoutParams params;
+
         if (charCount <= 200) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            scrollView.setLayoutParams(params);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } else {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
-            scrollView.setLayoutParams(params);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
         }
+
+        bindingDialog.scrollView.setLayoutParams(params);
 
 
         //---------------------->
 
-        ((SlideToActView) dialogView.findViewById(R.id.applySlider)).setOnSlideCompleteListener(slideToActView -> {
-
+        bindingDialog.applySlider.setOnSlideCompleteListener(slideToActView -> {
             //apply
             if (ParseUser.getCurrentUser().getString("firstName") != null) {
-                parseObjects.get(position).add("applied", ParseUser.getCurrentUser());
+                currentObject.add("applied", ParseUser.getCurrentUser());
 
-                parseObjects.get(position).saveInBackground(e -> {
+                currentObject.saveInBackground(e -> {
                     if (e == null) {
                         Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
 
-                        ParseUser.getCurrentUser().add("appliedPosts", parseObjects.get(position));
+                        ParseUser.getCurrentUser().add("appliedPosts", currentObject);
                         ParseUser.getCurrentUser().saveEventually();
 
                         removeJob(parseObjects, position);
@@ -242,6 +238,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 slideToActView.resetSlider();
             }
         });
+
     }
 
     private void removeJob(List<ParseObject> parseObjects, int pos) {
