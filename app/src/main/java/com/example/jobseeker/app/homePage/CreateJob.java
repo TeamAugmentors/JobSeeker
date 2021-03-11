@@ -1,9 +1,6 @@
 package com.example.jobseeker.app.homePage;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,15 +13,10 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.createJob.CreateJobTitlePagerAdapter;
 import com.example.jobseeker.app.homePage.adapters.createJob.CreateJobViewPagerAdapter;
 import com.example.jobseeker.databinding.ActivityCreateJobBinding;
-import com.example.jobseeker.utils.ChipHelper;
+import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import java.util.ArrayList;
 
 import static android.view.View.GONE;
 
@@ -199,9 +191,9 @@ public class CreateJob extends AppCompatActivity {
             entity.put("description", adapter.getFragmentJobTitle().getBinding().jobDescriptionLayout.getEditText().getText().toString());
             entity.put("budget", Integer.parseInt(adapter.getFragmentJobBudget().getBinding().budgetLayout.getEditText().getText().toString()));
             entity.put("duration", adapter.getFragmentJobBudget().getBinding().dateTextView.getText().toString());
-            entity.put("revisions", Integer.parseInt(ChipHelper.getTextFromSelectedChip(adapter.getFragmentJobBudget().getBinding().revisionChipGroup)));
+            entity.put("revisions", Integer.parseInt(HelperUtils.getTextFromSelectedChip(adapter.getFragmentJobBudget().getBinding().revisionChipGroup)));
 
-            if (ChipHelper.getTextFromSelectedChip(adapter.getFragmentJobBudget().getBinding().negotiableChipGroup).equals("Yes")) {
+            if (HelperUtils.getTextFromSelectedChip(adapter.getFragmentJobBudget().getBinding().negotiableChipGroup).equals("Yes")) {
                 entity.put("negotiable", true);
             } else
                 entity.put("negotiable", false);

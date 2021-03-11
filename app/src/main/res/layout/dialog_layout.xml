@@ -277,72 +277,72 @@
             android:textSize="@dimen/_14sdp" />
 
         <LinearLayout
-            android:id="@+id/fileContainer"
+            android:id="@+id/fileLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:background="@drawable/button_background_filled"
-                android:drawableTint="@color/white"
-                android:drawablePadding="@dimen/_5sdp"
-                android:fontFamily="@font/roboto_regular"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:drawableEnd="@drawable/ic_download"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:textColor="@color/white"
-                android:text="File 1"
-                android:textSize="@dimen/_13sdp"
-                />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:background="@drawable/button_background_filled"-->
+<!--                android:drawableTint="@color/white"-->
+<!--                android:drawablePadding="@dimen/_5sdp"-->
+<!--                android:fontFamily="@font/roboto_regular"-->
+<!--                android:minWidth="0dp"-->
+<!--                android:minHeight="0dp"-->
+<!--                android:paddingHorizontal="@dimen/_10sdp"-->
+<!--                android:paddingTop="@dimen/_5sdp"-->
+<!--                android:paddingBottom="@dimen/_5sdp"-->
+<!--                android:drawableEnd="@drawable/ic_download"-->
+<!--                android:layout_marginEnd="@dimen/_10sdp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:text="File 1"-->
+<!--                android:textSize="@dimen/_13sdp"-->
+<!--                />-->
 
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:background="@drawable/button_background_filled"
-                android:drawableTint="@color/white"
-                android:drawablePadding="@dimen/_5sdp"
-                android:fontFamily="@font/roboto_regular"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:drawableEnd="@drawable/ic_download"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:textColor="@color/white"
-                android:text="File 2"
-                android:textSize="@dimen/_13sdp" />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:background="@drawable/button_background_filled"-->
+<!--                android:drawableTint="@color/white"-->
+<!--                android:drawablePadding="@dimen/_5sdp"-->
+<!--                android:fontFamily="@font/roboto_regular"-->
+<!--                android:minWidth="0dp"-->
+<!--                android:minHeight="0dp"-->
+<!--                android:paddingHorizontal="@dimen/_10sdp"-->
+<!--                android:paddingTop="@dimen/_5sdp"-->
+<!--                android:paddingBottom="@dimen/_5sdp"-->
+<!--                android:drawableEnd="@drawable/ic_download"-->
+<!--                android:layout_marginEnd="@dimen/_10sdp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:text="File 2"-->
+<!--                android:textSize="@dimen/_13sdp" />-->
 
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:background="@drawable/button_background_filled"
-                android:drawableTint="@color/white"
-                android:drawablePadding="@dimen/_5sdp"
-                android:fontFamily="@font/roboto_regular"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:drawableEnd="@drawable/ic_download"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:textColor="@color/white"
-                android:text="File 3"
-                android:textSize="@dimen/_13sdp" />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:background="@drawable/button_background_filled"-->
+<!--                android:drawableTint="@color/white"-->
+<!--                android:drawablePadding="@dimen/_5sdp"-->
+<!--                android:fontFamily="@font/roboto_regular"-->
+<!--                android:minWidth="0dp"-->
+<!--                android:minHeight="0dp"-->
+<!--                android:paddingHorizontal="@dimen/_10sdp"-->
+<!--                android:paddingTop="@dimen/_5sdp"-->
+<!--                android:paddingBottom="@dimen/_5sdp"-->
+<!--                android:drawableEnd="@drawable/ic_download"-->
+<!--                android:layout_marginEnd="@dimen/_10sdp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:text="File 3"-->
+<!--                android:textSize="@dimen/_13sdp" />-->
 
         </LinearLayout>
 

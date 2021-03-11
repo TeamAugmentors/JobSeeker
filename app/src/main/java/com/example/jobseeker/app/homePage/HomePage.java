@@ -7,25 +7,19 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +28,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
-import com.example.jobseeker.utils.ChipHelper;
+import com.example.jobseeker.utils.HelperUtils;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -213,7 +207,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 }
 
                 if (ParseUser.getCurrentUser().getString("skillSet") != null) {
-                    ChipHelper.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false,isDarkModeOn, ParseUser.getCurrentUser().getString("skillSet").split(","));
+                    HelperUtils.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false,isDarkModeOn, ParseUser.getCurrentUser().getString("skillSet").split(","));
                 }
 
                 ScrollView scrollView = dialog.findViewById(R.id.scroll_view);

@@ -2,6 +2,7 @@ package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.constraintlayout.solver.widgets.Helper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import androidx.appcompat.widget.SearchView;
@@ -32,9 +33,11 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
+import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.ncorti.slidetoact.SlideToActView;
 import com.parse.Parse;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -209,9 +212,15 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         bindingDialog.scrollView.setLayoutParams(params);
 
-
         //---------------------->
-
+        ArrayList<ParseFile> parseFiles = new ArrayList<>();
+        for(int i=0;i<3;i++)
+        {
+            if(currentObject.getParseFile("file" + (i+1))!=null)
+                parseFiles.add(currentObject.getParseFile("file" + (i+1)));
+        }
+        HelperUtils.addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout,this);
+        //---------------------->
         bindingDialog.applySlider.setOnSlideCompleteListener(slideToActView -> {
             //apply
             if (ParseUser.getCurrentUser().getString("firstName") != null) {

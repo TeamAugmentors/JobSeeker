@@ -40,7 +40,7 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.createProfile.CreateProfileInfoViewPagerAdapter;
 import com.example.jobseeker.app.homePage.adapters.createProfile.CreateProfileViewPager2Adapter;
 import com.example.jobseeker.databinding.ActivityCreateProfileBinding;
-import com.example.jobseeker.utils.ChipHelper;
+import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.HideKeyboard;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.google.android.material.chip.ChipGroup;
@@ -193,7 +193,7 @@ public class CreateProfile extends AppCompatActivity {
             });
 
             if (ParseUser.getCurrentUser().getString("skillSet") != null) {
-                ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true, isDarkModeOn,ParseUser.getCurrentUser().getString("skillSet").split(","));
+                HelperUtils.addChipIntoChipGroup(skillChipGroup, this, true, isDarkModeOn,ParseUser.getCurrentUser().getString("skillSet").split(","));
             }
 
             ((Button) findViewById(R.id.createProfile)).setText("Update Profile");
@@ -463,7 +463,7 @@ public class CreateProfile extends AppCompatActivity {
             if (skillChipGroup.getChildCount() == 0)
                 ParseUser.getCurrentUser().remove("skillSet");
             else {
-                ParseUser.getCurrentUser().put("skillSet", ChipHelper.getAllChipText(skillChipGroup));
+                ParseUser.getCurrentUser().put("skillSet", HelperUtils.getAllChipText(skillChipGroup));
             }
 
             ParseUser.getCurrentUser().saveInBackground(e -> {
@@ -494,8 +494,8 @@ public class CreateProfile extends AppCompatActivity {
     public void addSkill(View view) {
 
         String skills = ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().getText().toString().toLowerCase();
-        if (!ChipHelper.findMatch(skillChipGroup, skills)) {
-            ChipHelper.addChipIntoChipGroup(skillChipGroup, this, true,isDarkModeOn,skills);
+        if (!HelperUtils.findMatch(skillChipGroup, skills)) {
+            HelperUtils.addChipIntoChipGroup(skillChipGroup, this, true,isDarkModeOn,skills);
             ((TextInputLayout) findViewById(R.id.SkillSetLayout)).getEditText().setText("");
         } else {
             Toast.makeText(this, "Skill already exists!", Toast.LENGTH_SHORT).show();
