@@ -27,8 +27,9 @@ import java.util.List;
 public class CreatedJobInbox extends Fragment {
 
     FragemntCreatedJobsInboxBinding binding;
-    HashMap<String,ParseObject> parseObjects = new HashMap<>();
+    HashMap<String, ParseObject> parseObjects = new HashMap<>();
     InboxAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,11 +53,11 @@ public class CreatedJobInbox extends Fragment {
         query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 
         query.findInBackground((objects, e) -> {
-            if (e==null){
+            if (e == null) {
                 for (int i = 0; i < objects.size(); i++) {
-                    if (objects.get(i).getList("applied") != null){
+                    if (objects.get(i).getList("applied") != null) {
                         for (int j = 0; j < objects.get(i).getList("applied").size(); j++) {
-                            parseObjects.put(((ParseObject)objects.get(i).getList("applied").get(j)).getObjectId(),(ParseObject) objects.get(i).getList("applied").get(j));
+                            parseObjects.put(((ParseObject) objects.get(i).getList("applied").get(j)).getObjectId(), (ParseObject) objects.get(i).getList("applied").get(j));
                         }
                     }
                 }
@@ -66,8 +67,8 @@ public class CreatedJobInbox extends Fragment {
 
                     }
                 });
-
-                binding.recyclerview.setAdapter(adapter);
+                if (adapter.getItemCount() != 0)
+                    binding.recyclerview.setAdapter(adapter);
             }
         });
     }

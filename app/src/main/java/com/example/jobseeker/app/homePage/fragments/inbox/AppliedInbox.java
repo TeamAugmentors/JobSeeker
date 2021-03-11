@@ -80,7 +80,8 @@ public class AppliedInbox extends Fragment {
                         }
                     });
 
-                    binding.recyclerview.setAdapter(adapter);
+                    if (adapter.getItemCount() != 0)
+                        binding.recyclerview.setAdapter(adapter);
                 }
                 Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
             } else {
