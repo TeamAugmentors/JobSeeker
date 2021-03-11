@@ -112,7 +112,7 @@ public class FragmentJobSample extends Fragment {
                     parseFiles[0] = new ParseFile("SampleFile1." + extension, inputData);
 
                     parseFiles[0].saveInBackground(e -> {
-                        if (e!=null){
+                        if (e != null) {
                             Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                             ProgressBarStatus.errorFlash(binding.progressOne, getContext());
@@ -190,7 +190,7 @@ public class FragmentJobSample extends Fragment {
                     parseFiles[1] = new ParseFile("SampleFile2." + extension, inputData);
 
                     parseFiles[1].saveInBackground(e -> {
-                        if (e!=null){
+                        if (e != null) {
                             Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                             ProgressBarStatus.errorFlash(binding.progressTwo, getContext());
@@ -269,7 +269,7 @@ public class FragmentJobSample extends Fragment {
                     parseFiles[2] = new ParseFile("SampleFile1." + extension, inputData);
 
                     parseFiles[2].saveInBackground(e -> {
-                        if (e!=null){
+                        if (e != null) {
                             Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                             ProgressBarStatus.errorFlash(binding.progressThree, getContext());
@@ -304,6 +304,114 @@ public class FragmentJobSample extends Fragment {
         }
     }
 
+    public void fileHandler(Intent data, int requestCode) {
+        Uri uri = data.getData();
+        String uriString = uri.toString();
+
+        InputStream iStream;
+
+        byte[] inputData = null;
+        try {
+            iStream = getActivity().getContentResolver().openInputStream(uri);
+            inputData = getBytes(iStream);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        File myFile = new File(uriString);
+
+        StringBuilder extension = new StringBuilder();
+
+        String displayName = null;
+
+        if (uriString.startsWith("content://")) {
+            Cursor cursor = null;
+            try {
+                cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        } else if (uriString.startsWith("file://")) {
+            displayName = myFile.getName();
+        }
+
+        for (int i = displayName.length() - 1; i >= 0; i--) {
+            if (displayName.charAt(i) == '.') {
+                break;
+            }
+            extension.insert(0, displayName.charAt(i));
+        }
+
+        parseFiles[requestCode - 1] = new ParseFile("SampleFile1." + extension, inputData);
+
+        parseFiles[requestCode - 1].saveInBackground(e -> {
+            if (e != null) {
+                Toast.makeText(getActivity(), "Error uploading! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                ProgressBarStatus.errorFlash(binding.progressOne, getContext());
+
+                new Handler().postDelayed(() -> {
+                    if (requestCode == 1) {
+                        binding.progressOne.setVisibility(GONE);
+                        binding.progressOne.setProgress(0, true);
+                    } else if (requestCode == 2) {
+                        binding.progressTwo.setVisibility(GONE);
+                        binding.progressTwo.setProgress(0, true);
+                    } else if (requestCode == 3) {
+                        binding.progressThree.setVisibility(GONE);
+                        binding.progressThree.setProgress(0, true);
+                    }
+                }, 1000);
+            }
+        }, percentDone -> {
+            if (percentDone != 100) {
+                if (requestCode == 1) {
+                    if (binding.progressOne.getVisibility() == GONE) {
+                        binding.progressOne.setVisibility(View.VISIBLE);
+                    }
+                    binding.progressOne.setProgress(percentDone, true);
+                } else if (requestCode == 2) {
+                    if (binding.progressTwo.getVisibility() == GONE) {
+                        binding.progressTwo.setVisibility(View.VISIBLE);
+                    }
+                    binding.progressTwo.setProgress(percentDone, true);
+                } else if (requestCode == 3) {
+                    if (binding.progressThree.getVisibility() == GONE) {
+                        binding.progressThree.setVisibility(View.VISIBLE);
+                    }
+                    binding.progressThree.setProgress(percentDone, true);
+                }
+            } else {
+                ProgressBarStatus.successFlash(binding.progressOne, getContext());
+
+                new Handler().postDelayed(() -> {
+                    if (requestCode == 1) {
+                        binding.progressOne.setVisibility(GONE);
+                        binding.progressOne.setProgress(0, true);
+
+                        binding.cross1.setVisibility(View.VISIBLE);
+                    } else if (requestCode == 2) {
+                        binding.progressTwo.setVisibility(GONE);
+                        binding.progressTwo.setProgress(0, true);
+
+                        binding.cross2.setVisibility(View.VISIBLE);
+                    } else if (requestCode == 3) {
+                        binding.progressThree.setVisibility(GONE);
+                        binding.progressThree.setProgress(0, true);
+
+                        binding.cross3.setVisibility(View.VISIBLE);
+                    }
+                }, 1000);
+            }
+        });
+
+        binding.file1.setText(displayName);
+    }
+
+
     public byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
@@ -314,6 +422,7 @@ public class FragmentJobSample extends Fragment {
         }
         return byteBuffer.toByteArray();
     }
+
     public FragmentCreateJobSampleBinding getBinding() {
         return binding;
     }

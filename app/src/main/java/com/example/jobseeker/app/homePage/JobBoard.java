@@ -58,6 +58,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     TextWatcher textWatcher;
     SearchView.OnQueryTextListener onQueryTextListener;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
