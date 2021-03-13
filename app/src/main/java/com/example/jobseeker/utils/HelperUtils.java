@@ -139,20 +139,21 @@ public class HelperUtils {
 
         final String[] columns = {id, name};
 
-        String folder = "/storage/emulated/0/Download/JobSeeker/JobId_";
-        folder +=jobId;
-        folder+="/";
+        String folder = "/storage/emulated/0/Download/JobSeeker/";
+        //folder = folder.concat(jobId+"/");
+        //Log.d("Item1",folder);
         String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
         String[] selectionArgs = new String[]{
                 "%" + folder + "%",
-                "%" + folder + "/%/%"};
+                "%" + folder + "/%/%"
+        };
 
         Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 String retrievedFileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME));
-                Log.d("Item",retrievedFileName);
+                Log.d("Item",cursor.getCount()+"");
                 if (retrievedFileName.contains(fileName)) {
                     cursor.close();
                     return true;
