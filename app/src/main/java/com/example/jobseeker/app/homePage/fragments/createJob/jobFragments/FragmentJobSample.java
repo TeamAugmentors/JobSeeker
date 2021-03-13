@@ -58,7 +58,7 @@ public class FragmentJobSample extends Fragment {
     }
 
     private void setFileIntent() {
-        String fileTypes[] = {"image/*", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
+        String fileTypes[] = {"image/jpg","image/jpeg","image/png", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
 
         myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
         myFileIntent.setType("*/*");
