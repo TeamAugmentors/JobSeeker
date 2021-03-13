@@ -83,7 +83,6 @@ public class HelperUtils {
             ParseFile parseFile = parseFiles.get(i);
 
             button.setOnClickListener(v -> parseFile.getDataInBackground((data, e) -> {
-
                 if (e == null) {
                     try {
                         saveFile(data, parseFile, context, jobId );
@@ -99,15 +98,12 @@ public class HelperUtils {
     }
 
     private static void saveFile(byte[] data, ParseFile parseFile, Activity context, String jobId) throws Exception {
-
         OutputStream outputStream;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
-            if (!query(context, parseFile.getName())) {
+            if (!query(context, parseFile.getName(),jobId)) {
                 ContentResolver resolver = context.getContentResolver();
                 ContentValues contentValues = new ContentValues();
-
                 //Automatically creates a directory if there is no directory. Might need a permission check in the future
                 contentValues.put(MediaStore.Downloads.DISPLAY_NAME, parseFile.getName());
                 contentValues.put(MediaStore.Downloads.MIME_TYPE, "image/jpg");
@@ -133,7 +129,7 @@ public class HelperUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    private static boolean query(Context context, String fileName) {
+    private static boolean query(Context context, String fileName,String jobId) {
 
         final Uri uri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
         ContentResolver resolver = context.getContentResolver();
@@ -143,12 +139,20 @@ public class HelperUtils {
 
         final String[] columns = {id, name};
 
-        Cursor cursor = resolver.query(uri, columns, null, null, name + " ASC");
+        String folder = "/storage/emulated/0/Download/JobSeeker/JobId_";
+        folder +=jobId;
+        folder+="/";
+        String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
+        String[] selectionArgs = new String[]{
+                "%" + folder + "%",
+                "%" + folder + "/%/%"};
 
+        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 String retrievedFileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME));
+                Log.d("Item",retrievedFileName);
                 if (retrievedFileName.contains(fileName)) {
                     cursor.close();
                     return true;

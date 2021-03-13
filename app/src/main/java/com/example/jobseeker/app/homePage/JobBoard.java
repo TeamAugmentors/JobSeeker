@@ -161,9 +161,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         adapter.filter(filteredList);
     }
-
     DialogLayoutBinding bindingDialog;
-
     @Override
     public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
 
