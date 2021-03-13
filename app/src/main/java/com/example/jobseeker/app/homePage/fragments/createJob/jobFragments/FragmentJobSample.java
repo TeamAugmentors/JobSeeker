@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.jobseeker.databinding.FragmentCreateJobSampleBinding;
+import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ProgressBarStatus;
 import com.parse.ParseFile;
 
@@ -87,8 +88,6 @@ public class FragmentJobSample extends Fragment {
 
         File myFile = new File(uriString);
 
-        StringBuilder extension = new StringBuilder();
-
         String displayName = null;
 
         if (uriString.startsWith("content://")) {
@@ -105,12 +104,7 @@ public class FragmentJobSample extends Fragment {
             displayName = myFile.getName();
         }
 
-        for (int i = displayName.length() - 1; i >= 0; i--) {
-            if (displayName.charAt(i) == '.') {
-                break;
-            }
-            extension.insert(0, displayName.charAt(i));
-        }
+        String extension = HelperUtils.getFileExtention(displayName);
 
         parseFiles[requestCode - 1] = new ParseFile("SampleFile1." + extension, inputData);
 

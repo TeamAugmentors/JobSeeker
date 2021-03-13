@@ -161,7 +161,9 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         adapter.filter(filteredList);
     }
+
     DialogLayoutBinding bindingDialog;
+
     @Override
     public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
 
@@ -214,12 +216,15 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         //---------------------->
         ArrayList<ParseFile> parseFiles = new ArrayList<>();
-        for(int i=0;i<3;i++)
-        {
-            if(currentObject.getParseFile("file" + (i+1))!=null)
-                parseFiles.add(currentObject.getParseFile("file" + (i+1)));
+        for (int i = 0; i < 3; i++) {
+            if (currentObject.getParseFile("file" + (i + 1)) != null)
+                parseFiles.add(currentObject.getParseFile("file" + (i + 1)));
         }
-        HelperUtils.addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout,this);
+        if (parseFiles.size() != 0)
+            HelperUtils.addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout, this, currentObject.getObjectId());
+        else{
+            bindingDialog.sampleFileTextView.setText("No sample files provided");
+        }
         //---------------------->
         bindingDialog.applySlider.setOnSlideCompleteListener(slideToActView -> {
             //apply

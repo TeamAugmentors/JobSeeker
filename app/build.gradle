@@ -81,7 +81,9 @@ dependencies {
 
     //ucrop
     implementation 'com.github.yalantis:ucrop:2.2.6'
-    compileOnly 'com.google.android.wearable:wearable:2.8.1'
+
+    //Save File
+    implementation 'com.snatik:storage:2.1.0'
 
 
 }
