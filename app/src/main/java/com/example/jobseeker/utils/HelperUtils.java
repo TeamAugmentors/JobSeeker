@@ -1,9 +1,11 @@
 package com.example.jobseeker.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
@@ -33,8 +36,12 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
 public class HelperUtils {
 
+    private static final int PERMISSION_CODE = 1000;
     public static final String JOBSEEKER_DIR = Environment.DIRECTORY_DOWNLOADS + "/JobSeeker";
 
     public static String getAllChipText(ChipGroup chipGroup) {
@@ -85,7 +92,7 @@ public class HelperUtils {
             button.setOnClickListener(v -> parseFile.getDataInBackground((data, e) -> {
                 if (e == null) {
                     try {
-                        saveFile(data, parseFile, context, jobId );
+                        saveFile(data, parseFile, context, jobId);
                     } catch (Exception exception) {
                         Log.d("error!", exception.getMessage());
                     }
@@ -97,11 +104,12 @@ public class HelperUtils {
         }
     }
 
+
     private static void saveFile(byte[] data, ParseFile parseFile, Activity context, String jobId) throws Exception {
         OutputStream outputStream;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (!query(context, parseFile.getName(),jobId)) {
+            if (!query(context, parseFile.getName(), jobId)) {
                 ContentResolver resolver = context.getContentResolver();
                 ContentValues contentValues = new ContentValues();
                 //Automatically creates a directory if there is no directory. Might need a permission check in the future
@@ -129,7 +137,7 @@ public class HelperUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    private static boolean query(Context context, String fileName,String jobId) {
+    private static boolean query(Context context, String fileName, String jobId) {
 
         final Uri uri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
         ContentResolver resolver = context.getContentResolver();
@@ -140,7 +148,7 @@ public class HelperUtils {
         final String[] columns = {id, name};
 
         String folder = "/storage/emulated/0/Download/JobSeeker/";
-        //folder = folder.concat(jobId+"/");
+        //folder = folder.concat(jobId+"");
         //Log.d("Item1",folder);
         String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
         String[] selectionArgs = new String[]{
@@ -149,12 +157,12 @@ public class HelperUtils {
         };
 
         Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
+        Log.d("Item", cursor.getCount()+"");
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 String retrievedFileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME));
-                Log.d("Item",cursor.getCount()+"");
-                if (retrievedFileName.contains(fileName)) {
+                if (retrievedFileName.equals(fileName)) {
                     cursor.close();
                     return true;
                 }
