@@ -92,7 +92,13 @@ public class HelperUtils {
             button.setOnClickListener(v -> parseFile.getDataInBackground((data, e) -> {
                 if (e == null) {
                     try {
-                        saveFile(data, parseFile, context, jobId);
+                        if (ContextCompat.checkSelfPermission(context,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                            //ask for permission
+                            requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
+                        } else {
+                            saveFile(data, parseFile, context, jobId);
+                        }
                     } catch (Exception exception) {
                         Log.d("error!", exception.getMessage());
                     }
