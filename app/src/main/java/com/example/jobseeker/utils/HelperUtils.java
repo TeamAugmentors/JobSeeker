@@ -132,9 +132,9 @@ public class HelperUtils {
             }
 
         } else {
-            String imageDir = Environment.getExternalStoragePublicDirectory(JOBSEEKER_DIR).toString();
+            File imageDir = Environment.getExternalStoragePublicDirectory(JOBSEEKER_DIR + "/JobId_"+ jobId);
+            imageDir.mkdir();
             File image = new File(imageDir, parseFile.getName());
-
             outputStream = new FileOutputStream(image);
         }
 

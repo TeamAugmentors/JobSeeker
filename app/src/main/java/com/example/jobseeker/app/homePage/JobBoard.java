@@ -272,7 +272,8 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         txtSearch.setHintTextColor(getResources().getColor(R.color.hintColor));
         closeBtn.setImageTintList(ColorStateList.valueOf(Color.WHITE));
         txtSearch.setTextColor(Color.WHITE);
-        txtSearch.setTextCursorDrawable(R.drawable.cursor);
+
+        //txtSearch.setTextCursorDrawable(R.drawable.cursor);
 
         return super.onCreateOptionsMenu(menu);
     }
