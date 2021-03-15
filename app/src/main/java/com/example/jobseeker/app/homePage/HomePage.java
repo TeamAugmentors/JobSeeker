@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -33,6 +36,7 @@ import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.example.jobseeker.utils.HelperUtils;
+import com.example.jobseeker.utils.HorizontalZoomCenterLayoutManager;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -89,23 +93,33 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
             binding.navView.getMenu().getItem(0).setTitle("Create Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
+
+            binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_profile,0,0,0);
+            binding.textView.setText("Please create a profile\nto get recommendations!");
         }
 
 
         if (ParseUser.getCurrentUser().get("skillSet") != null) {
-            fetchJobs();
+            fetchJobs(null);
+        } else {
+            binding.textViewLinearLayout.setVisibility(View.VISIBLE);
+            binding.refreshForYou.setVisibility(View.GONE);
+
+            binding.forYouRecyclerView.setAdapter(null);
         }
     }
 
     ArrayList<ParseObject> jobObjects = new ArrayList<>();
     ForYouAdapter adapter;
 
-    private void fetchJobs() {
-        String skillSet = ParseUser.getCurrentUser().getString("skillSet").toLowerCase();
+    public void fetchJobs(View view) {
+        binding.forYouSpinKit.setVisibility(View.VISIBLE);
+        binding.refreshForYou.setVisibility(View.GONE);
+
+        String skillSet = ParseUser.getCurrentUser().getString("skillSet").toUpperCase();
 
         String tokens[] = skillSet.split(",");
 
-        Log.d("of1", Arrays.toString(tokens));
         Log.d("of", tokens.length + "");
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
@@ -117,22 +131,20 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         binding.forYouSpinKit.setVisibility(View.VISIBLE);
         query.findInBackground((List<ParseObject> objects, ParseException e) -> {
             if (e == null) {
+                jobObjects = new ArrayList<>();
                 int len = objects.size();
                 for (int i = 0; i < len; i++) {
-                    Log.d("of", "main loop " + objects.get(i).getString("title").toLowerCase());
+                    Log.d("of", "i " + i);
 
                     for (int j = 0; j < tokens.length; j++) {
+                        Log.d("of", "j " + j);
 
-                        Log.d("of", "inner loop " + objects.get(i).getString("title").toLowerCase());
-
-                        if (objects.get(i).getString("title").toLowerCase().contains(tokens[j])){
-                            Log.d("sada","I am here"+j+"");
-                            Log.d("of1", "added " + objects.get(i).getString("title").toLowerCase());
+                        if (objects.get(i).getString("title").toUpperCase().contains(tokens[j])){
+                            Log.d("of", "added " + objects.get(i).getString("title").toUpperCase());
+                            objects.get(i).put("chip", tokens[j]);
                             jobObjects.add(objects.get(i));
                             break;
                         }
-
-
                     }
 
                 }
@@ -146,9 +158,18 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     });
 
                     binding.forYouRecyclerView.setAdapter(adapter);
-                    Toast.makeText(this, "Success!22", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
+
+                    binding.textViewLinearLayout.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(this, "Sorry! no matching jobs found", Toast.LENGTH_SHORT).show();
+
+                    binding.refreshForYou.setVisibility(View.VISIBLE);
+                    binding.refreshForYou.setAnimation(AnimationUtils.loadAnimation(this, R.anim.spin_in));
+
+                    binding.textViewLinearLayout.setVisibility(View.GONE);
+
+                    binding.forYouRecyclerView.setAdapter(null);
                 }
 
                 binding.forYouSpinKit.setVisibility(View.GONE);
@@ -165,8 +186,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         setSupportActionBar(binding.toolbar);
 
-        binding.forYouRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.forYouRecyclerView.setLayoutManager(new HorizontalZoomCenterLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.forYouRecyclerView.setItemViewCacheSize(1);
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(binding.forYouRecyclerView);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);
@@ -232,7 +256,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         } else if (item.getItemId() == R.id.nav_profile) {
-            startActivity(new Intent(this, CreateProfile.class));
+            createProfile(null);
         } else if (item.getItemId() == R.id.nav_created_jobs) {
             startActivity(new Intent(this, CreatedPosts.class));
         } else if (item.getItemId() == R.id.nav_applied_jobs) {
@@ -326,6 +350,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             setDarkMode(true);
         }
         return true;
+    }
+
+    public void createProfile(View view) {
+        startActivity(new Intent(this, CreateProfile.class));
     }
 
     private void setDarkMode(Boolean flag) {

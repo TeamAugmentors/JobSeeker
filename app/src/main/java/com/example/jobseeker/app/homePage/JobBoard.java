@@ -1,26 +1,45 @@
 package com.example.jobseeker.app.homePage;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import androidx.appcompat.widget.SearchView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,19 +51,33 @@ import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
 import com.example.jobseeker.utils.HelperUtils;
+import com.example.jobseeker.utils.ProgressBarStatus;
 import com.example.jobseeker.utils.ToolbarHelper;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.ProgressCallback;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJobBoardListener {
     JobBoardAdapter adapter;
     ActivityJobBoardBinding binding;
     ArrayList<ParseObject> parseObjects;
+    BottomSheetBehavior bottomSheetBehavior;
+
+    private final int PERMISSION_CODE = 1000;
+    public final String JOBSEEKER_DIR = Environment.DIRECTORY_DOWNLOADS + "/JobSeeker";
+
 
     MenuItem searchItem;
     SearchView searchView;
@@ -144,6 +177,12 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         binding.search.addTextChangedListener(textWatcher);
 
+//        bottomSheetBehavior = HelperUtils.defaultSheet(binding.downloadingLayout.getRoot(), binding.downloadingLayout.close);
+
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.filterBottomSheetRootLayout);
+        bottomSheetBehavior.setHideable(false);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
     }
 
     private void filter(String text) {
@@ -157,7 +196,9 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         adapter.filter(filteredList);
     }
+
     DialogLayoutBinding bindingDialog;
+
     @Override
     public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
 
@@ -215,8 +256,8 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 parseFiles.add(currentObject.getParseFile("file" + (i + 1)));
         }
         if (parseFiles.size() != 0)
-            HelperUtils.addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout, this, currentObject.getObjectId());
-        else{
+            addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout, this, currentObject.getObjectId());
+        else {
             bindingDialog.sampleFileTextView.setText("No sample files provided");
         }
         //---------------------->
@@ -248,6 +289,145 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         });
 
     }
+
+    public void addButtonsToLayout(ArrayList<ParseFile> parseFiles, LinearLayout linearLayout, Activity context, String jobId) {
+        Typeface typeface = ResourcesCompat.getFont(context, R.font.roboto_regular);
+
+        int dimen10sdp = (int) context.getResources().getDimension(R.dimen._10sdp);
+
+        for (int i = 0; i < parseFiles.size(); i++) {
+
+            int buttonStyle = R.style.Widget_AppCompat_Button_Borderless;
+            Button button = new Button(new ContextThemeWrapper(context, buttonStyle), null, buttonStyle);
+
+            button.setText("File " + (i + 1));
+
+            button.setBackground(context.getDrawable(R.drawable.button_background_filled));
+            button.setCompoundDrawableTintList(ContextCompat.getColorStateList(context, R.color.white));
+            button.setCompoundDrawablePadding(dimen10sdp);
+            button.setTypeface(typeface);
+            button.setMinimumWidth(0);
+            button.setMinimumHeight(0);
+            button.setMinWidth(0);
+            button.setMinHeight(0);
+            button.setPadding(25, 15, 25, 15);
+
+            button.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_download, 0);
+            button.setTextColor(context.getColor(R.color.white));
+            button.setTextSize(16);
+            linearLayout.addView(button);
+
+            LinearLayout.LayoutParams btnParams = ((LinearLayout.LayoutParams) button.getLayoutParams());
+            btnParams.setMarginEnd(dimen10sdp);
+            button.setLayoutParams(btnParams);
+
+            ParseFile parseFile = parseFiles.get(i);
+
+            button.setOnClickListener(v -> parseFile.getDataInBackground((data, e) -> {
+                if (e == null) {
+                    try {
+                        if (ContextCompat.checkSelfPermission(context,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                            //ask for permission
+                            JobBoard.this.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
+                        } else {
+                            JobBoard.this.saveFile(data, parseFile, context, jobId);
+                        }
+                    } catch (Exception exception) {
+                        Log.d("error!", exception.getMessage());
+                    }
+
+                } else {
+                    Toast.makeText(context, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }, percentDone -> {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+//                binding.downloadingLayout.progress.setProgress(percentDone, true);
+//                if (percentDone == 100) {
+//                    ProgressBarStatus.successFlash(binding.downloadingLayout.progress, this);
+//                    binding.downloadingLayout.textView.setText("Download complete!");
+//
+//                    new Handler().postDelayed(() -> {
+//                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//
+//                        binding.downloadingLayout.progress.setProgress(0, false);
+//                    }, 1400);
+//                }
+            }));
+        }
+    }
+
+
+    private void saveFile(byte[] data, ParseFile parseFile, Activity context, String jobId) throws Exception {
+        OutputStream outputStream;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (!query(context, parseFile.getName(), jobId)) {
+                ContentResolver resolver = context.getContentResolver();
+                ContentValues contentValues = new ContentValues();
+                //Automatically creates a directory if there is no directory. Might need a permission check in the future
+                contentValues.put(MediaStore.Downloads.DISPLAY_NAME, parseFile.getName());
+                contentValues.put(MediaStore.Downloads.MIME_TYPE, "image/jpg");
+                contentValues.put(MediaStore.Downloads.RELATIVE_PATH, JOBSEEKER_DIR + "/JobId_" + jobId);
+
+                Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
+
+                outputStream = resolver.openOutputStream(uri);
+            } else {
+                Toast.makeText(context, "Duplicate file found!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        } else {
+            File imageDir = Environment.getExternalStoragePublicDirectory(JOBSEEKER_DIR + "/JobId_" + jobId);
+            imageDir.mkdir();
+            File image = new File(imageDir, parseFile.getName());
+            outputStream = new FileOutputStream(image);
+        }
+
+        outputStream.write(data);
+        outputStream.close();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private boolean query(Context context, String fileName, String jobId) {
+
+        final Uri uri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+        ContentResolver resolver = context.getContentResolver();
+
+        final String id = MediaStore.Downloads._ID;
+        final String name = MediaStore.Downloads.DISPLAY_NAME;
+
+        final String[] columns = {id, name};
+
+        String folder = "/storage/emulated/0/Download/JobSeeker/";
+        //folder = folder.concat(jobId+"");
+        //Log.d("Item1",folder);
+        String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
+        String[] selectionArgs = new String[]{
+                "%" + folder + "%",
+                "%" + folder + "/%/%"
+        };
+
+        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
+        Log.d("Item", cursor.getCount() + "");
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                String retrievedFileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME));
+                if (retrievedFileName.equals(fileName)) {
+                    cursor.close();
+                    return true;
+                }
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return false;
+    }
+
 
     private void removeJob(List<ParseObject> parseObjects, int pos) {
         parseObjects.remove(pos);

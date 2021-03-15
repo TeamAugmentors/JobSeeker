@@ -74,6 +74,8 @@ public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ViewHolder
         {
             holder.binding.description.setText(test.substring(0,73)+"...");
         }
+
+        holder.binding.chip.setText(parseObjects.get(pos).getString("chip"));
         holder.binding.getRoot().setAnimation(AnimationUtils.loadAnimation(holder.context, R.anim.fade_scale_in));
     }
 
