@@ -5,8 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,11 +19,11 @@
             android:background="@color/job_seeker_logo_green"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:titleTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,38 +38,23 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:minHeight="@dimen/_100sdp">
 
-            <LinearLayout
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/forYouRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/forYouRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
-<!--                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator-->
-<!--                    android:id="@+id/forYouIndicators"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:dotsSize="@dimen/_6sdp"-->
-<!--                    android:layout_marginTop="@dimen/_10sdp"-->
-<!--                    />-->
-            </LinearLayout>
 
             <com.github.ybq.android.spinkit.SpinKitView
                 android:id="@+id/forYouSpinKit"
+                style="@style/SpinKitView.Large.ThreeBounce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/SpinKitView.Large.ThreeBounce"
                 android:layout_gravity="center"
-                app:SpinKit_Color="@color/job_seeker_logo_green"
                 android:visibility="gone"
-                />
+                app:SpinKit_Color="@color/job_seeker_logo_green" />
 
         </FrameLayout>
 
@@ -130,15 +114,15 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:background="@drawable/homepage_button_bg"
             android:drawableStart="@drawable/ic_inbox"
+            android:drawablePadding="@dimen/_10sdp"
             android:drawableTint="@color/job_seeker_logo_green"
             android:elevation="@dimen/_5sdp"
             android:fontFamily="@font/roboto_light"
             android:onClick="liveChat"
-            android:textSize="@dimen/_15sdp"
             android:paddingHorizontal="@dimen/_90sdp"
-            android:drawablePadding="@dimen/_10sdp"
             android:text="Inbox"
-            android:textColor="@color/job_seeker_logo_green" />
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_15sdp" />
 
     </LinearLayout>
 
@@ -148,11 +132,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/backgroundColor"
-        app:itemBackground="@drawable/custom_ripple"
         android:theme="@style/Navigation"
         app:headerLayout="@layout/nav_header"
+        app:itemBackground="@drawable/custom_ripple"
         app:itemIconTint="@color/drawer_item_color"
         app:itemTextColor="@color/drawer_item_color"
-        app:menu="@menu/drawer_menu"/>
+        app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

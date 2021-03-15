@@ -36,19 +36,21 @@ import com.example.jobseeker.utils.HelperUtils;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ActivityHomepageBinding binding;
     SwitchMaterial switch_id;
-    boolean isDarkModeOn=false;
+    boolean isDarkModeOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         init();
         fetchData();
-
     }
 
 
@@ -91,15 +92,21 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }
 
 
-        if (ParseUser.getCurrentUser().get("skillSet") != null){
+        if (ParseUser.getCurrentUser().get("skillSet") != null) {
             fetchJobs();
         }
     }
 
-    ArrayList<ParseObject> jobObjects;
+    ArrayList<ParseObject> jobObjects = new ArrayList<>();
     ForYouAdapter adapter;
 
     private void fetchJobs() {
+        String skillSet = ParseUser.getCurrentUser().getString("skillSet").toLowerCase();
+
+        String tokens[] = skillSet.split(",");
+
+        Log.d("of1", Arrays.toString(tokens));
+        Log.d("of", tokens.length + "");
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
         query.include("applied");
@@ -107,20 +114,44 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         query.whereNotEqualTo("createdBy", ParseUser.getCurrentUser());
         query.orderByDescending("createdAt");
 
-        query.findInBackground((objects, e) -> {
+        binding.forYouSpinKit.setVisibility(View.VISIBLE);
+        query.findInBackground((List<ParseObject> objects, ParseException e) -> {
             if (e == null) {
-                jobObjects = (ArrayList<ParseObject>) objects;
-                Log.d("afjas", jobObjects.toString());
+                int len = objects.size();
+                for (int i = 0; i < len; i++) {
+                    Log.d("of", "main loop " + objects.get(i).getString("title").toLowerCase());
 
-                adapter = new ForYouAdapter(jobObjects, new ForYouAdapter.OnJobBoardListener() {
-                    @Override
-                    public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
+                    for (int j = 0; j < tokens.length; j++) {
+
+                        Log.d("of", "inner loop " + objects.get(i).getString("title").toLowerCase());
+
+                        if (objects.get(i).getString("title").toLowerCase().contains(tokens[j])){
+                            Log.d("sada","I am here"+j+"");
+                            Log.d("of1", "added " + objects.get(i).getString("title").toLowerCase());
+                            jobObjects.add(objects.get(i));
+                            break;
+                        }
+
 
                     }
-                });
 
-                Toast.makeText(this, "Success!22", Toast.LENGTH_SHORT).show();
-                binding.forYouRecyclerView.setAdapter(adapter);
+                }
+
+                if (jobObjects.size() != 0) {
+                    adapter = new ForYouAdapter(jobObjects, new ForYouAdapter.OnJobBoardListener() {
+                        @Override
+                        public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
+
+                        }
+                    });
+
+                    binding.forYouRecyclerView.setAdapter(adapter);
+                    Toast.makeText(this, "Success!22", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Sorry! no matching jobs found", Toast.LENGTH_SHORT).show();
+                }
+
+                binding.forYouSpinKit.setVisibility(View.GONE);
             } else {
                 Toast.makeText(HomePage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -259,7 +290,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 }
 
                 if (ParseUser.getCurrentUser().getString("skillSet") != null) {
-                    HelperUtils.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false,isDarkModeOn, ParseUser.getCurrentUser().getString("skillSet").split(","));
+                    HelperUtils.addChipIntoChipGroup(dialog.findViewById(R.id.skill_chip_group), this, false, isDarkModeOn, ParseUser.getCurrentUser().getString("skillSet").split(","));
                 }
 
                 ScrollView scrollView = dialog.findViewById(R.id.scroll_view);
