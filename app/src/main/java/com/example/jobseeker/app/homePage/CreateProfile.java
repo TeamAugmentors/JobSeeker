@@ -57,8 +57,6 @@ public class CreateProfile extends AppCompatActivity {
 
     private static final int REQUEST_STORAGE = 111;
     private static final int REQUEST_FILE = 222;
-    private static final int REQUEST_CAMERA = 333;
-    private static final int CAMERA_REQUEST_CODE = 444;
     private static final int PERMISSION_CODE = 1000;
     private static final int CAPTURE_CODE = 1001;
     ActivityCreateProfileBinding binding;
