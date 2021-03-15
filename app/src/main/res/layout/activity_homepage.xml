@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,38 +30,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/roboto_regular"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_light"
             android:text="For you"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/_50sdp" />
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_35sdp" />
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            >
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_marginVertical="@dimen/_20sdp"
-                android:layout_weight="1"
-                android:orientation="horizontal" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/forYouRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
 
-            <ImageView
+<!--                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator-->
+<!--                    android:id="@+id/forYouIndicators"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:dotsSize="@dimen/_6sdp"-->
+<!--                    android:layout_marginTop="@dimen/_10sdp"-->
+<!--                    />-->
+            </LinearLayout>
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/forYouSpinKit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:src="@drawable/ic_right_arrow"
-                app:tint="@color/textColor"/>
+                style="@style/SpinKitView.Large.ThreeBounce"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/job_seeker_logo_green"
+                android:visibility="gone"
+                />
 
-        </LinearLayout>
+        </FrameLayout>
+
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:stretchColumns="0,1">
 
             <TableRow

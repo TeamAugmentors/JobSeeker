@@ -1,9 +1,6 @@
 package com.example.jobseeker.app.homePage.fragments.inbox;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.jobseeker.R;
-import com.example.jobseeker.app.homePage.AppliedPosts;
-import com.example.jobseeker.app.homePage.CreateProfile;
-import com.example.jobseeker.app.homePage.CreatedPostsAdapter;
-import com.example.jobseeker.app.homePage.JobBoard;
-import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.app.homePage.adapters.inbox.InboxAdapter;
 import com.example.jobseeker.databinding.FragemntAppliedInboxBinding;
-import com.example.jobseeker.databinding.FragmentCreateJobBudgetBinding;
-import com.example.jobseeker.databinding.FragmentCreateProfile1Binding;
-import com.google.android.material.chip.ChipDrawable;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class AppliedInbox extends Fragment {
 

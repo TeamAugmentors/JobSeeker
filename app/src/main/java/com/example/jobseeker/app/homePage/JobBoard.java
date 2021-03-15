@@ -2,7 +2,6 @@ package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.constraintlayout.solver.widgets.Helper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import androidx.appcompat.widget.SearchView;
@@ -25,18 +24,15 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.homePage.adapters.ForYouAdapter;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
 import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.ncorti.slidetoact.SlideToActView;
-import com.parse.Parse;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;

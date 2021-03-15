@@ -1,4 +1,4 @@
-package com.example.jobseeker.app.homePage;
+package com.example.jobseeker.app.homePage.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,19 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.databinding.ItemForYouBinding;
 import com.example.jobseeker.databinding.ItemJobBoardBinding;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapter.ViewHolder> {
+public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ViewHolder> {
 
     // Store a member variable for the contacts
     private ArrayList<ParseObject> parseObjects;
-    private OnCreatedPostsListener mOnJobBoardListener;
+    private OnJobBoardListener mOnJobBoardListener;
 
-    public CreatedPostsAdapter(ArrayList<ParseObject> object, OnCreatedPostsListener onJobBoardListener) {
+    public ForYouAdapter(ArrayList<ParseObject> object, OnJobBoardListener onJobBoardListener) {
         parseObjects = object;
         mOnJobBoardListener = onJobBoardListener;
     }
@@ -31,7 +32,7 @@ public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new CreatedPostsAdapter.ViewHolder(ItemJobBoardBinding.inflate((inflater), parent, false), parent.getContext(), mOnJobBoardListener);
+        return new ForYouAdapter.ViewHolder(ItemForYouBinding.inflate((inflater), parent, false), parent.getContext(), mOnJobBoardListener);
     }
 
     // Provide a direct reference to each of the views within a data item
@@ -40,10 +41,10 @@ public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapte
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         Context context;
-        ItemJobBoardBinding binding;
-        OnCreatedPostsListener onJobBoardListener;
+        ItemForYouBinding binding;
+        OnJobBoardListener onJobBoardListener;
 
-        public ViewHolder(ItemJobBoardBinding b, Context context, OnCreatedPostsListener onJobBoardListener) {
+        public ViewHolder(ItemForYouBinding b, Context context, OnJobBoardListener onJobBoardListener) {
 
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
@@ -53,8 +54,6 @@ public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapte
             this.context = context;
             this.onJobBoardListener = onJobBoardListener;
             b.getRoot().setOnClickListener(this);
-
-
         }
 
         @Override
@@ -67,24 +66,8 @@ public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapte
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int pos) {
         holder.binding.title.setText(parseObjects.get(pos).getString("title"));
         holder.binding.description.setText(parseObjects.get(pos).getString("description"));
-//        holder.binding.skills.setText(parseObjects.get(pos).getString("requiredSkills"));
 
-        /*a function that displays salary in K if its greater than 1000, and displays it normally if it is under 1000, and set it to holder.biding.salary*/
-        double temp=parseObjects.get(pos).getInt("budget");
-        if(temp>1000)
-        {
-            temp/=1000;
-            int flag = (int)((temp*10)%10);
-            int temp2 = (int)(temp);
 
-            if(flag==0)
-                holder.binding.salary.setText(temp2+"K");
-            else{
-                holder.binding.salary.setText(String.format("%.1f",temp)+"K");
-            }
-        }
-        else
-            holder.binding.salary.setText(parseObjects.get(pos).getInt("budget") + "");
         /*a function that displays text upto 25 characters from description and puts "..." at the end if its greater than 25 characters, set it to holder.biding.description*/
         String test = holder.binding.description.getText().toString();
         if(test.length()>74)
@@ -94,22 +77,13 @@ public class CreatedPostsAdapter extends RecyclerView.Adapter<CreatedPostsAdapte
         holder.binding.getRoot().setAnimation(AnimationUtils.loadAnimation(holder.context, R.anim.fade_scale_in));
     }
 
-    private void setSalary(){
-
-    }
     @Override
     public int getItemCount() {
         return parseObjects.size();
     }
 
-    public interface OnCreatedPostsListener {
+    public interface OnJobBoardListener {
         void onJobBoardClick(int position,List<ParseObject> parseObjects);
     }
 
-    public void filter(ArrayList<ParseObject> filteredList){
-        if (!parseObjects.equals(filteredList)){
-            parseObjects = filteredList;
-            notifyDataSetChanged();
-        }
-    }
 }

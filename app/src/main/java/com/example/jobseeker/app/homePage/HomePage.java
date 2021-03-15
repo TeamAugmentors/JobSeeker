@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.jobseeker.R;
+import com.example.jobseeker.app.homePage.adapters.ForYouAdapter;
+import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.example.jobseeker.utils.HelperUtils;
@@ -33,7 +37,12 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,8 +55,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-        isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
+
+
         init();
         fetchData();
 
@@ -80,10 +89,53 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             binding.navView.getMenu().getItem(0).setTitle("Create Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
         }
+
+
+        if (ParseUser.getCurrentUser().get("skillSet") != null){
+            fetchJobs();
+        }
     }
 
+    ArrayList<ParseObject> jobObjects;
+    ForYouAdapter adapter;
+
+    private void fetchJobs() {
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
+        query.include("applied");
+        query.whereNotEqualTo("applied", ParseUser.getCurrentUser());
+        query.whereNotEqualTo("createdBy", ParseUser.getCurrentUser());
+        query.orderByDescending("createdAt");
+
+        query.findInBackground((objects, e) -> {
+            if (e == null) {
+                jobObjects = (ArrayList<ParseObject>) objects;
+                Log.d("afjas", jobObjects.toString());
+
+                adapter = new ForYouAdapter(jobObjects, new ForYouAdapter.OnJobBoardListener() {
+                    @Override
+                    public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
+
+                    }
+                });
+
+                Toast.makeText(this, "Success!22", Toast.LENGTH_SHORT).show();
+                binding.forYouRecyclerView.setAdapter(adapter);
+            } else {
+                Toast.makeText(HomePage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     private void init() {
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
+
         setSupportActionBar(binding.toolbar);
+
+        binding.forYouRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        binding.forYouRecyclerView.setItemViewCacheSize(1);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);
