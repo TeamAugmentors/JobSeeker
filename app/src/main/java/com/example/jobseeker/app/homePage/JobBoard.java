@@ -361,18 +361,19 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                     Toast.makeText(context, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }, percentDone -> {
-
-//                binding.downloadingLayout.progress.setProgress(percentDone, true);
-//                if (percentDone == 100) {
-//                    ProgressBarStatus.successFlash(binding.downloadingLayout.progress, this);
-//                    binding.downloadingLayout.textView.setText("Download complete!");
-//
-//                    new Handler().postDelayed(() -> {
-//                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//
-//                        binding.downloadingLayout.progress.setProgress(0, false);
-//                    }, 1400);
-//                }
+                Toast.makeText(this, "LOL", Toast.LENGTH_SHORT).show();
+                binding.progress.setProgress(percentDone, true);
+                Log.d("HI", "addButtonsToLayout: "+percentDone);
+                if (percentDone == 100) {
+                    ProgressBarStatus.successFlash(binding.progress, this);
+                    binding.textView.setText("Download complete!");
+                    Toast.makeText(context, "SUPER", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(() -> {
+                       //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        bottomSheet.dismiss();
+                        binding.progress.setProgress(0, false);
+                    }, 1400);
+                }
             }));
         }
     }
