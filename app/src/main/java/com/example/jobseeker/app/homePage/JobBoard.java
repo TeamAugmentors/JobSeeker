@@ -50,6 +50,7 @@ import com.example.jobseeker.app.homePage.adapters.ForYouAdapter;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
+import com.example.jobseeker.utils.BottomSheet;
 import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ProgressBarStatus;
 import com.example.jobseeker.utils.ToolbarHelper;
@@ -73,7 +74,8 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     JobBoardAdapter adapter;
     ActivityJobBoardBinding binding;
     ArrayList<ParseObject> parseObjects;
-    BottomSheetBehavior bottomSheetBehavior;
+
+    BottomSheet bottomSheet = new BottomSheet();
 
     private final int PERMISSION_CODE = 1000;
     public final String JOBSEEKER_DIR = Environment.DIRECTORY_DOWNLOADS + "/JobSeeker";
@@ -122,6 +124,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         ToolbarHelper.create(binding.toolbar, binding.collapsingToolbar, this, "Job Board");
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemViewCacheSize(1);
+
 
         binding.appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
             verticalOffset = verticalOffset * -1;
@@ -177,11 +180,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         binding.search.addTextChangedListener(textWatcher);
 
-//        bottomSheetBehavior = HelperUtils.defaultSheet(binding.downloadingLayout.getRoot(), binding.downloadingLayout.close);
-
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.filterBottomSheetRootLayout);
-        bottomSheetBehavior.setHideable(false);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
     }
 
@@ -341,7 +339,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                     Toast.makeText(context, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }, percentDone -> {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
 //                binding.downloadingLayout.progress.setProgress(percentDone, true);
 //                if (percentDone == 100) {
@@ -364,6 +361,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (!query(context, parseFile.getName(), jobId)) {
+                bottomSheet.show(getSupportFragmentManager(),"bottomSheet");
                 ContentResolver resolver = context.getContentResolver();
                 ContentValues contentValues = new ContentValues();
                 //Automatically creates a directory if there is no directory. Might need a permission check in the future
@@ -380,6 +378,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
             }
 
         } else {
+            bottomSheet.show(getSupportFragmentManager(),"bottomSheet");
             File imageDir = Environment.getExternalStoragePublicDirectory(JOBSEEKER_DIR + "/JobId_" + jobId);
             imageDir.mkdir();
             File image = new File(imageDir, parseFile.getName());

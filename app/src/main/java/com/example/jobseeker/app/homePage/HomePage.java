@@ -37,6 +37,7 @@ import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
 import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.HorizontalZoomCenterLayoutManager;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -188,10 +189,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         binding.forYouRecyclerView.setLayoutManager(new HorizontalZoomCenterLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.forYouRecyclerView.setItemViewCacheSize(1);
-        binding.forYouRecyclerView.scheduleLayoutAnimation();
 
-//        SnapHelper snapHelper = new LinearSnapHelper();
-//        snapHelper.attachToRecyclerView(binding.forYouRecyclerView);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);
