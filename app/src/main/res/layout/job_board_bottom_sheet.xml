@@ -40,7 +40,7 @@
                 android:id="@+id/close"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="@dimen/_13sdp"
-                android:layout_height="@dimen/_13sdp"
+                android:layout_height="13dp"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/backgroundColor"
                 android:elevation="0dp"
@@ -65,19 +65,18 @@
 
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:layout_width="match_parent"
         android:id="@+id/progress"
-        android:layout_height="@dimen/_4sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        app:trackThickness="@dimen/_4sdp"
-        app:trackCornerRadius="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         app:indicatorColor="@color/job_seeker_logo_green"
         app:trackColor="@color/backgroundColor"
-        android:layout_marginBottom="@dimen/_20sdp"
-        />
+        app:trackCornerRadius="@dimen/_2sdp"
+        app:trackThickness="@dimen/_4sdp" />
 
 
 
