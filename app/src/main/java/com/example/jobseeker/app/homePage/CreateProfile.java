@@ -345,8 +345,7 @@ public class CreateProfile extends AppCompatActivity {
         dialogView.findViewById(R.id.galleryButton).setOnClickListener(v -> {
 
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                requestPermissions(permission, REQUEST_STORAGE);
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
             } else {
                 openGallery();
             }

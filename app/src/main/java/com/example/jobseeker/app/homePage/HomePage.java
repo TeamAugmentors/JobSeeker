@@ -159,7 +159,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     });
 
                     binding.forYouRecyclerView.setAdapter(adapter);
-                    Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
 
                     binding.textViewLinearLayout.setVisibility(View.GONE);
                 } else {

@@ -16,10 +16,13 @@
 
     <style name="ModalBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <!-- Apply attributes here -->
+
+        <!-- optional -->
     </style>
 
     <style name="ModalBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">

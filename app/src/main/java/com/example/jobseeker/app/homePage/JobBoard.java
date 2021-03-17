@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -87,6 +88,10 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     TextWatcher textWatcher;
     SearchView.OnQueryTextListener onQueryTextListener;
 
+    byte[] globalData;
+    ParseFile globalParseFile;
+    Activity globalContext;
+    String globalJobId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -288,6 +293,20 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            try {
+                saveFile(globalData, globalParseFile, globalContext, globalJobId);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(JobBoard.this, "Error!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void addButtonsToLayout(ArrayList<ParseFile> parseFiles, LinearLayout linearLayout, Activity context, String jobId) {
         Typeface typeface = ResourcesCompat.getFont(context, R.font.roboto_regular);
 
@@ -323,13 +342,16 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
             button.setOnClickListener(v -> parseFile.getDataInBackground((data, e) -> {
                 if (e == null) {
+                    globalData = data;
+                    globalParseFile=parseFile;
+                    globalContext = context;
+                    globalJobId = jobId;
                     try {
-                        if (ContextCompat.checkSelfPermission(context,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                             //ask for permission
-                            JobBoard.this.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
+                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
                         } else {
-                            JobBoard.this.saveFile(data, parseFile, context, jobId);
+                            saveFile(data, parseFile, context, jobId);
                         }
                     } catch (Exception exception) {
                         Log.d("error!", exception.getMessage());
