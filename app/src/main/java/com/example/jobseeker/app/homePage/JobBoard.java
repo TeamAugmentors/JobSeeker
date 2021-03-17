@@ -14,10 +14,12 @@ import androidx.appcompat.widget.SearchView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -31,7 +33,9 @@ import android.os.Bundle;
 
 import android.os.Environment;
 import android.os.Handler;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -65,10 +69,13 @@ import com.parse.ParseUser;
 import com.parse.ProgressCallback;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJobBoardListener {
@@ -293,19 +300,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            try {
-                saveFile(globalData, globalParseFile, globalContext, globalJobId);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(JobBoard.this, "Error!", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     public void addButtonsToLayout(ArrayList<ParseFile> parseFiles, LinearLayout linearLayout, Activity context, String jobId) {
         Typeface typeface = ResourcesCompat.getFont(context, R.font.roboto_regular);
@@ -342,8 +336,9 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
             button.setOnClickListener(v -> parseFile.getDataInBackground((data, e) -> {
                 if (e == null) {
+
                     globalData = data;
-                    globalParseFile=parseFile;
+                    globalParseFile = parseFile;
                     globalContext = context;
                     globalJobId = jobId;
                     try {
@@ -379,12 +374,28 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     }
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            try {
+                saveFile(globalData, globalParseFile, globalContext, globalJobId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     private void saveFile(byte[] data, ParseFile parseFile, Activity context, String jobId) throws Exception {
         OutputStream outputStream;
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (!query(context, parseFile.getName(), jobId)) {
-                bottomSheet.show(getSupportFragmentManager(),"bottomSheet");
+                bottomSheet.show(getSupportFragmentManager(), "bottomSheet");
                 ContentResolver resolver = context.getContentResolver();
                 ContentValues contentValues = new ContentValues();
                 //Automatically creates a directory if there is no directory. Might need a permission check in the future
@@ -393,7 +404,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                 contentValues.put(MediaStore.Downloads.RELATIVE_PATH, JOBSEEKER_DIR + "/JobId_" + jobId);
 
                 Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
-
                 outputStream = resolver.openOutputStream(uri);
             } else {
                 Toast.makeText(context, "Duplicate file found!", Toast.LENGTH_SHORT).show();
@@ -401,7 +411,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
             }
 
         } else {
-            bottomSheet.show(getSupportFragmentManager(),"bottomSheet");
+            bottomSheet.show(getSupportFragmentManager(), "bottomSheet");
             File imageDir = Environment.getExternalStoragePublicDirectory(JOBSEEKER_DIR + "/JobId_" + jobId);
             imageDir.mkdir();
             File image = new File(imageDir, parseFile.getName());
@@ -423,13 +433,13 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         final String[] columns = {id, name};
 
-        String folder = "/storage/emulated/0/Download/JobSeeker/";
-        //folder = folder.concat(jobId+"");
+        String folder = "/storage/emulated/0/Download/JobSeeker/JobId_";
+        folder = folder.concat(jobId+"/");
         //Log.d("Item1",folder);
-        String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
+         String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
         String[] selectionArgs = new String[]{
                 "%" + folder + "%",
-                "%" + folder + "/%/%"
+                "%" + folder + "/%/%",
         };
 
         Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
@@ -437,7 +447,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
-                String retrievedFileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DISPLAY_NAME));
+                String retrievedFileName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
                 if (retrievedFileName.equals(fileName)) {
                     cursor.close();
                     return true;
