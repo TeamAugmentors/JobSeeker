@@ -188,9 +188,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         binding.forYouRecyclerView.setLayoutManager(new HorizontalZoomCenterLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.forYouRecyclerView.setItemViewCacheSize(1);
+        binding.forYouRecyclerView.scheduleLayoutAnimation();
 
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(binding.forYouRecyclerView);
+//        SnapHelper snapHelper = new LinearSnapHelper();
+//        snapHelper.attachToRecyclerView(binding.forYouRecyclerView);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.drawerLayout.addDrawerListener(toggle);

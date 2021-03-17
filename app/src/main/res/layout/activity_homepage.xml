@@ -43,10 +43,12 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/forYouRecyclerView"
-                android:paddingStart="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_12sdp"
+                android:paddingStart="@dimen/_20sdp"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
