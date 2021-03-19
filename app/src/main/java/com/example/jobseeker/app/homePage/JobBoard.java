@@ -56,6 +56,7 @@ import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
 import com.example.jobseeker.utils.BottomSheet;
+import com.example.jobseeker.utils.ColorEx;
 import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ProgressBarStatus;
 import com.example.jobseeker.utils.ToolbarHelper;
@@ -334,42 +335,52 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
             ParseFile parseFile = parseFiles.get(i);
 
-            button.setOnClickListener(v -> parseFile.getDataInBackground((data, e) -> {
-                if (e == null) {
+            button.setOnClickListener(v -> {
+                parseFile.getDataInBackground((data, e) -> {
+                    if (e == null) {
 
-                    globalData = data;
-                    globalParseFile = parseFile;
-                    globalContext = context;
-                    globalJobId = jobId;
-                    try {
-                        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                            //ask for permission
-                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
-                        } else {
-                            saveFile(data, parseFile, context, jobId);
+                        globalData = data;
+                        globalParseFile = parseFile;
+                        globalContext = context;
+                        globalJobId = jobId;
+
+                        try {
+                            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                                //ask for permission
+                                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
+                            } else {
+                                saveFile(data, parseFile, context, jobId);
+                            }
+                        } catch (Exception exception) {
+                            Log.d("error!", exception.getMessage());
                         }
-                    } catch (Exception exception) {
-                        Log.d("error!", exception.getMessage());
-                    }
 
-                } else {
-                    Toast.makeText(context, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }, percentDone -> {
-                Toast.makeText(this, "LOL", Toast.LENGTH_SHORT).show();
-                binding.progress.setProgress(percentDone, true);
-                Log.d("HI", "addButtonsToLayout: "+percentDone);
-                if (percentDone == 100) {
-                    ProgressBarStatus.successFlash(binding.progress, this);
-                    binding.textView.setText("Download complete!");
-                    Toast.makeText(context, "SUPER", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(() -> {
-                       //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        bottomSheet.dismiss();
-                        binding.progress.setProgress(0, false);
-                    }, 1400);
-                }
-            }));
+                    } else {
+                        Toast.makeText(context, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, new ProgressCallback() {
+                    @Override
+                    public void done(Integer percentDone) {
+
+                        binding.progressJobBoard.setIndicatorColor(ColorEx.JOB_SEEKER_GREEN);
+
+                        binding.progressJobBoard.setProgress(50, true);
+                        Log.d("afsfasf", "new: " + percentDone);
+
+                        if (percentDone == 100) {
+                            ProgressBarStatus.successFlash(binding.progressJobBoard, JobBoard.this);
+                            binding.textView.setText("Download complete!");
+
+
+                            new Handler().postDelayed(() -> {
+                                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                                bottomSheet.dismiss();
+                                binding.progressJobBoard.setProgress(0, false);
+                            }, 1400);
+                        }
+                    }
+                });
+            });
         }
     }
 
@@ -405,6 +416,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
                 Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
                 outputStream = resolver.openOutputStream(uri);
+                Toast.makeText(context, "successfully downloaded!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, "Duplicate file found!", Toast.LENGTH_SHORT).show();
                 return;

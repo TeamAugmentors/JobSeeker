@@ -37,11 +37,11 @@ public class HorizontalZoomCenterLayoutManager extends LinearLayoutManager {
                     (getDecoratedRight(child) + getDecoratedLeft(child)) / 2.f;
             float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
             float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
-            int translationDirection;
+            float translationDirection;
             if (childMidpoint > midpoint) {
-                translationDirection = -1;
+                translationDirection = -0.8f;
             } else {
-                translationDirection = 1;
+                translationDirection = 0.8f;
             }
             float translationXFromScale = translationDirection * child.getWidth() * (1 - scale) / 2f;
             child.setTranslationX(translationXFromScale);

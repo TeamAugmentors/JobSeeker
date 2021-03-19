@@ -377,10 +377,13 @@ public class CreateProfile extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Pictures");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+
         imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(camera, CAPTURE_CODE);
+
 
     }
 
@@ -391,12 +394,12 @@ public class CreateProfile extends AppCompatActivity {
 
         if (requestCode == REQUEST_FILE && resultCode == RESULT_OK && data != null) {
             startCrop(data.getData());
-
         } else if (requestCode == CAPTURE_CODE && resultCode == RESULT_OK) {
             startCrop(imageUri);
         } else if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             isImageSelected = true;
             Uri imageUriResultCrop = UCrop.getOutput(data);
+
             if (imageUriResultCrop != null) {
                 Glide.with(this)
                         .asBitmap()

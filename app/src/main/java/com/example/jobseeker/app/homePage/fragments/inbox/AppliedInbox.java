@@ -1,6 +1,8 @@
 package com.example.jobseeker.app.homePage.fragments.inbox;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.jobseeker.app.homePage.LiveMessage;
 import com.example.jobseeker.app.homePage.adapters.inbox.InboxAdapter;
 import com.example.jobseeker.databinding.FragemntAppliedInboxBinding;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,9 +65,14 @@ public class AppliedInbox extends Fragment {
 
                     adapter = new InboxAdapter(createdBys, new InboxAdapter.OnInboxListener() {
                         @Override
-                        public void onInboxClick(int position, List<ParseObject> parseObjects) {
+                        public void onInboxClick(int position, ArrayList<ParseObject> users, ArrayList<byte[]> picBytesList) {
+                            ///check length of our file in bytes. Pic wont exceed 500kb so we can pass bytes through intent ez if > 500kb,  your app will crash on intent with no error logs
 
+                            startActivity(new Intent(getActivity(), LiveMessage.class).putExtra("picBytes", picBytesList.get(position))
+                                    .putExtra("clientUser", users.get(position))
+                                    .putExtra("type", "Hirer"));
                         }
+
                     });
 
                     if (adapter.getItemCount() != 0)

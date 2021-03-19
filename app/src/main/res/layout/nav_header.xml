@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
@@ -8,13 +9,16 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:background="@color/job_seeker_logo_green">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/proPic"
+        app:civ_border_width="@dimen/_1sdp"
+        app:civ_border_color="@color/white"
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_60sdp"
+        android:elevation="@dimen/_4sdp"
         android:src="@drawable/ic_user"
-        android:contentDescription="@string/profile_picture"
         />
+
 
     <TextView
         android:id="@+id/user"

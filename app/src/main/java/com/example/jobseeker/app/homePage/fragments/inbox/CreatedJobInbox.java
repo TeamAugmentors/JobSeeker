@@ -62,9 +62,10 @@ public class CreatedJobInbox extends Fragment {
                 }
                 adapter = new InboxAdapter(parseObjects, new InboxAdapter.OnInboxListener() {
                     @Override
-                    public void onInboxClick(int position, List<ParseObject> parseObjects) {
+                    public void onInboxClick(int position, ArrayList<ParseObject> users, ArrayList<byte[]> picBytesList) {
 
                     }
+
                 });
                 if (adapter.getItemCount() != 0)
                     binding.recyclerview.setAdapter(adapter);

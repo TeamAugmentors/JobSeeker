@@ -47,6 +47,7 @@ dependencies {
 
     //Parse SDK
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.25.0"
+    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.1.0'
 
     //otp
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'

@@ -1,6 +1,8 @@
 package com.example.jobseeker.app.homePage.adapters.inbox;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,16 +12,21 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ItemInboxBinding;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ProgressCallback;
 
+import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +35,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
     // Store a member variable for the contacts
     private ArrayList<ParseObject> parseObjects = new ArrayList<>();
+    private ArrayList<byte[]> picBytesList = new ArrayList<>();
+
     private OnInboxListener mOnInboxListener;
 
     public InboxAdapter(HashMap<String,ParseObject> objectHashMap, OnInboxListener onInboxListener) {
@@ -69,7 +78,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            onInboxListener.onInboxClick(getAdapterPosition(), parseObjects);
+            onInboxListener.onInboxClick(getAdapterPosition(), parseObjects,picBytesList);
         }
     }
 
@@ -84,9 +93,21 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
                 Glide.with(holder.context)
                         .asBitmap()
                         .load(data)
-                        .override(500, 500)
                         .transform(new CircleCrop())
-                        .into(holder.binding.proPic);
+                        .into(new CustomTarget<Bitmap>(250, 250) {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                holder.binding.proPic.setImageBitmap(resource);
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                resource.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                picBytesList.add(stream.toByteArray());
+                            }
+
+                            @Override
+                            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                            }
+                        });
             } else {
                 Log.d("fiasdjfiaws", "Error on e not equal to null! " + e.getMessage());
             }
@@ -100,7 +121,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
     }
 
     public interface OnInboxListener {
-        void onInboxClick(int position, List<ParseObject> parseObjects);
+        void onInboxClick(int position, ArrayList<ParseObject> users,ArrayList<byte[]> picBytesList);
     }
 
     public void filter(ArrayList<ParseObject> filteredList) {
