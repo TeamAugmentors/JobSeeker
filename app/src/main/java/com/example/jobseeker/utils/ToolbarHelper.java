@@ -26,6 +26,7 @@ public class ToolbarHelper {
         upArrow.setColorFilter(ContextCompat.getColor(activity, R.color.white), PorterDuff.Mode.SRC_ATOP);
         activity.getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
+
         if (collapsingToolbarLayout != null) {
             collapsingToolbarLayout.setExpandedTitleColor(activity.getColor(R.color.white));
             collapsingToolbarLayout.setCollapsedTitleTextColor(activity.getColor(R.color.white));
@@ -36,4 +37,5 @@ public class ToolbarHelper {
     public static ToolbarHelper create(Toolbar toolbar, CollapsingToolbarLayout collapsingToolbarLayout, AppCompatActivity activity, String title) {
         return new ToolbarHelper(toolbar, collapsingToolbarLayout, activity, title);
     }
+
 }
