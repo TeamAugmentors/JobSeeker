@@ -13,13 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@color/job_seeker_logo_green">
 
-        <!--        <ImageButton-->
-        <!--            android:onClick="onBackPressed"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:src="@drawable/ic_back_arrow"-->
-        <!--            android:background="@null"-->
-        <!--            />-->
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/clientPic"
