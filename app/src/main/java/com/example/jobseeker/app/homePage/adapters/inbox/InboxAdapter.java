@@ -21,8 +21,11 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ItemInboxBinding;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.ProgressCallback;
 
 import java.io.ByteArrayOutputStream;
@@ -102,6 +105,37 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
             }
         });
 
+        ParseQuery<ParseObject> parseQuery1 = ParseQuery.getQuery("LiveMessage");
+
+        parseQuery1.whereEqualTo("createdBy", ParseUser.getCurrentUser().getUsername());
+        parseQuery1.whereEqualTo("createdFor", parseObjects.get(pos).get("username"));
+
+        ParseQuery<ParseObject> parseQuery2 = ParseQuery.getQuery("LiveMessage");
+
+        parseQuery2.whereEqualTo("createdFor", ParseUser.getCurrentUser().getUsername());
+        parseQuery2.whereEqualTo("createdBy", parseObjects.get(pos).get("username"));
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        queries.add(parseQuery1);
+        queries.add(parseQuery2);
+
+        ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
+        mainQuery.orderByAscending("createdAt");
+
+        mainQuery.findInBackground((objects, e) -> {
+            if (e==null){
+                if (objects.size() != 0){
+                    ParseObject parseObject =  objects.get(objects.size() - 1);
+                    if (parseObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())){
+                        //message made by me
+                        holder.binding.recentMessage.setText("You: " + parseObject.getString("message"));
+                    } else {
+                        holder.binding.recentMessage.setText( parseObject.getString("message"));
+                    }
+
+                }
+            }
+        });
     }
 
     @Override
