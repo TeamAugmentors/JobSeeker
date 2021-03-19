@@ -65,12 +65,13 @@ public class AppliedInbox extends Fragment {
 
                     adapter = new InboxAdapter(createdBys, new InboxAdapter.OnInboxListener() {
                         @Override
-                        public void onInboxClick(int position, ArrayList<ParseObject> users, ArrayList<byte[]> picBytesList) {
+                        public void onInboxClick(int position, ArrayList<ParseObject> users) {
                             ///check length of our file in bytes. Pic wont exceed 500kb so we can pass bytes through intent ez if > 500kb,  your app will crash on intent with no error logs
 
-                            startActivity(new Intent(getActivity(), LiveMessage.class).putExtra("picBytes", picBytesList.get(position))
+                            startActivity(new Intent(getActivity(), LiveMessage.class)
                                     .putExtra("clientUser", users.get(position))
                                     .putExtra("type", "Hirer"));
+
                         }
 
                     });

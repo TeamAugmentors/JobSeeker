@@ -36,9 +36,6 @@ public class LiveMessage extends AppCompatActivity {
     LiveChatAdapter adapter;
     ArrayList<ParseObject> parseObjects = new ArrayList<>();
 
-
-    byte[] proPicBytes;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,10 +87,11 @@ public class LiveMessage extends AppCompatActivity {
 
         ToolbarHelper.create(binding.toolbar, null, this, null);
 
-        proPicBytes = getIntent().getByteArrayExtra("picBytes");
         clientUser = getIntent().getParcelableExtra("clientUser");
 
-        Glide.with(this).load(proPicBytes).into(binding.clientPic);
+        clientUser.getParseFile("proPic").getDataInBackground((data, e) -> {
+            Glide.with(this).load(data).into(binding.clientPic);
+        });
 
         binding.fullname.setText(clientUser.getString("firstName"));
         binding.type.setText(getIntent().getStringExtra("type"));

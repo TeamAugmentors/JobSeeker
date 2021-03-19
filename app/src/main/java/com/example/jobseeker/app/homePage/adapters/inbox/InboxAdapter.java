@@ -35,7 +35,6 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
     // Store a member variable for the contacts
     private ArrayList<ParseObject> parseObjects = new ArrayList<>();
-    private ArrayList<byte[]> picBytesList = new ArrayList<>();
 
     private OnInboxListener mOnInboxListener;
 
@@ -78,7 +77,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            onInboxListener.onInboxClick(getAdapterPosition(), parseObjects,picBytesList);
+            onInboxListener.onInboxClick(getAdapterPosition(), parseObjects);
         }
     }
 
@@ -89,25 +88,15 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
         holder.binding.firstName.setText(parseObjects.get(pos).getString("firstName"));
 
         parseObjects.get(pos).getParseFile("proPic").getDataInBackground((data, e) -> {
+
             if (e == null) {
                 Glide.with(holder.context)
                         .asBitmap()
                         .load(data)
                         .transform(new CircleCrop())
-                        .into(new CustomTarget<Bitmap>(250, 250) {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                holder.binding.proPic.setImageBitmap(resource);
-                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                                resource.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                                picBytesList.add(stream.toByteArray());
-                            }
+                        .override(250, 250)
+                        .into(holder.binding.proPic);
 
-                            @Override
-                            public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                            }
-                        });
             } else {
                 Log.d("fiasdjfiaws", "Error on e not equal to null! " + e.getMessage());
             }
@@ -121,7 +110,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
     }
 
     public interface OnInboxListener {
-        void onInboxClick(int position, ArrayList<ParseObject> users,ArrayList<byte[]> picBytesList);
+        void onInboxClick(int position, ArrayList<ParseObject> users);
     }
 
     public void filter(ArrayList<ParseObject> filteredList) {
