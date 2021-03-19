@@ -33,6 +33,9 @@ public class Inbox extends AppCompatActivity {
         ToolbarHelper.create(binding.toolbar, null, this, "Inbox");
 
         binding.viewPager2.setAdapter(adapter = new InboxViewPager2Adapter(this));
+
+        binding.viewPager2.setOffscreenPageLimit(5);
+
         new TabLayoutMediator(binding.tabLayout, binding.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -55,6 +58,8 @@ public class Inbox extends AppCompatActivity {
             adapter.getCreatedJobInbox().fetchData(binding.swipeRefresh);
 
         });
+
+
     }
 
     public void compose(View view) {

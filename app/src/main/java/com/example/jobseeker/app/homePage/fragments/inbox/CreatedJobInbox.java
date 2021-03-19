@@ -1,5 +1,6 @@
 package com.example.jobseeker.app.homePage.fragments.inbox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.jobseeker.app.homePage.LiveMessage;
 import com.example.jobseeker.app.homePage.adapters.inbox.InboxAdapter;
 import com.example.jobseeker.databinding.FragemntAppliedInboxBinding;
 import com.example.jobseeker.databinding.FragemntCreatedJobsInboxBinding;
@@ -52,6 +54,7 @@ public class CreatedJobInbox extends Fragment {
         query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 
         query.findInBackground((objects, e) -> {
+
             if (e == null) {
                 for (int i = 0; i < objects.size(); i++) {
                     if (objects.get(i).getList("applied") != null) {
@@ -60,13 +63,19 @@ public class CreatedJobInbox extends Fragment {
                         }
                     }
                 }
-                adapter = new InboxAdapter(parseObjects, new InboxAdapter.OnInboxListener() {
-                    @Override
-                    public void onInboxClick(int position, ArrayList<ParseObject> users, ArrayList<byte[]> picBytesList) {
 
+                adapter = new InboxAdapter(parseObjects, new InboxAdapter.OnInboxListener() {
+
+                    public void onInboxClick(int position, ArrayList<ParseObject> users, ArrayList<byte[]> picBytesList) {
+                        ///check length of our file in bytes. Pic wont exceed 500kb so we can pass bytes through intent ez if > 500kb,  your app will crash on intent with no error logs
+
+                        startActivity(new Intent(getActivity(), LiveMessage.class).putExtra("picBytes", picBytesList.get(position))
+                                .putExtra("clientUser", users.get(position))
+                                .putExtra("type", "Hirer"));
                     }
 
                 });
+
                 if (adapter.getItemCount() != 0)
                     binding.recyclerview.setAdapter(adapter);
             }

@@ -18,6 +18,7 @@
             android:id="@+id/clientPic"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:elevation="@dimen/_4sdp"
             android:src="@color/white"
             app:civ_border_color="@color/white"
@@ -57,6 +58,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
