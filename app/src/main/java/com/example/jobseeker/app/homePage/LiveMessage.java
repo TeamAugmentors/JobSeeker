@@ -3,6 +3,7 @@ package com.example.jobseeker.app.homePage;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.LiveChatAdapter;
 import com.example.jobseeker.databinding.ActivityLiveMessageBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
@@ -52,8 +54,8 @@ public class LiveMessage extends AppCompatActivity {
             if (e == null) {
                 parseObjects = (ArrayList<ParseObject>) objects;
 
-                    adapter = new LiveChatAdapter(parseObjects);
-                    binding.recyclerView.setAdapter(adapter);
+                adapter = new LiveChatAdapter(parseObjects);
+                binding.recyclerView.setAdapter(adapter);
 
                 Log.d("agag", parseObjects.toString());
             } else {
@@ -66,7 +68,7 @@ public class LiveMessage extends AppCompatActivity {
 
         ParseQuery<ParseObject> parseQuery1 = ParseQuery.getQuery("LiveMessage");
 
-        parseQuery1.whereEqualTo("createdBy" , ParseUser.getCurrentUser().getUsername());
+        parseQuery1.whereEqualTo("createdBy", ParseUser.getCurrentUser().getUsername());
         parseQuery1.whereEqualTo("createdFor", clientUser.getUsername());
 
         ParseQuery<ParseObject> parseQuery2 = ParseQuery.getQuery("LiveMessage");
@@ -127,6 +129,8 @@ public class LiveMessage extends AppCompatActivity {
                 handler.post(() -> {
                     addMessage(object);
 
+                    if (!object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername()))
+                        playSound();
                     binding.recyclerView.scrollToPosition(binding.recyclerView.getAdapter().getItemCount() - 1);
                 });
             });
@@ -134,17 +138,21 @@ public class LiveMessage extends AppCompatActivity {
 
     }
 
+    private void playSound() {
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.pop);
+        mp.start();
+    }
+
 
     public void sendMessage(View view) {
         String message = binding.msgEditText.getText().toString();
-        if (!message.trim().equals("")){
+        if (!message.trim().equals("")) {
             binding.msgEditText.getText().clear();
 
             ParseObject messageObject = new ParseObject("LiveMessage");
             messageObject.put("message", message.trim());
             messageObject.put("createdBy", ParseUser.getCurrentUser().getUsername());
             messageObject.put("createdFor", clientUser.getUsername());
-            messageObject.addAll("pairUsernames", Arrays.asList(ParseUser.getCurrentUser().getUsername(), clientUser.getUsername()));
 
             messageObject.saveInBackground(e -> {
                 if (e == null) {
