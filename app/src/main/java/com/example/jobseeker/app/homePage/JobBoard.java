@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,12 +15,10 @@ import androidx.appcompat.widget.SearchView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -33,7 +32,6 @@ import android.os.Bundle;
 
 import android.os.Environment;
 import android.os.Handler;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Editable;
@@ -51,40 +49,29 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
-import com.example.jobseeker.app.homePage.adapters.ForYouAdapter;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
-import com.example.jobseeker.utils.BottomSheet;
 import com.example.jobseeker.utils.ColorEx;
-import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ProgressBarStatus;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.ProgressCallback;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 
 public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJobBoardListener {
     JobBoardAdapter adapter;
     ActivityJobBoardBinding binding;
     ArrayList<ParseObject> parseObjects;
-
-    BottomSheet bottomSheet = new BottomSheet();
 
     private final int PERMISSION_CODE = 1000;
     public final String JOBSEEKER_DIR = Environment.DIRECTORY_DOWNLOADS + "/JobSeeker";
@@ -337,6 +324,9 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
             button.setOnClickListener(v -> {
                 parseFile.getDataInBackground((data, e) -> {
+
+                    Log.d("afijawif", Arrays.toString(data));
+
                     if (e == null) {
 
                         globalData = data;
@@ -345,7 +335,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                         globalJobId = jobId;
 
                         try {
-                            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                            if (ActivityCompat.checkSelfPermission(context,Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                                 //ask for permission
                                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
                             } else {
@@ -358,26 +348,21 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                     } else {
                         Toast.makeText(context, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }, new ProgressCallback() {
-                    @Override
-                    public void done(Integer percentDone) {
+                }, percentDone -> {
 
-                        binding.progressJobBoard.setIndicatorColor(ColorEx.JOB_SEEKER_GREEN);
+                    binding.progressJobBoard.setIndicatorColor(ColorEx.JOB_SEEKER_GREEN);
 
-                        binding.progressJobBoard.setProgress(50, true);
-                        Log.d("afsfasf", "new: " + percentDone);
+                    binding.progressJobBoard.setProgress(50, true);
+                    Log.d("afsfasf", "new: " + percentDone);
 
-                        if (percentDone == 100) {
-                            ProgressBarStatus.successFlash(binding.progressJobBoard, JobBoard.this);
-                            binding.textView.setText("Download complete!");
+                    if (percentDone == 100) {
+                        ProgressBarStatus.successFlash(binding.progressJobBoard, JobBoard.this);
+                        binding.textView.setText("Download complete!");
 
 
-                            new Handler().postDelayed(() -> {
-                                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                                bottomSheet.dismiss();
-                                binding.progressJobBoard.setProgress(0, false);
-                            }, 1400);
-                        }
+                        new Handler().postDelayed(() -> {
+                            binding.progressJobBoard.setProgress(0, false);
+                        }, 1400);
                     }
                 });
             });
@@ -406,7 +391,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (!query(context, parseFile.getName(), jobId)) {
-                bottomSheet.show(getSupportFragmentManager(), "bottomSheet");
                 ContentResolver resolver = context.getContentResolver();
                 ContentValues contentValues = new ContentValues();
                 //Automatically creates a directory if there is no directory. Might need a permission check in the future
@@ -423,7 +407,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
             }
 
         } else {
-            bottomSheet.show(getSupportFragmentManager(), "bottomSheet");
+
             File imageDir = Environment.getExternalStoragePublicDirectory(JOBSEEKER_DIR + "/JobId_" + jobId);
             imageDir.mkdir();
             File image = new File(imageDir, parseFile.getName());

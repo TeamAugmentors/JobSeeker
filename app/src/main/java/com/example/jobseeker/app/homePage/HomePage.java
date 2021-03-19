@@ -35,6 +35,7 @@ import com.example.jobseeker.app.homePage.adapters.ForYouAdapter;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.app.startScreen.WelcomeScreen;
 import com.example.jobseeker.databinding.ActivityHomepageBinding;
+import com.example.jobseeker.databinding.DialogLayoutBinding;
 import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.HorizontalZoomCenterLayoutManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -112,6 +113,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     ArrayList<ParseObject> jobObjects = new ArrayList<>();
     ForYouAdapter adapter;
+    DialogLayoutBinding bindingDialog;
 
     public void fetchJobs(View view) {
         binding.forYouSpinKit.setVisibility(View.VISIBLE);
@@ -154,7 +156,92 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     adapter = new ForYouAdapter(jobObjects, new ForYouAdapter.OnJobBoardListener() {
                         @Override
                         public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
+                            Dialog dialog = new Dialog(HomePage.this, R.style.Dialog);
+                            bindingDialog = DialogLayoutBinding.inflate(getLayoutInflater());
 
+                            dialog.setContentView(bindingDialog.getRoot());
+
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            dialog.show();
+
+                            bindingDialog.close.setOnClickListener(v -> {
+                                dialog.dismiss();
+                            });
+
+                            ParseObject currentObject = parseObjects.get(position);
+
+                            bindingDialog.title.setText(currentObject.getString("title"));
+                            bindingDialog.description.setText(currentObject.getString("description"));
+                            bindingDialog.budget.setText(currentObject.getInt("budget") + "");
+                            bindingDialog.duration.setText(currentObject.getString("duration"));
+                            bindingDialog.revisions.setText(currentObject.getInt("revisions") + "");
+                            bindingDialog.seeFreelancerButton.setVisibility(View.GONE);
+                            bindingDialog.deleteButton.setVisibility(View.GONE);
+
+                            if (currentObject.getBoolean("negotiable"))
+                                bindingDialog.negotiable.setText("Yes");
+                            else
+                                bindingDialog.negotiable.setText("No");
+
+                            //Dynamic scroll view height
+
+                            String text = bindingDialog.description.getText().toString();
+
+                            int charCount = text.length();
+
+                            DisplayMetrics displayMetrics = new DisplayMetrics();
+                            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                            int height = displayMetrics.heightPixels;
+
+                            LinearLayout.LayoutParams params;
+
+                            if (charCount <= 200) {
+                                params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            } else {
+                                params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
+                            }
+
+                            bindingDialog.scrollView.setLayoutParams(params);
+
+                            //---------------------->
+                            ArrayList<ParseFile> parseFiles = new ArrayList<>();
+                            for (int i = 0; i < 3; i++) {
+                                if (currentObject.getParseFile("file" + (i + 1)) != null)
+                                    parseFiles.add(currentObject.getParseFile("file" + (i + 1)));
+                            }
+                            JobBoard jobBoard = new JobBoard();
+                            if (parseFiles.size() != 0)
+                                jobBoard.addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout,HomePage.this, currentObject.getObjectId());
+                            else {
+                                bindingDialog.sampleFileTextView.setText("No sample files provided");
+                            }
+                            //---------------------->
+                            bindingDialog.applySlider.setOnSlideCompleteListener(slideToActView -> {
+                                //apply
+                                if (ParseUser.getCurrentUser().getString("firstName") != null) {
+                                    currentObject.add("applied", ParseUser.getCurrentUser());
+
+                                    currentObject.saveInBackground(e -> {
+                                        if (e == null) {
+                                            Toast.makeText(HomePage.this, "Successfully applied!", Toast.LENGTH_SHORT).show();
+
+                                            ParseUser.getCurrentUser().add("appliedPosts", currentObject);
+                                            ParseUser.getCurrentUser().saveEventually();
+
+                                            removeJob(parseObjects, position);
+
+                                            dialog.dismiss();
+                                        } else {
+                                            Toast.makeText(HomePage.this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            slideToActView.resetSlider();
+                                        }
+                                    });
+
+                                } else {
+                                    Toast.makeText(HomePage.this, "Please create an account first", Toast.LENGTH_SHORT).show();
+                                    slideToActView.resetSlider();
+                                }
+                            });
                         }
                     });
 
@@ -394,6 +481,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         switch_id.setChecked(isButtonChecked);
     }
 
+    private void removeJob(List<ParseObject> parseObjects, int pos) {
+        parseObjects.remove(pos);
+        adapter.notifyItemRemoved(pos);
+        adapter.notifyItemRangeChanged(pos, parseObjects.size());
+    }
 
     public void jobBoard(View view) {
         startActivity(new Intent(this, JobBoard.class));
