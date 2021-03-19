@@ -37,8 +37,6 @@ public class LiveMessage extends AppCompatActivity {
     LiveChatAdapter adapter;
     ArrayList<ParseObject> parseObjects = new ArrayList<>();
 
-    ParseUser parseUser;
-    Drawable drawable;
 
     byte[] proPicBytes;
 
@@ -108,7 +106,7 @@ public class LiveMessage extends AppCompatActivity {
         }
 
         if (parseLiveQueryClient != null) {
-            ParseQuery<ParseObject> parseQuery = new ParseQuery("LiveMessage");
+            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("LiveMessage");
 
             parseQuery.whereEqualTo("pairUsernames", ParseUser.getCurrentUser().getUsername());
             parseQuery.whereEqualTo("pairUsernames", clientUser.getUsername());
@@ -127,10 +125,6 @@ public class LiveMessage extends AppCompatActivity {
 
     }
 
-
-    public void onBackPressed(View view) {
-        onBackPressed();
-    }
 
     public void sendMessage(View view) {
         String message = binding.msgEditText.getText().toString();
