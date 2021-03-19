@@ -3,17 +3,14 @@ package com.example.jobseeker.app.homePage;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.LiveChatAdapter;
 import com.example.jobseeker.databinding.ActivityLiveMessageBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
@@ -50,27 +47,41 @@ public class LiveMessage extends AppCompatActivity {
     }
 
     private void fetchData() {
-        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("LiveMessage");
-        parseQuery.orderByAscending("createdAt");
 
-        parseQuery.whereEqualTo("pairUsernames", ParseUser.getCurrentUser().getUsername());
-        parseQuery.whereEqualTo("pairUsernames", clientUser.getUsername());
-
-        Log.d("afaf", "my name " + ParseUser.getCurrentUser().getUsername() + " client name " + clientUser.getUsername());
-
-        parseQuery.findInBackground((objects, e) -> {
+        getMainQuery().findInBackground((objects, e) -> {
             if (e == null) {
                 parseObjects = (ArrayList<ParseObject>) objects;
 
                     adapter = new LiveChatAdapter(parseObjects);
                     binding.recyclerView.setAdapter(adapter);
 
-
                 Log.d("agag", parseObjects.toString());
             } else {
                 Toast.makeText(this, "error " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private ParseQuery<ParseObject> getMainQuery() {
+
+        ParseQuery<ParseObject> parseQuery1 = ParseQuery.getQuery("LiveMessage");
+
+        parseQuery1.whereEqualTo("createdBy" , ParseUser.getCurrentUser().getUsername());
+        parseQuery1.whereEqualTo("createdFor", clientUser.getUsername());
+
+        ParseQuery<ParseObject> parseQuery2 = ParseQuery.getQuery("LiveMessage");
+
+        parseQuery2.whereEqualTo("createdFor", ParseUser.getCurrentUser().getUsername());
+        parseQuery2.whereEqualTo("createdBy", clientUser.getUsername());
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        queries.add(parseQuery1);
+        queries.add(parseQuery2);
+
+        ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
+        mainQuery.orderByAscending("createdAt");
+
+        return mainQuery;
     }
 
     private void init() {
@@ -106,12 +117,10 @@ public class LiveMessage extends AppCompatActivity {
         }
 
         if (parseLiveQueryClient != null) {
-            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("LiveMessage");
 
-            parseQuery.whereEqualTo("pairUsernames", ParseUser.getCurrentUser().getUsername());
-            parseQuery.whereEqualTo("pairUsernames", clientUser.getUsername());
+            ParseQuery<ParseObject> mainQuery = getMainQuery();
 
-            SubscriptionHandling<ParseObject> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
+            SubscriptionHandling<ParseObject> subscriptionHandling = parseLiveQueryClient.subscribe(mainQuery);
 
             subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
                 Handler handler = new Handler(Looper.getMainLooper());
