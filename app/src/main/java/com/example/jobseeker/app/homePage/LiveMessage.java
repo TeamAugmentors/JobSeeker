@@ -107,6 +107,7 @@ public class LiveMessage extends AppCompatActivity {
     }
 
     ParseLiveQueryClient parseLiveQueryClient;
+    ParseQuery<ParseObject> mainQuery;
 
     private void liveQueryInit() {
         // Init Live Query Client
@@ -118,7 +119,7 @@ public class LiveMessage extends AppCompatActivity {
 
         if (parseLiveQueryClient != null) {
 
-            ParseQuery<ParseObject> mainQuery = getMainQuery();
+            mainQuery = getMainQuery();
 
             SubscriptionHandling<ParseObject> subscriptionHandling = parseLiveQueryClient.subscribe(mainQuery);
 
@@ -127,13 +128,24 @@ public class LiveMessage extends AppCompatActivity {
                 handler.post(() -> {
                     addMessage(object);
 
-                    if (!object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername()))
+                    if (!object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
                         playSound();
+                        Toast.makeText(this, "seenforistrue", Toast.LENGTH_SHORT).show();
+                        object.put("seenByFor", true);
+                        object.saveInBackground();
+                    }
+
                     binding.recyclerView.scrollToPosition(binding.recyclerView.getAdapter().getItemCount() - 1);
                 });
             });
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        parseLiveQueryClient.unsubscribe(mainQuery);
     }
 
     private void playSound() {

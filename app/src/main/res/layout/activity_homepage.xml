@@ -66,7 +66,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/textView"
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:background="@drawable/button_background_filled_capsule"
-                    android:drawableStart="@drawable/ic_edit_profile"
+                    android:drawableStart="@drawable/ic_edit_small"
                     android:drawablePadding="@dimen/_10sdp"
                     android:drawableTint="@color/white"
                     android:fontFamily="@font/roboto_regular"
@@ -97,7 +97,7 @@
                     android:paddingVertical="@dimen/_5sdp"
                     android:text="Edit Profile"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_16sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
 
             </LinearLayout>

@@ -61,28 +61,10 @@
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp"
                 android:lineSpacingExtra="@dimen/_3sdp"
-                android:layout_marginTop="@dimen/_6sdp"
                 android:textAlignment="textStart"
                 android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 />
-
-            <TextView
-                android:drawablePadding="@dimen/_5sdp"
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_light"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:text="2:15 PM"
-                android:textColor="@color/textColor"
-                android:alpha="0.7"
-                android:textAlignment="textEnd"
-                android:layout_marginStart="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:textSize="@dimen/_10sdp"
-                />
-
 
         </LinearLayout>
 
@@ -99,6 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/card_view" />
+        app:layout_constraintTop_toTopOf="@+id/card_view"
+        app:layout_constraintVertical_bias="0.13" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -329,7 +329,6 @@ public class CreateProfile extends AppCompatActivity {
 
     public void uploadProPic(View view) {
 
-
         Dialog dialog = new Dialog(this, R.style.Dialog);
         dialog.setContentView(R.layout.dialog_image_select);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -383,8 +382,6 @@ public class CreateProfile extends AppCompatActivity {
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(camera, CAPTURE_CODE);
-
-
     }
 
 
@@ -425,7 +422,6 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     private void startCrop(@NonNull Uri uri) {
-
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(this.getCacheDir(), "U_Crop_Image_" + System.currentTimeMillis() + ".jpeg")));
 
         uCrop.withOptions(getCropOption()).start(CreateProfile.this);

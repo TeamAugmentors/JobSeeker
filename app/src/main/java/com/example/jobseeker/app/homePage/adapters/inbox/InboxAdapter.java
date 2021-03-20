@@ -41,7 +41,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
     private OnInboxListener mOnInboxListener;
 
-    public InboxAdapter(HashMap<String,ParseObject> objectHashMap, OnInboxListener onInboxListener) {
+    public InboxAdapter(HashMap<String, ParseObject> objectHashMap, OnInboxListener onInboxListener) {
 
         objectHashMap.forEach((s, parseObject) -> {
             parseObjects.add(parseObject);
@@ -123,14 +123,18 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
         mainQuery.orderByAscending("createdAt");
 
         mainQuery.findInBackground((objects, e) -> {
-            if (e==null){
-                if (objects.size() != 0){
-                    ParseObject parseObject =  objects.get(objects.size() - 1);
-                    if (parseObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())){
+            if (e == null) {
+                if (objects.size() != 0) {
+                    ParseObject parseObject = objects.get(objects.size() - 1);
+                    if (parseObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
                         //message made by me
                         holder.binding.recentMessage.setText("You: " + parseObject.getString("message"));
+                        holder.binding.firstName.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                     } else {
-                        holder.binding.recentMessage.setText( parseObject.getString("message"));
+                        holder.binding.recentMessage.setText(parseObject.getString("message"));
+
+                        if (parseObject.getBoolean("seenByFor"))
+                            holder.binding.firstName.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                     }
 
                 }

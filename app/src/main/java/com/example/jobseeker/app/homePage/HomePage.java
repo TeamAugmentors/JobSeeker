@@ -64,7 +64,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         init();
         fetchData();
     }
@@ -91,24 +90,30 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+
+            if (ParseUser.getCurrentUser().get("skillSet") != null) {
+                fetchJobs(null);
+            } else {
+                binding.textViewLinearLayout.setVisibility(View.VISIBLE);
+                binding.refreshForYou.setVisibility(View.GONE);
+
+                binding.forYouRecyclerView.setAdapter(null);
+
+                binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_edit_small,0,0,0);
+                binding.addSkill.setText("Edit Profile");
+                binding.textView.setText("Please add some skills\nto get recommendations!");
+            }
+
         } else {
             ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
             binding.navView.getMenu().getItem(0).setTitle("Create Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
 
-            binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_profile,0,0,0);
+            binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_small,0,0,0);
+            binding.addSkill.setText("Create Profile");
             binding.textView.setText("Please create a profile\nto get recommendations!");
         }
 
-
-        if (ParseUser.getCurrentUser().get("skillSet") != null) {
-            fetchJobs(null);
-        } else {
-            binding.textViewLinearLayout.setVisibility(View.VISIBLE);
-            binding.refreshForYou.setVisibility(View.GONE);
-
-            binding.forYouRecyclerView.setAdapter(null);
-        }
     }
 
     ArrayList<ParseObject> jobObjects = new ArrayList<>();
