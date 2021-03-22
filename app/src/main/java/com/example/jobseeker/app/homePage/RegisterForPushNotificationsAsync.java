@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -31,6 +32,14 @@ class RegisterForPushNotificationsAsync extends AsyncTask<Void, Void, Object> {
 
             // Send the token to your backend server via an HTTP GET request
             ParseUser.getCurrentUser().put("pushyDeviceToken", deviceToken);
+
+            ParseUser.getCurrentUser().saveEventually(e -> {
+                if (e==null){
+                    Toast.makeText(getApplicationContext(), "token is saved", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), ""+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
             // Provide token to onPostExecute()
             return deviceToken;

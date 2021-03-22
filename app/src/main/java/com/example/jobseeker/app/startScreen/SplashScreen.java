@@ -12,6 +12,8 @@ import com.example.jobseeker.app.homePage.HomePage;
 import com.example.jobseeker.databinding.ActivitySplashScreenBinding;
 import com.parse.ParseUser;
 
+import me.pushy.sdk.Pushy;
+
 public class SplashScreen extends AppCompatActivity {
 
     ActivitySplashScreenBinding binding;
@@ -35,6 +37,9 @@ public class SplashScreen extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        //pushy
+        Pushy.listen(this);
+
         new Handler().postDelayed(() -> {
             if (ParseUser.getCurrentUser() != null)
                 startActivity(new Intent(this, HomePage.class));
@@ -42,6 +47,9 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(new Intent(this, WelcomeScreen.class));
             finish();
         }, 1300);
+
+
+
 
     }
 
