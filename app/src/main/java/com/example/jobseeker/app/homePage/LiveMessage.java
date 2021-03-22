@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -64,6 +65,7 @@ public class LiveMessage extends AppCompatActivity {
                 if (parseObjects.size()!=0){
                     parseObjects.get(parseObjects.size()-1).put("seenByFor", true);
                     parseObjects.get(parseObjects.size()-1).saveInBackground();
+                    ((LiveChatAdapter) binding.recyclerView.getAdapter()).setSeen("seen");
                 }
             } else {
                 Toast.makeText(this, "error " + e.getMessage(), Toast.LENGTH_SHORT).show();

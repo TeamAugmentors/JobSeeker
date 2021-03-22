@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import com.example.jobseeker.databinding.ItemLiveChatBinding;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ public class LiveChatAdapter extends RecyclerView.Adapter<LiveChatAdapter.ViewHo
 
     // Store a member variable for the contacts
     private ArrayList<ParseObject> parseObjects;
+    TextView seenText;
 
     public LiveChatAdapter(ArrayList<ParseObject> object) {
         parseObjects = object;
@@ -64,6 +68,7 @@ public class LiveChatAdapter extends RecyclerView.Adapter<LiveChatAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int pos) {
 
+        seenText = holder.binding.txtRSeen;
         if (parseObjects.get(pos).getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())){
             //user made this message
             holder.binding.senderMessage.setVisibility(View.VISIBLE);
@@ -77,6 +82,12 @@ public class LiveChatAdapter extends RecyclerView.Adapter<LiveChatAdapter.ViewHo
         }
     }
 
+    public void setSeen(String string){
+        if(seenText!=null) {
+            seenText.setVisibility(View.VISIBLE);
+            seenText.setText(string);
+        }
+    }
     private void setSalary(){
 
     }
