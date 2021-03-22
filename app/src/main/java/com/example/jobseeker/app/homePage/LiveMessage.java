@@ -1,9 +1,15 @@
 package com.example.jobseeker.app.homePage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.LiveChatAdapter;
 import com.example.jobseeker.databinding.ActivityLiveMessageBinding;
+import com.example.jobseeker.parseSdk.Connect;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -35,6 +42,7 @@ public class LiveMessage extends AppCompatActivity {
     ParseUser clientUser;
     LiveChatAdapter adapter;
     ArrayList<ParseObject> parseObjects = new ArrayList<>();
+    private NotificationManagerCompat notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +93,8 @@ public class LiveMessage extends AppCompatActivity {
 
     private void init() {
 
+        notificationManager = NotificationManagerCompat.from(this);
+
         ToolbarHelper.create(binding.toolbar, null, this, null);
 
         clientUser = getIntent().getParcelableExtra("clientUser");
@@ -103,8 +113,11 @@ public class LiveMessage extends AppCompatActivity {
 
         binding.recyclerView.setItemViewCacheSize(50);
 
+
         liveQueryInit();
+
     }
+
 
     ParseLiveQueryClient parseLiveQueryClient;
     ParseQuery<ParseObject> mainQuery;
@@ -129,7 +142,9 @@ public class LiveMessage extends AppCompatActivity {
                     addMessage(object);
 
                     if (!object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
+
                         playSound();
+                        showNotification(clientUser.getString("firstName"));
                         Toast.makeText(this, "seenforistrue", Toast.LENGTH_SHORT).show();
                         object.put("seenByFor", true);
                         object.saveInBackground();
@@ -140,6 +155,17 @@ public class LiveMessage extends AppCompatActivity {
             });
         }
 
+    }
+
+    private void showNotification(String name) {
+        Notification notification = new NotificationCompat.Builder(this, Connect.CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_one)
+                .setContentTitle(name)
+                .setContentText("Sent you a message")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(1,notification);
     }
 
     @Override
