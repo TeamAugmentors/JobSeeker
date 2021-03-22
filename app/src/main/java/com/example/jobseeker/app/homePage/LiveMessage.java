@@ -32,6 +32,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.parse.livequery.ParseLiveQueryClient;
@@ -44,6 +46,7 @@ public class LiveMessage extends AppCompatActivity {
     LiveChatAdapter adapter;
     ArrayList<ParseObject> parseObjects = new ArrayList<>();
     private NotificationManagerCompat notificationManager;
+    String currentDate,seenDate,seenClock,outputTime="",showTime,seenTime,currentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +65,59 @@ public class LiveMessage extends AppCompatActivity {
                 adapter = new LiveChatAdapter(parseObjects);
                 binding.recyclerView.setAdapter(adapter);
 
-                if (parseObjects.size()!=0){
-                    parseObjects.get(parseObjects.size()-1).put("seenByFor", true);
-                    parseObjects.get(parseObjects.size()-1).saveInBackground();
-                    ((LiveChatAdapter) binding.recyclerView.getAdapter()).setSeen("seen");
+                if (parseObjects.size() != 0) {
+                    ParseObject lastObject = parseObjects.get(parseObjects.size() - 1);
+                    if (!lastObject.getBoolean("seenByFor")) {
+                        lastObject.put("seenByFor", true);
+                        lastObject.saveInBackground();
+                    }
+                    if (lastObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
+                        seenTime = lastObject.getUpdatedAt().toString();
+                        currentTime = Calendar.getInstance().getTime().toString();
+                        showTime = seenCheckTime(seenTime,currentTime);
+                        //Log.d("key", showTime+seenDate+" at " +outputTime);
+                        binding.txtRSeen.setText(showTime);
+                        binding.txtRSeen.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.txtRSeen.setVisibility(View.GONE);
+                    }
+
                 }
             } else {
                 Toast.makeText(this, "error " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String seenCheckTime(String seenTime, String currentTime){
+        currentDate = currentTime.substring(7,10)+" "+ currentTime.substring(4,7) +" "+ currentTime.substring(30,34);
+        seenDate = seenTime.substring(7,10) +" "+ seenTime.substring(4,7) +" "+ seenTime.substring(30,34);
+
+        seenClock = seenTime.substring(11,16);
+        StringBuilder temp = new StringBuilder(seenClock);
+        outputTime = convertTo12(temp);
+
+        if(currentDate.equals(seenDate)) {
+            return "Seen "+ outputTime;
+        }else{
+            return "Seen "+ seenDate +" at " +outputTime;
+        }
+    }
+
+    private String convertTo12(StringBuilder outputTime){
+        if(outputTime.charAt(1)>'2' && outputTime.charAt(0)>'0') {
+            int temp2 = ((outputTime.charAt(0) - '0') * 10 + (outputTime.charAt(1) - '0')) - 12;
+            if (temp2 < 10) {
+                outputTime.setCharAt(0, '0');
+                outputTime.setCharAt(1, (char) (temp2 + '0'));
+            } else {
+                outputTime.setCharAt(1, (char) (temp2 % 10 + '0'));
+                temp2 /= 10;
+                outputTime.setCharAt(0, (char) (temp2 % 10 + '0'));
+            }
+            return outputTime.toString() + " pm";
+        }
+        return outputTime.toString()+" am";
     }
 
     private ParseQuery<ParseObject> getMainQuery() {
@@ -149,14 +196,38 @@ public class LiveMessage extends AppCompatActivity {
 
                         playSound();
                         showNotification(clientUser.getString("firstName"));
-                        Toast.makeText(this, "seenforistrue", Toast.LENGTH_SHORT).show();
-                        object.put("seenByFor", true);
-                        object.saveInBackground();
+                        if(!object.getBoolean("seenByFor")) {
+                            object.put("seenByFor", true);
+                            object.saveInBackground();
+                        }
+                        binding.txtRSeen.setVisibility(View.GONE);
+                    }
+                    binding.recyclerView.scrollToPosition(binding.recyclerView.getAdapter().getItemCount() - 1);
+                });
+            });
+
+            SubscriptionHandling<ParseObject> updateHandler = parseLiveQueryClient.subscribe(mainQuery);
+
+            updateHandler.handleEvent(SubscriptionHandling.Event.UPDATE, (query, object) -> {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(() -> {
+                    if (object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
+                        if (object.getBoolean("seenByFor")) {
+                            seenTime = parseObjects.get(parseObjects.size()-1).getUpdatedAt().toString();
+                            currentTime = Calendar.getInstance().getTime().toString();
+                            showTime = seenCheckTime(seenTime,currentTime);
+
+                            binding.txtRSeen.setText(showTime);
+                            binding.txtRSeen.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        binding.txtRSeen.setVisibility(View.GONE);
                     }
 
                     binding.recyclerView.scrollToPosition(binding.recyclerView.getAdapter().getItemCount() - 1);
                 });
             });
+
         }
 
     }
@@ -169,7 +240,7 @@ public class LiveMessage extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManager.notify(1,notification);
+        notificationManager.notify(1, notification);
     }
 
     @Override
@@ -196,6 +267,8 @@ public class LiveMessage extends AppCompatActivity {
 
             messageObject.saveInBackground(e -> {
                 if (e == null) {
+                    binding.txtRSeen.setVisibility(View.VISIBLE);
+                    binding.txtRSeen.setText("Delivered");
                 } else {
                     Toast.makeText(this, "error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }

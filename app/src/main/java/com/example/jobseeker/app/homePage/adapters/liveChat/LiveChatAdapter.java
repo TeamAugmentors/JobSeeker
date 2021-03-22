@@ -67,8 +67,6 @@ public class LiveChatAdapter extends RecyclerView.Adapter<LiveChatAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int pos) {
-
-        seenText = holder.binding.txtRSeen;
         if (parseObjects.get(pos).getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())){
             //user made this message
             holder.binding.senderMessage.setVisibility(View.VISIBLE);
@@ -79,13 +77,6 @@ public class LiveChatAdapter extends RecyclerView.Adapter<LiveChatAdapter.ViewHo
             holder.binding.senderMessage.setVisibility(View.GONE);
             holder.binding.clientMessage.setVisibility(View.VISIBLE);
             holder.binding.clientMessage.setText(parseObjects.get(pos).getString("message"));
-        }
-    }
-
-    public void setSeen(String string){
-        if(seenText!=null) {
-            seenText.setVisibility(View.VISIBLE);
-            seenText.setText(string);
         }
     }
     private void setSalary(){

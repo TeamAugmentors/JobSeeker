@@ -128,8 +128,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         String tokens[] = skillSet.split(",");
 
-        Log.d("of", tokens.length + "");
-
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
         query.include("applied");
         query.whereNotEqualTo("applied", ParseUser.getCurrentUser());
@@ -142,13 +140,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 jobObjects = new ArrayList<>();
                 int len = objects.size();
                 for (int i = 0; i < len; i++) {
-                    Log.d("of", "i " + i);
 
                     for (int j = 0; j < tokens.length; j++) {
-                        Log.d("of", "j " + j);
 
                         if (objects.get(i).getString("title").toUpperCase().contains(tokens[j])){
-                            Log.d("of", "added " + objects.get(i).getString("title").toUpperCase());
                             objects.get(i).put("chip", tokens[j]);
                             jobObjects.add(objects.get(i));
                             break;
