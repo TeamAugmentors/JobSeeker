@@ -58,26 +58,4 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extended_fab"
-        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:elevation="@dimen/_5sdp"
-        android:fontFamily="@font/roboto_regular"
-        android:gravity="center"
-        android:onClick="compose"
-        android:text="Compose"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/job_seeker_logo_green"
-        app:icon="@drawable/ic_edit_profile"
-        app:iconPadding="@dimen/_10sdp"
-        app:iconSize="@dimen/_12sdp"
-        app:iconTint="@color/white"
-        app:collapsedSize="@dimen/_37sdp"
-        />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
