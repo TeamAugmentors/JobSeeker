@@ -19,7 +19,8 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_30sdp"
         android:lineSpacingExtra="@dimen/_2sdp"
-        android:text="Hello! I will blatently rape you"
+        android:maxWidth="@dimen/_250sdp"
+        android:text="Hello! I will blatently love you"
         />
 
     <TextView
@@ -36,7 +37,8 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:lineSpacingExtra="@dimen/_2sdp"
-        android:text="Hello! I want u to kill me really quick ok 1 hit kill wha"
+        android:maxWidth="@dimen/_250sdp"
+        android:text="Hello! I want u to kill me really quick ok 1 hit kill wsdgggggggggggggggggggggggggggggggha"
         />
 
 </LinearLayout>
