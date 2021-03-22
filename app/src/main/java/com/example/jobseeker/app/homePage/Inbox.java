@@ -62,13 +62,6 @@ public class Inbox extends AppCompatActivity {
 
     }
 
-    public void compose(View view) {
-        if (binding.extendedFab.isExtended())
-            binding.extendedFab.shrink();
-        else
-            binding.extendedFab.extend();
-    }
-
     public ActivityInboxBinding getBinding() {
         return binding;
     }

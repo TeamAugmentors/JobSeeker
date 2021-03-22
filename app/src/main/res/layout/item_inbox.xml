@@ -2,86 +2,62 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/layout"
-    android:orientation="vertical"
-    android:layout_marginTop="@dimen/_10sdp">
-    
+    android:background="@drawable/custom_ripple"
+    android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:foreground="@drawable/custom_ripple"
-        android:id="@+id/card_view"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_25sdp"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:cardElevation="@dimen/_2sdp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true"
-        app:cardBackgroundColor="@color/backgroundColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            >
-
-            <TextView
-                android:drawableEnd="@drawable/ic_blue_dot"
-                android:drawablePadding="@dimen/_5sdp"
-                android:id="@+id/firstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/kiona_regular"
-                android:text="Mustavi"
-                android:textColor="@color/job_seeker_logo_green"
-                android:textAlignment="textStart"
-                android:layout_marginStart="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:textSize="@dimen/_17sdp"
-                />
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:drawableEnd="@drawable/ic_blue_dot"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/kiona_regular"
+            android:text="Mustavi"
+            android:textAlignment="textStart"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_17sdp" />
 
 
+        <TextView
+            android:id="@+id/recentMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:fontFamily="@font/roboto_light"
+            android:lineSpacingExtra="@dimen/_3sdp"
+            android:text="Hello! I would like to contact you"
+            android:textAlignment="textStart"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/_12sdp" />
 
-            <TextView
-                android:id="@+id/recentMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_light"
-                android:text="Hello! I would like to contact you"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/_12sdp"
-                android:lineSpacingExtra="@dimen/_3sdp"
-                android:textAlignment="textStart"
-                android:layout_marginStart="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/proPic"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:elevation="@dimen/_4sdp"
+        android:layout_margin="@dimen/_10sdp"
         android:src="@color/job_seeker_logo_green"
-        app:layout_constraintBottom_toBottomOf="@id/card_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/card_view"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
