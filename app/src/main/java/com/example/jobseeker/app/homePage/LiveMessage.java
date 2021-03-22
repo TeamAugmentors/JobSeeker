@@ -67,11 +67,11 @@ public class LiveMessage extends AppCompatActivity {
 
                 if (parseObjects.size() != 0) {
                     ParseObject lastObject = parseObjects.get(parseObjects.size() - 1);
-                    if (!lastObject.getBoolean("seenByFor")) {
+                    if (!lastObject.getBoolean("seenByFor") && !lastObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
                         lastObject.put("seenByFor", true);
                         lastObject.saveInBackground();
                     }
-                    if (lastObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
+                    if (lastObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername()) && lastObject.getBoolean("seenByFor")) {
                         seenTime = lastObject.getUpdatedAt().toString();
                         currentTime = Calendar.getInstance().getTime().toString();
                         showTime = seenCheckTime(seenTime,currentTime);
@@ -213,11 +213,7 @@ public class LiveMessage extends AppCompatActivity {
                 handler.post(() -> {
                     if (object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
                         if (object.getBoolean("seenByFor")) {
-                            seenTime = parseObjects.get(parseObjects.size()-1).getUpdatedAt().toString();
-                            currentTime = Calendar.getInstance().getTime().toString();
-                            showTime = seenCheckTime(seenTime,currentTime);
-
-                            binding.txtRSeen.setText(showTime);
+                            binding.txtRSeen.setText("Seen");
                             binding.txtRSeen.setVisibility(View.VISIBLE);
                         }
                     } else {
