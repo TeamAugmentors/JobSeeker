@@ -52,6 +52,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import me.pushy.sdk.Pushy;
+
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ActivityHomepageBinding binding;
@@ -65,7 +67,15 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(binding.getRoot());
 
         init();
+        registerUserForPush();
         fetchData();
+
+    }
+
+    private void registerUserForPush() {
+        if (!Pushy.isRegistered(this)) {
+            new RegisterForPushNotificationsAsync(this).execute();
+        }
     }
 
 
@@ -122,6 +132,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void fetchJobs(View view) {
         binding.forYouSpinKit.setVisibility(View.VISIBLE);
+        binding.textViewLinearLayout.setVisibility(View.GONE);
         binding.refreshForYou.setVisibility(View.GONE);
 
         String skillSet = ParseUser.getCurrentUser().getString("skillSet").toUpperCase();

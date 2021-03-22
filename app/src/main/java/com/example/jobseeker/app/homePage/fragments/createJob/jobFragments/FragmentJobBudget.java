@@ -49,6 +49,7 @@ public class FragmentJobBudget extends Fragment {
         binding.datePickButton.setOnClickListener(v -> materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER"));
 
         materialDatePicker.addOnPositiveButtonClickListener(selection -> setNumberOfDays());
+        budget = "";
 
         //budget
         binding.budgetLayout.getEditText().addTextChangedListener(new TextWatcher() {
@@ -61,7 +62,6 @@ public class FragmentJobBudget extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 budget = binding.budgetLayout.getEditText().getText().toString();
-
                 char[] budgetArray = budget.toCharArray();
 
                 StringBuilder result = new StringBuilder();
@@ -150,7 +150,7 @@ public class FragmentJobBudget extends Fragment {
         return binding;
     }
 
-    public String getBudget(){
+    public String getBudget() {
         return budget;
     }
 }

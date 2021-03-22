@@ -67,7 +67,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtR_seen"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:text="Seen"
+        android:fontFamily="@font/roboto_light"
+        android:textSize="@dimen/_8sdp"
         android:layout_gravity="right"
         android:paddingRight="@dimen/_15sdp"/>
 
@@ -88,11 +91,11 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_weight="1"
             android:background="@drawable/live_message_edit_text_bg"
-            android:hint="Say hello!"
+            android:hint="Aa"
             android:paddingLeft="@dimen/_20sdp"
             android:paddingRight="@dimen/_10sdp"
-            android:textColor="@color/job_seeker_logo_green"
-            android:textColorHint="@color/job_seeker_green_hint"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint_black"
             android:textCursorDrawable="@null" />
 
         <ImageButton

@@ -76,6 +76,7 @@ dependencies {
 
     //transformation image
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
+
     // If you want to use the GPU Filters
     implementation 'jp.co.cyberagent.android:gpuimage:2.0.4'
 
@@ -90,5 +91,9 @@ dependencies {
 
     //spinkit
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+    //pushy
+    implementation 'me.pushy:sdk:1.0.68'
+
 
 }

@@ -75,7 +75,7 @@ public class LiveMessage extends AppCompatActivity {
                         seenTime = lastObject.getUpdatedAt().toString();
                         currentTime = Calendar.getInstance().getTime().toString();
                         showTime = seenCheckTime(seenTime,currentTime);
-                        //Log.d("key", showTime+seenDate+" at " +outputTime);
+
                         binding.txtRSeen.setText(showTime);
                         binding.txtRSeen.setVisibility(View.VISIBLE);
                     } else {
