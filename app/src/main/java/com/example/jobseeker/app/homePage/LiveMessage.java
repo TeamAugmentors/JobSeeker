@@ -54,7 +54,6 @@ public class LiveMessage extends AppCompatActivity {
     }
 
     private void fetchData() {
-
         getMainQuery().findInBackground((objects, e) -> {
             if (e == null) {
                 parseObjects = (ArrayList<ParseObject>) objects;
@@ -62,7 +61,10 @@ public class LiveMessage extends AppCompatActivity {
                 adapter = new LiveChatAdapter(parseObjects);
                 binding.recyclerView.setAdapter(adapter);
 
-                Log.d("agag", parseObjects.toString());
+                if (parseObjects.size()!=0){
+                    parseObjects.get(parseObjects.size()-1).put("seenByFor", true);
+                    parseObjects.get(parseObjects.size()-1).saveInBackground();
+                }
             } else {
                 Toast.makeText(this, "error " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
