@@ -33,6 +33,8 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    useLibrary  'org.apache.http.legacy'
 }
 
 dependencies {
@@ -95,5 +97,7 @@ dependencies {
     //pushy
     implementation 'me.pushy:sdk:1.0.68'
 
+    //maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 }

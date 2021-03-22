@@ -34,7 +34,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
@@ -265,6 +267,9 @@ public class LiveMessage extends AppCompatActivity {
                 if (e == null) {
                     binding.txtRSeen.setVisibility(View.VISIBLE);
                     binding.txtRSeen.setText("Delivered");
+
+                    //send notification
+                    sendPush(clientUser.getString("pushyDeviceToken"));
                 } else {
                     Toast.makeText(this, "error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -276,6 +281,51 @@ public class LiveMessage extends AppCompatActivity {
         parseObjects.add(messageObject);
         adapter.notifyItemInserted(parseObjects.size() - 1);
         adapter.notifyItemRangeChanged(parseObjects.size() - 1, parseObjects.size());
+    }
+
+    public void sendPush(String token) {
+        // Prepare list of target device tokens
+        List<String> deviceTokens = new ArrayList<>();
+
+        // Add your device tokens here
+        deviceTokens.add(token);
+
+        // Convert to String[] array
+        String to[] = new String[1];
+        to[0] = deviceTokens.get(0);
+
+        // Optionally, send to a publish/subscribe topic instead
+
+        // String to = '/topics/news';
+
+        // Set payload (any object, it will be serialized to JSON)
+        Map<String, String> payload = new HashMap<>();
+
+        // Add "message" parameter to payload
+        payload.put("message", "" + ParseUser.getCurrentUser().getString("firstName") + " has sent you a message!");
+
+        // iOS notification fields
+        Map<String, Object> notification = new HashMap<>();
+
+        notification.put("badge", 1);
+        notification.put("sound", "ping.aiff");
+        notification.put("body", "Hello World \u270c");
+
+        // Prepare the push request
+        PushyAPI.PushyPushRequest push = new PushyAPI.PushyPushRequest(payload, to, notification);
+
+        Log.d("awfsa", "clienttoken : " + token + " fn " + ParseUser.getCurrentUser().getString("firstName"));
+
+        new Handler().postDelayed(() -> {
+            try {
+                // Try sending the push notification
+                PushyAPI.sendPush(push);
+            }
+            catch (Exception exc) {
+                // Error, print to console
+                Log.d("awfsa", exc.toString());
+            }
+        } , 100);
     }
 
 }
