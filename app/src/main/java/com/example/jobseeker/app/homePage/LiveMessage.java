@@ -102,15 +102,8 @@ public class LiveMessage extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        ParseUser.getCurrentUser().put("isInLiveMessageActivity", false);
-
-        try {
-            ParseUser.getCurrentUser().save();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } finally {
+        ParseCloud.callFunctionInBackground("exitActivity", new HashMap<>());
         super.onPause();
-        }
     }
 
     private ParseQuery<ParseObject> getMainQuery() {
