@@ -57,7 +57,6 @@ public class HelperUtils {
         return result.toString();
     }
 
-
     public static void addChipIntoChipGroup(ChipGroup chipGroup, Context context, boolean isCloseIcon, boolean isDarkModeOn, String... texts) {
         for (String text : texts) {
             Chip chip = new Chip(context);
@@ -142,4 +141,40 @@ public class HelperUtils {
 
         return bottomSheetBehavior;
     }
+
+
+    public static String getTime(String seenTime, String currentTime) {
+        String currentDate, seenDate, seenClock, outputTime = "";
+
+        currentDate = currentTime.substring(7, 10) + " " + currentTime.substring(4, 7) + " " + currentTime.substring(30, 34);
+        seenDate = seenTime.substring(7, 10) + " " + seenTime.substring(4, 7) + " " + seenTime.substring(30, 34);
+
+        seenClock = seenTime.substring(11, 16);
+        StringBuilder temp = new StringBuilder(seenClock);
+        outputTime = convertTo12(temp);
+
+        if (currentDate.equals(seenDate)) {
+            return "Seen " + outputTime;
+        } else {
+            return "Seen " + seenDate + " at " + outputTime;
+        }
+    }
+
+    private static String convertTo12(StringBuilder outputTime) {
+        if (outputTime.charAt(1) > '2' && outputTime.charAt(0) > '0') {
+            int temp2 = ((outputTime.charAt(0) - '0') * 10 + (outputTime.charAt(1) - '0')) - 12;
+            if (temp2 < 10) {
+                outputTime.setCharAt(0, '0');
+                outputTime.setCharAt(1, (char) (temp2 + '0'));
+            } else {
+                outputTime.setCharAt(1, (char) (temp2 % 10 + '0'));
+                temp2 /= 10;
+                outputTime.setCharAt(0, (char) (temp2 % 10 + '0'));
+            }
+
+            return outputTime.toString() + " pm";
+        }
+        return outputTime.toString() + " am";
+    }
+
 }

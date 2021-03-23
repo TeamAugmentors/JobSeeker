@@ -23,8 +23,10 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.LiveChatAdapter;
 import com.example.jobseeker.databinding.ActivityLiveMessageBinding;
 import com.example.jobseeker.parseSdk.Connect;
+import com.example.jobseeker.utils.HelperUtils;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.parse.ParseCloud;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -49,7 +51,7 @@ public class LiveMessage extends AppCompatActivity {
     LiveChatAdapter adapter;
     ArrayList<ParseObject> parseObjects = new ArrayList<>();
 
-    String currentDate,seenDate,seenClock,outputTime="",showTime,seenTime,currentTime;
+    String currentDate, seenDate, seenClock, outputTime = "", showTime, seenTime, currentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +63,12 @@ public class LiveMessage extends AppCompatActivity {
     }
 
     private void fetchData() {
-        getMainQuery().findInBackground((objects, e) -> {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("clientUsername", clientUser.getUsername());
+
+        ParseCloud.callFunctionInBackground("fetchInbox", hashMap, (objects, e) -> {
             if (e == null) {
+                Log.d("asfokasf", objects.toString());
                 parseObjects = (ArrayList<ParseObject>) objects;
 
                 adapter = new LiveChatAdapter(parseObjects);
@@ -74,10 +80,12 @@ public class LiveMessage extends AppCompatActivity {
                         lastObject.put("seenByFor", true);
                         lastObject.saveInBackground();
                     }
+
                     if (lastObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername()) && lastObject.getBoolean("seenByFor")) {
                         seenTime = lastObject.getUpdatedAt().toString();
                         currentTime = Calendar.getInstance().getTime().toString();
-                        showTime = seenCheckTime(seenTime,currentTime);
+
+                        showTime = HelperUtils.getTime(seenTime, currentTime);
 
                         binding.txtRSeen.setText(showTime);
                         binding.txtRSeen.setVisibility(View.VISIBLE);
@@ -92,35 +100,17 @@ public class LiveMessage extends AppCompatActivity {
         });
     }
 
-    private String seenCheckTime(String seenTime, String currentTime){
-        currentDate = currentTime.substring(7,10)+" "+ currentTime.substring(4,7) +" "+ currentTime.substring(30,34);
-        seenDate = seenTime.substring(7,10) +" "+ seenTime.substring(4,7) +" "+ seenTime.substring(30,34);
+    @Override
+    protected void onPause() {
+        ParseUser.getCurrentUser().put("isInLiveMessageActivity", false);
 
-        seenClock = seenTime.substring(11,16);
-        StringBuilder temp = new StringBuilder(seenClock);
-        outputTime = convertTo12(temp);
-
-        if(currentDate.equals(seenDate)) {
-            return "Seen "+ outputTime;
-        }else{
-            return "Seen "+ seenDate +" at " +outputTime;
+        try {
+            ParseUser.getCurrentUser().save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+        super.onPause();
         }
-    }
-
-    private String convertTo12(StringBuilder outputTime){
-        if(outputTime.charAt(1)>'2' && outputTime.charAt(0)>'0') {
-            int temp2 = ((outputTime.charAt(0) - '0') * 10 + (outputTime.charAt(1) - '0')) - 12;
-            if (temp2 < 10) {
-                outputTime.setCharAt(0, '0');
-                outputTime.setCharAt(1, (char) (temp2 + '0'));
-            } else {
-                outputTime.setCharAt(1, (char) (temp2 % 10 + '0'));
-                temp2 /= 10;
-                outputTime.setCharAt(0, (char) (temp2 % 10 + '0'));
-            }
-            return outputTime.toString() + " pm";
-        }
-        return outputTime.toString()+" am";
     }
 
     private ParseQuery<ParseObject> getMainQuery() {
@@ -197,7 +187,7 @@ public class LiveMessage extends AppCompatActivity {
 
                         playSound();
 
-                        if(!object.getBoolean("seenByFor")) {
+                        if (!object.getBoolean("seenByFor")) {
                             object.put("seenByFor", true);
                             object.saveInBackground();
                         }
@@ -230,7 +220,6 @@ public class LiveMessage extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -249,23 +238,24 @@ public class LiveMessage extends AppCompatActivity {
             binding.msgEditText.getText().clear();
             HashMap<String, String> params = new HashMap<>();
 
-            params.put("message" , message);
-            params.put("deviceToken" , clientUser.getString("pushyDeviceToken"));
-            params.put("senderName" , ParseUser.getCurrentUser().getString("firstName"));
-            params.put("createdBy" , ParseUser.getCurrentUser().getUsername());
-            params.put("createdFor" , clientUser.getUsername());
+            params.put("message", message);
+            params.put("deviceToken", clientUser.getString("pushyDeviceToken"));
+            params.put("senderName", ParseUser.getCurrentUser().getString("firstName"));
+            params.put("createdBy", ParseUser.getCurrentUser().getUsername());
+            params.put("createdFor", clientUser.getUsername());
+            params.put("clientUserId", clientUser.getObjectId());
 
             binding.txtRSeen.setVisibility(View.VISIBLE);
             binding.txtRSeen.setText("Sending...");
 
             ParseCloud.callFunctionInBackground("saveMessage", params, (object, e) -> {
-                if (e == null){
+                if (e == null) {
                     Toast.makeText(this, "msg saved, notification delivered!", Toast.LENGTH_SHORT).show();
 
                     binding.txtRSeen.setVisibility(View.VISIBLE);
                     binding.txtRSeen.setText("Delivered");
                 } else {
-                    Toast.makeText(this, "error"  + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
