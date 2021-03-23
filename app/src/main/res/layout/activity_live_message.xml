@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtR_seen"
         android:visibility="visible"
-        android:text="Seen"
+        android:layout_marginTop="@dimen/_2sdp"
         android:fontFamily="@font/roboto_light"
         android:textSize="@dimen/_8sdp"
         android:layout_gravity="right"

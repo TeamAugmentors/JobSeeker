@@ -54,6 +54,8 @@ import java.util.List;
 
 import me.pushy.sdk.Pushy;
 
+import static com.parse.Parse.getApplicationContext;
+
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ActivityHomepageBinding binding;
@@ -73,6 +75,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void registerUserForPush() {
+        Pushy.toggleFCM(true, this);
+
         if (!Pushy.isRegistered(this)) {
             new RegisterForPushNotificationsAsync(this).execute();
         }

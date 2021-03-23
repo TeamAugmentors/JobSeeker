@@ -1,5 +1,6 @@
 package com.example.jobseeker;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -10,15 +11,18 @@ import android.media.RingtoneManager;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.jobseeker.app.homePage.HomePage;
+import com.example.jobseeker.parseSdk.Connect;
 
 import me.pushy.sdk.Pushy;
 
 public class PushReceiver extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        String notificationTitle = "MyApp";
+        String notificationTitle = "Job Seeker";
         String notificationText = "Test notification";
 
         // Attempt to extract the "message" property from the payload: {"message":"Hello World!"}
@@ -27,23 +31,23 @@ public class PushReceiver extends BroadcastReceiver {
         }
 
         // Prepare a notification with vibration, sound and lights
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setAutoCancel(true)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+        Notification notification = new NotificationCompat.Builder(context, Connect.CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_notif)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
-                .setLights(Color.RED, 1000, 1000)
-                .setVibrate(new long[]{0, 400, 250, 400})
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, HomePage.class), PendingIntent.FLAG_UPDATE_CURRENT));
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
 
         // Automatically configure a Notification Channel for devices running Android O+
-        Pushy.setNotificationChannel(builder, context);
+        Pushy.setNotificationChannel(notification, context);
 
         // Get an instance of the NotificationManager service
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
 
+        notificationManager.notify(1, notification);
+
         // Build the notification and display it
-        notificationManager.notify(1, builder.build());
+        notificationManager.notify(1, notification);
     }
 }

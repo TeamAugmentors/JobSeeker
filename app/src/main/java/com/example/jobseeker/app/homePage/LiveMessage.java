@@ -24,6 +24,7 @@ import com.example.jobseeker.app.homePage.adapters.LiveChatAdapter;
 import com.example.jobseeker.databinding.ActivityLiveMessageBinding;
 import com.example.jobseeker.parseSdk.Connect;
 import com.example.jobseeker.utils.ToolbarHelper;
+import com.parse.ParseCloud;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -47,7 +48,7 @@ public class LiveMessage extends AppCompatActivity {
     ParseUser clientUser;
     LiveChatAdapter adapter;
     ArrayList<ParseObject> parseObjects = new ArrayList<>();
-    private NotificationManagerCompat notificationManager;
+
     String currentDate,seenDate,seenClock,outputTime="",showTime,seenTime,currentTime;
 
     @Override
@@ -146,8 +147,6 @@ public class LiveMessage extends AppCompatActivity {
 
     private void init() {
 
-        notificationManager = NotificationManagerCompat.from(this);
-
         ToolbarHelper.create(binding.toolbar, null, this, null);
 
         clientUser = getIntent().getParcelableExtra("clientUser");
@@ -197,7 +196,7 @@ public class LiveMessage extends AppCompatActivity {
                     if (!object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
 
                         playSound();
-                        showNotification(clientUser.getString("firstName"));
+
                         if(!object.getBoolean("seenByFor")) {
                             object.put("seenByFor", true);
                             object.saveInBackground();
@@ -230,16 +229,7 @@ public class LiveMessage extends AppCompatActivity {
 
     }
 
-    private void showNotification(String name) {
-        Notification notification = new NotificationCompat.Builder(this, Connect.CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(name)
-                .setContentText("Sent you a message")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-        notificationManager.notify(1, notification);
-    }
+
 
     @Override
     protected void onDestroy() {
@@ -254,24 +244,28 @@ public class LiveMessage extends AppCompatActivity {
 
 
     public void sendMessage(View view) {
-        String message = binding.msgEditText.getText().toString();
-        if (!message.trim().equals("")) {
+        String message = binding.msgEditText.getText().toString().trim();
+        if (!message.equals("")) {
             binding.msgEditText.getText().clear();
+            HashMap<String, String> params = new HashMap<>();
 
-            ParseObject messageObject = new ParseObject("LiveMessage");
-            messageObject.put("message", message.trim());
-            messageObject.put("createdBy", ParseUser.getCurrentUser().getUsername());
-            messageObject.put("createdFor", clientUser.getUsername());
+            params.put("message" , message);
+            params.put("deviceToken" , clientUser.getString("pushyDeviceToken"));
+            params.put("senderName" , ParseUser.getCurrentUser().getString("firstName"));
+            params.put("createdBy" , ParseUser.getCurrentUser().getUsername());
+            params.put("createdFor" , clientUser.getUsername());
 
-            messageObject.saveInBackground(e -> {
-                if (e == null) {
+            binding.txtRSeen.setVisibility(View.VISIBLE);
+            binding.txtRSeen.setText("Sending...");
+
+            ParseCloud.callFunctionInBackground("saveMessage", params, (object, e) -> {
+                if (e == null){
+                    Toast.makeText(this, "msg saved, notification delivered!", Toast.LENGTH_SHORT).show();
+
                     binding.txtRSeen.setVisibility(View.VISIBLE);
                     binding.txtRSeen.setText("Delivered");
-
-                    //send notification
-                    sendPush(clientUser.getString("pushyDeviceToken"));
                 } else {
-                    Toast.makeText(this, "error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "error"  + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -281,51 +275,6 @@ public class LiveMessage extends AppCompatActivity {
         parseObjects.add(messageObject);
         adapter.notifyItemInserted(parseObjects.size() - 1);
         adapter.notifyItemRangeChanged(parseObjects.size() - 1, parseObjects.size());
-    }
-
-    public void sendPush(String token) {
-        // Prepare list of target device tokens
-        List<String> deviceTokens = new ArrayList<>();
-
-        // Add your device tokens here
-        deviceTokens.add(token);
-
-        // Convert to String[] array
-        String to[] = new String[1];
-        to[0] = deviceTokens.get(0);
-
-        // Optionally, send to a publish/subscribe topic instead
-
-        // String to = '/topics/news';
-
-        // Set payload (any object, it will be serialized to JSON)
-        Map<String, String> payload = new HashMap<>();
-
-        // Add "message" parameter to payload
-        payload.put("message", "" + ParseUser.getCurrentUser().getString("firstName") + " has sent you a message!");
-
-        // iOS notification fields
-        Map<String, Object> notification = new HashMap<>();
-
-        notification.put("badge", 1);
-        notification.put("sound", "ping.aiff");
-        notification.put("body", "Hello World \u270c");
-
-        // Prepare the push request
-        PushyAPI.PushyPushRequest push = new PushyAPI.PushyPushRequest(payload, to, notification);
-
-        Log.d("awfsa", "clienttoken : " + token + " fn " + ParseUser.getCurrentUser().getString("firstName"));
-
-        new Handler().postDelayed(() -> {
-            try {
-                // Try sending the push notification
-                PushyAPI.sendPush(push);
-            }
-            catch (Exception exc) {
-                // Error, print to console
-                Log.d("awfsa", exc.toString());
-            }
-        } , 100);
     }
 
 }

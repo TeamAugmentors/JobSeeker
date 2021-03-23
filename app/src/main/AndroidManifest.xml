@@ -29,6 +29,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker">
 
+        <service
+            android:name="me.pushy.sdk.services.PushyFirebaseService"
+            android:exported="false"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
