@@ -136,6 +136,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void fetchJobs(View view) {
         binding.forYouSpinKit.setVisibility(View.VISIBLE);
+
         binding.textViewLinearLayout.setVisibility(View.GONE);
         binding.refreshForYou.setVisibility(View.GONE);
 
