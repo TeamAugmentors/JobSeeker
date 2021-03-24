@@ -174,6 +174,7 @@ public class LiveMessage extends AppCompatActivity {
             subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() -> {
+
                     addMessage(object);
 
                     if (!object.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
@@ -217,6 +218,12 @@ public class LiveMessage extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         parseLiveQueryClient.unsubscribe(mainQuery);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        parseLiveQueryClient.connectIfNeeded();
     }
 
     private void playSound() {

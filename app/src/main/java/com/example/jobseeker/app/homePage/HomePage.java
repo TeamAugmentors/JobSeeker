@@ -76,10 +76,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void registerUserForPush() {
         Pushy.toggleFCM(true, this);
-
-        if (!Pushy.isRegistered(this)) {
-            new RegisterForPushNotificationsAsync(this).execute();
-        }
+        new RegisterForPushNotificationsAsync(this).execute();
     }
 
 
@@ -113,7 +110,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                 binding.forYouRecyclerView.setAdapter(null);
 
-                binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_edit_small,0,0,0);
+                binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_edit_small, 0, 0, 0);
                 binding.addSkill.setText("Edit Profile");
                 binding.textView.setText("Please add some skills\nto get recommendations!");
             }
@@ -123,7 +120,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             binding.navView.getMenu().getItem(0).setTitle("Create Profile");
             binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
 
-            binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_small,0,0,0);
+            binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_small, 0, 0, 0);
             binding.addSkill.setText("Create Profile");
             binding.textView.setText("Please create a profile\nto get recommendations!");
         }
@@ -159,7 +156,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                     for (int j = 0; j < tokens.length; j++) {
 
-                        if (objects.get(i).getString("title").toUpperCase().contains(tokens[j])){
+                        if (objects.get(i).getString("title").toUpperCase().contains(tokens[j])) {
                             objects.get(i).put("chip", tokens[j]);
                             jobObjects.add(objects.get(i));
                             break;
@@ -227,7 +224,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                             }
                             JobBoard jobBoard = new JobBoard();
                             if (parseFiles.size() != 0)
-                                jobBoard.addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout,HomePage.this, currentObject.getObjectId());
+                                jobBoard.addButtonsToLayout(parseFiles, bindingDialog.fileLinearLayout, HomePage.this, currentObject.getObjectId());
                             else {
                                 bindingDialog.sampleFileTextView.setText("No sample files provided");
                             }
@@ -292,7 +289,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         binding.forYouRecyclerView.setLayoutManager(new HorizontalZoomCenterLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.forYouRecyclerView.setItemViewCacheSize(1);
-        SnapHelper snap= new LinearSnapHelper();
+        SnapHelper snap = new LinearSnapHelper();
         snap.attachToRecyclerView(binding.forYouRecyclerView);
 
 
