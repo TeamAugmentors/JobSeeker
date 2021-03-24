@@ -102,6 +102,8 @@ public class LiveMessage extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        Log.d("callingpause", "calling on pause");
+
         ParseCloud.callFunctionInBackground("exitActivity", new HashMap<>());
         super.onPause();
     }

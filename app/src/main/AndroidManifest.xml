@@ -27,6 +27,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        
         android:theme="@style/Theme.JobSeeker">
 
         <service
@@ -81,7 +82,10 @@
 
         <!-- End Pushy Declarations -->
 
-        <activity android:name=".app.homePage.LiveMessage" android:parentActivityName=".app.homePage.Inbox"></activity>
+        <activity
+            android:name=".app.homePage.LiveMessage"
+            android:parentActivityName=".app.homePage.Inbox" />
+
         <activity android:name=".app.homePage.AppliedFreelancers"></activity>
         <activity
             android:name=".app.homePage.Inbox"
