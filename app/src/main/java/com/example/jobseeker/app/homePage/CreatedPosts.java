@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -120,9 +121,16 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
             confirmationDialog.show();
         });
 
+        //see freelancers
+        dialogView.findViewById(R.id.seeFreelancerButton).setOnClickListener(v -> {
+            dialog.dismiss();
+            startActivity(new Intent(this,WhoApplied.class));
+        });
+
         //delete confirmation dialog
         confirmationDialogView.findViewById(R.id.close).setOnClickListener(v1 -> {
             confirmationDialog.dismiss();
+
         });
 
         confirmationDialogView.findViewById(R.id.yesButton).setOnClickListener(v1 -> {

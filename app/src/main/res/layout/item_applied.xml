@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@color/transparent"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/view_profile_Image"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/transparent"
+        android:src="@drawable/upload_pic"
+        android:translationZ="10dp"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="@dimen/_3sdp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/cardView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_minus40sdp"
+        android:elevation="@dimen/_4sdp"
+        android:translationZ="5dp"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        app:cardBackgroundColor="@color/backgroundColor"
+        app:cardCornerRadius="@dimen/_4sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/close"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_13sdp"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/backgroundColor"
+                android:elevation="0dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:shadowColor="@color/white"
+                app:cornerRadius="@dimen/_30sdp"
+                app:icon="@drawable/ic_round_clear_24"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="@dimen/_15sdp"
+                app:iconTint="@color/job_seeker_logo_green"
+                app:rippleColor="@color/job_seeker_green_hint" />
+
+
+            <TextView
+                android:id="@+id/view_profile_picture_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Your Info"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_26sdp" />
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/phone_chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textAppearance="@style/textChipStyle."
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/job_seeker_logo_green"
+                app:chipIcon="@drawable/ic_phone_call_1"
+                app:chipIconSize="@dimen/_16sdp"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:iconStartPadding="@dimen/_1sdp"
+                app:rippleColor="@color/white" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/job_complete"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAppearance="@style/textChipStyle."
+                android:textColor="@color/white"
+                app:chipBackgroundColor="@color/job_seeker_logo_green"
+                app:chipIcon="@drawable/ic_chip_job"
+                app:chipIconSize="@dimen/_16sdp"
+                app:chipIconVisible="true"
+                app:iconStartPadding="@dimen/_1sdp"
+                app:rippleColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/roboto_light"
+                android:text="Skill set"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="25dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/job_seeker_logo_green" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:id="@+id/scroll_view">
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/skill_chip_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:animateLayoutChanges="true" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
