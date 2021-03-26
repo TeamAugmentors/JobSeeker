@@ -76,7 +76,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void registerUserForPush() {
         Pushy.toggleFCM(true, this);
-        new RegisterForPushNotificationsAsync(this).execute();
+        if (!Pushy.isRegistered(this))
+            new RegisterForPushNotificationsAsync(this).execute();
     }
 
 

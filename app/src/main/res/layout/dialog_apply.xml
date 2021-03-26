@@ -30,7 +30,7 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_weight="9"
                 android:fontFamily="@font/roboto_light"
-                android:text="Leave a message?"
+                android:text="Leave a message? (Optional)"
                 android:textAlignment="textStart"
                 android:textColor="@color/job_seeker_logo_green"
                 android:textSize="@dimen/_20sdp" />

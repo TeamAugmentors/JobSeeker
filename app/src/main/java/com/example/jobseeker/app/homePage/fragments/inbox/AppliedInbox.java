@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AppliedInbox extends Fragment {
-
+    //People who applied to your posts
     FragemntAppliedInboxBinding binding;
     List<ParseObject> parseObjects;
     InboxAdapter adapter;
@@ -49,6 +49,7 @@ public class AppliedInbox extends Fragment {
 
     public void fetchData(SwipeRefreshLayout swipeRefreshLayout) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
+
         query.include("appliedPosts.createdBy");
 
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (object, e) -> {

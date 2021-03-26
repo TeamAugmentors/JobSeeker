@@ -464,6 +464,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
     private void removeJob(List<ParseObject> parseObjects, int pos) {
         parseObjects.remove(pos);
+
         adapter.notifyItemRemoved(pos);
         adapter.notifyItemRangeChanged(pos, parseObjects.size());
     }
