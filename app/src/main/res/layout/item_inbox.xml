@@ -14,8 +14,8 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/_30sdp"
         android:orientation="vertical"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp">
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp">
 
         <TextView
             android:id="@+id/firstName"
@@ -25,7 +25,7 @@
             android:layout_marginEnd="@dimen/_15sdp"
             android:drawableEnd="@drawable/ic_blue_dot"
             android:drawablePadding="@dimen/_5sdp"
-            android:fontFamily="@font/kiona_regular"
+            android:fontFamily="@font/roboto_regular"
             android:text="Mustavi"
             android:textAlignment="textStart"
             android:textColor="@color/job_seeker_logo_green"
@@ -52,11 +52,11 @@
         android:id="@+id/proPic"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_6sdp"
         android:src="@color/job_seeker_logo_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

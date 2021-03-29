@@ -1,28 +1,21 @@
 package com.example.jobseeker.app.homePage;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.inbox.InboxAdapter;
-import com.example.jobseeker.app.homePage.adapters.inbox.InboxViewPager2Adapter;
 import com.example.jobseeker.databinding.ActivityInboxBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 

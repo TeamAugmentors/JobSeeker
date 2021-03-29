@@ -46,14 +46,6 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
     private OnInboxListener mOnInboxListener;
 
-    public InboxAdapter(HashMap<String, ParseObject> objectHashMap, OnInboxListener onInboxListener) {
-        objectHashMap.forEach((s, parseObject) -> {
-            parseObjects.add(parseObject);
-        });
-
-        mOnInboxListener = onInboxListener;
-    }
-
     public InboxAdapter(ArrayList<ParseObject> parseObjects, ArrayList<ParseObject> recentMessages, OnInboxListener onInboxListener) {
         this.parseObjects = parseObjects;
         this.recentMessages = recentMessages;
