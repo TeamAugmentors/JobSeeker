@@ -73,17 +73,17 @@ public class CreatedJobInbox extends Fragment {
 //                    }
 //                }
                 
-                adapter = new InboxAdapter(parseObjects, new InboxAdapter.OnInboxListener() {
-
-                    public void onInboxClick(int position, ArrayList<ParseObject> users) {
-                        ///check length of our file in bytes. Pic wont exceed 500kb so we can pass bytes through intent ez if > 500kb,  your app will crash on intent with no error logs
-
-                        startActivity(new Intent(getActivity(), LiveMessage.class)
-                                .putExtra("clientUser", users.get(position))
-                                .putExtra("type", "Free Lancer"));
-                    }
-
-                });
+//                adapter = new InboxAdapter(parseObjects, new InboxAdapter.OnInboxListener() {
+//
+//                    public void onInboxClick(int position, ArrayList<ParseObject> users) {
+//                        ///check length of our file in bytes. Pic wont exceed 500kb so we can pass bytes through intent ez if > 500kb,  your app will crash on intent with no error logs
+//
+//                        startActivity(new Intent(getActivity(), LiveMessage.class)
+//                                .putExtra("clientUser", users.get(position))
+//                                .putExtra("type", "Free Lancer"));
+//                    }
+//
+//                });
 
                 if (adapter.getItemCount() != 0)
                     binding.recyclerview.setAdapter(adapter);

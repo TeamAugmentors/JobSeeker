@@ -44,60 +44,31 @@ public class Inbox extends AppCompatActivity {
     }
 
     private void fetchData() {
-        HashMap<String, String > params = new HashMap<>();
+        binding.swipeRefresh.setRefreshing(true);
+
+        HashMap<String, String> params = new HashMap<>();
         params.put("userId", ParseUser.getCurrentUser().getObjectId());
         Log.d("asfijasif", "aowjdfaw");
-//        ParseCloud.callFunctionInBackground("fetchInboxNew", params, (ArrayList<ArrayList<ParseObject>> mixedList, ParseException e) -> {
-//            if (e == null){
-//
-////                usersThatIHired = (ArrayList<ParseObject>) mixedList.get(0);
-////                usersThatHiredMe = (ArrayList<ParseObject>) mixedList.get(1);
-//
-//                ArrayList<ParseObject> list1 =  mixedList.get(0);
-//                ArrayList<ParseObject> list2 =  mixedList.get(1);
-//
-//                Log.d("asfijasif", list1.size() + " list 1");
-//                Log.d("asfijasif", list2.size() + " list 2");
-//
-//                for (int i = 0; i < list1.size(); i++) {
-//                    usersThatIHired.add(list1.get(i).getParseObject("hired"));
-//                    userMap.put(usersThatIHired.get(i).getObjectId(), usersThatIHired.get(i));
-//                }
-//
-//                for (int i = 0; i < list2.size(); i++) {
-//                    usersThatHiredMe.add(list2.get(i).getParseObject("createdBy"));
-//                    userMap.put(usersThatHiredMe.get(i).getObjectId(), usersThatHiredMe.get(i));
-//                }
-//
-//                if(!userMap.isEmpty()){
-//                    adapter = new InboxAdapter(userMap, (position, users) -> {
-//                        startActivity(new Intent(this, LiveMessage.class)
-//                                .putExtra("clientUser", users.get(position))
-//                                .putExtra("type", "Hirer"));
-//                    });
-//
-//                    binding.recyclerView.setAdapter(adapter);
-//                }
-//
-//            } else {
-//                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         ParseCloud.callFunctionInBackground("fetchInboxNew", params, (ArrayList<ArrayList<ParseObject>> object, ParseException e) -> {
-            if (e==null){
-                if (object.size() != 0){
-                    adapter = new InboxAdapter(object.get(0), object.get(1), (position, users) -> {
-                                 startActivity(new Intent(this, LiveMessage.class)
+            //Object.get(0) are your users, Object.get(1) are recent messages considering current parseUser
+            if (e == null) {
+                if (object.size() != 0) {
+                    adapter = new InboxAdapter(object.get(0), object.get(1), (position, users, recentMessagePosition) -> {
+                        startActivity(new Intent(this, LiveMessage.class)
                                 .putExtra("clientUser", users.get(position))
-                                .putExtra("type", "Hirer"));
+                                .putExtra("type", "Hirer")
+                                .putExtra("recentMessage", object.get(1).get(recentMessagePosition)));
                     });
 
                     binding.recyclerView.setAdapter(adapter);
                 }
+
             } else {
                 Toast.makeText(this, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+
+            binding.swipeRefresh.setRefreshing(false);
         });
     }
 
