@@ -450,6 +450,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         } else if (item.getItemId() == R.id.nav_switch) {
             setDarkMode(true);
+        }else if(item.getItemId() == R.id.nav_hired_jobs){
+            startActivity(new Intent(HomePage.this,HiredJobs.class));
         }
         return true;
     }
