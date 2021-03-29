@@ -40,6 +40,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
 
     // Store a member variable for the contacts
     private ArrayList<ParseObject> parseObjects = new ArrayList<>();
+    private ArrayList<ParseObject> recentMessages = new ArrayList<>();
 
     private OnInboxListener mOnInboxListener;
 
@@ -51,6 +52,13 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
         mOnInboxListener = onInboxListener;
     }
 
+    public InboxAdapter(ArrayList<ParseObject> parseObjects, ArrayList<ParseObject> recentMessages, OnInboxListener onInboxListener) {
+        this.parseObjects = parseObjects;
+        this.recentMessages = recentMessages;
+
+        mOnInboxListener = onInboxListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,40 +66,15 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
         return new InboxAdapter.ViewHolder(ItemInboxBinding.inflate((inflater), parent, false), parent.getContext(), mOnInboxListener);
     }
 
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
-        Context context;
-        ItemInboxBinding binding;
-        OnInboxListener onInboxListener;
-
-        public ViewHolder(ItemInboxBinding b, Context context, OnInboxListener onInboxListener) {
-
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
-
-            super(b.getRoot());
-            binding = b;
-            this.context = context;
-            this.onInboxListener = onInboxListener;
-            b.getRoot().setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            onInboxListener.onInboxClick(getAdapterPosition(), parseObjects);
-        }
-    }
-
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int pos) {
+        ParseUser clientUser = (ParseUser) parseObjects.get(pos);
+
         holder.binding.getRoot().setAnimation(AnimationUtils.loadAnimation(holder.context, R.anim.fade_scale_in));
 
-        holder.binding.firstName.setText(parseObjects.get(pos).getString("firstName"));
+        holder.binding.firstName.setText(clientUser.getString("firstName"));
 
-        parseObjects.get(pos).getParseFile("proPic").getDataInBackground((data, e) -> {
+        clientUser.getParseFile("proPic").getDataInBackground((data, e) -> {
 
             if (e == null) {
                 Glide.with(holder.context)
@@ -105,6 +88,23 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
                 Log.d("fiasdjfiaws", "Error on e not equal to null! " + e.getMessage());
             }
         });
+
+        //Check if recent messages are between me and client and vice versa
+        for (int i = 0; i < recentMessages.size(); i++) {
+
+            if(recentMessages.get(i).get("createdBy").equals(clientUser.getUsername()) ||
+                recentMessages.get(i).get("createdFor").equals(clientUser.getUsername())){
+                    if (recentMessages.get(i).get("createdBy").equals(ParseUser.getCurrentUser().getUsername())){
+                        // message was made by me
+                        holder.binding.recentMessage.setText("You: " + recentMessages.get(i).getString("message"));
+                    } else {
+                        holder.binding.recentMessage.setText(recentMessages.get(i).getString("message"));
+                    }
+                    break;
+            } else{
+                holder.binding.recentMessage.setText("Hello! I would like to contact you!");
+            }
+        }
 
 //        ParseQuery<ParseObject> parseQuery1 = ParseQuery.getQuery("LiveMessage");
 //
@@ -164,4 +164,32 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
             notifyDataSetChanged();
         }
     }
+
+    // Provide a direct reference to each of the views within a data item
+    // Used to cache the views within the item layout for fast access
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        Context context;
+        ItemInboxBinding binding;
+        OnInboxListener onInboxListener;
+
+        public ViewHolder(ItemInboxBinding b, Context context, OnInboxListener onInboxListener) {
+
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+
+            super(b.getRoot());
+            binding = b;
+            this.context = context;
+            this.onInboxListener = onInboxListener;
+            b.getRoot().setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onInboxListener.onInboxClick(getAdapterPosition(), parseObjects);
+        }
+    }
+
 }
