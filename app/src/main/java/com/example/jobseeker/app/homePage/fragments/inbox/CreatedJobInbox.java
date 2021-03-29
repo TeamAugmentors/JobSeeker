@@ -64,6 +64,15 @@ public class CreatedJobInbox extends Fragment {
                     }
                 }
 
+//                for(int i=0;i<parseObjects.size();i++) {
+//                    for(int j=i+1;j<parseObjects.size();j++) {
+//                        if(parseObjects.get(i).getUpdatedAt().toString().compareTo(parseObjects.get(j).getUpdatedAt().toString())>0){
+//                            parseObjects.get(i).setObjectId(parseObjects.get(j).getObjectId());
+//                            parseObjects.get(j).setObjectId(parseObjects.get(i).getObjectId());
+//                        }
+//                    }
+//                }
+                
                 adapter = new InboxAdapter(parseObjects, new InboxAdapter.OnInboxListener() {
 
                     public void onInboxClick(int position, ArrayList<ParseObject> users) {

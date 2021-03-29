@@ -51,7 +51,7 @@ public class LiveMessage extends AppCompatActivity {
     LiveChatAdapter adapter;
     ArrayList<ParseObject> parseObjects = new ArrayList<>();
 
-    String currentDate, seenDate, seenClock, outputTime = "", showTime, seenTime, currentTime;
+    String showTime, seenTime, currentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class LiveMessage extends AppCompatActivity {
                         seenTime = lastObject.getUpdatedAt().toString();
                         currentTime = Calendar.getInstance().getTime().toString();
 
-                        showTime = HelperUtils.getTime(seenTime, currentTime);
+                        showTime = HelperUtils.getTime(seenTime, currentTime,true);
 
                         binding.txtRSeen.setText(showTime);
                         binding.txtRSeen.setVisibility(View.VISIBLE);

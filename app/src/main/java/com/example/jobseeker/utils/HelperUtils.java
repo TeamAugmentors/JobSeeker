@@ -143,7 +143,7 @@ public class HelperUtils {
     }
 
 
-    public static String getTime(String seenTime, String currentTime) {
+    public static String getTime(String seenTime, String currentTime, boolean seenFlag) {
         String currentDate, seenDate, seenClock, outputTime = "";
 
         currentDate = currentTime.substring(7, 10) + " " + currentTime.substring(4, 7) + " " + currentTime.substring(30, 34);
@@ -153,11 +153,14 @@ public class HelperUtils {
         StringBuilder temp = new StringBuilder(seenClock);
         outputTime = convertTo12(temp);
 
-        if (currentDate.equals(seenDate)) {
-            return "Seen " + outputTime;
-        } else {
-            return "Seen " + seenDate + " at " + outputTime;
+        if(seenFlag) {
+            if (currentDate.equals(seenDate)) {
+                return "Seen " + outputTime;
+            } else {
+                return "Seen " + seenDate + " at " + outputTime;
+            }
         }
+        return outputTime;
     }
 
     private static String convertTo12(StringBuilder outputTime) {

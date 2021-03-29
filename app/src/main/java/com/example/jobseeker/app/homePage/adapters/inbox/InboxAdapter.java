@@ -21,6 +21,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ItemInboxBinding;
+import com.example.jobseeker.utils.HelperUtils;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -31,6 +32,7 @@ import com.parse.ProgressCallback;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -126,12 +128,18 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
             if (e == null) {
                 if (objects.size() != 0) {
                     ParseObject parseObject = objects.get(objects.size() - 1);
+                    String seenTime,currentTime,showTime;
+                    seenTime = parseObject.getUpdatedAt().toString();
+                    currentTime = Calendar.getInstance().getTime().toString();
+
+                    showTime = HelperUtils.getTime(seenTime, currentTime,false);
+
                     if (parseObject.getString("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
                         //message made by me
-                        holder.binding.recentMessage.setText("You: " + parseObject.getString("message"));
+                        holder.binding.recentMessage.setText("You: " + parseObject.getString("message")+" ~ "+showTime);
                         holder.binding.firstName.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                     } else {
-                        holder.binding.recentMessage.setText(parseObject.getString("message"));
+                        holder.binding.recentMessage.setText(parseObject.getString("message")+" ~ "+showTime);
 
                         if (parseObject.getBoolean("seenByFor"))
                             holder.binding.firstName.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
