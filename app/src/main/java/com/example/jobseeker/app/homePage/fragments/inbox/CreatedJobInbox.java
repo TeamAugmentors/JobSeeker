@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CreatedJobInbox extends Fragment {
-
+    //People who you want to hire
     FragemntCreatedJobsInboxBinding binding;
     HashMap<String, ParseObject> parseObjects = new HashMap<>();
     InboxAdapter adapter;

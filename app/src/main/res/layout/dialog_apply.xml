@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/backgroundColor"
+    app:cardCornerRadius="@dimen/_4sdp">
+
+    <LinearLayout
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_weight="9"
+                android:fontFamily="@font/roboto_light"
+                android:text="Leave a message? (Optional)"
+                android:textAlignment="textStart"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_20sdp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sampleFileTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_light"
+            android:text="You can leave a message to the hirer to increase your chances of getting hired!"
+            android:textAlignment="textStart"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_14sdp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/leaveMessage"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:hint="Leave a message"
+            android:textColorHint="@color/job_seeker_green_hint"
+            app:endIconMode="none"
+            app:errorEnabled="false"
+            app:hintTextColor="@color/job_seeker_logo_green">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:textColor="@color/job_seeker_logo_green"
+                android:textSize="@dimen/_16sdp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/fileLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/applyButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/button_background"
+            android:drawablePadding="@dimen/_6sdp"
+            android:drawableTint="@color/backgroundColor"
+            android:fontFamily="@font/roboto_light"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="@dimen/_25sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="Apply"
+            android:textAllCaps="false"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_16sdp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/message"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/button_background"
+            android:drawablePadding="@dimen/_6sdp"
+            android:drawableTint="@color/backgroundColor"
+            android:fontFamily="@font/roboto_light"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="@dimen/_25sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="Message"
+            android:textAllCaps="false"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_16sdp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

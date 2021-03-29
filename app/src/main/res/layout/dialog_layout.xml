@@ -287,7 +287,6 @@
         </LinearLayout>
 
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/seeFreelancerButton"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -307,7 +306,6 @@
             android:textAllCaps="false"
             android:textColor="@color/job_seeker_logo_green"
             android:textSize="@dimen/_16sdp" />
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:visibility="gone"

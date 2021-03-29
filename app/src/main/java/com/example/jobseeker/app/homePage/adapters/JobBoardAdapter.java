@@ -96,9 +96,6 @@ public class JobBoardAdapter extends RecyclerView.Adapter<JobBoardAdapter.ViewHo
         holder.binding.getRoot().setAnimation(AnimationUtils.loadAnimation(holder.context, R.anim.fade_scale_in));
     }
 
-    private void setSalary(){
-
-    }
     @Override
     public int getItemCount() {
         return parseObjects.size();

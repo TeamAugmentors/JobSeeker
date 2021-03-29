@@ -51,6 +51,7 @@ import android.widget.Toast;
 import com.example.jobseeker.R;
 import com.example.jobseeker.app.homePage.adapters.JobBoardAdapter;
 import com.example.jobseeker.databinding.ActivityJobBoardBinding;
+import com.example.jobseeker.databinding.DialogApplyBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
 import com.example.jobseeker.utils.ColorEx;
 import com.example.jobseeker.utils.ProgressBarStatus;
@@ -196,6 +197,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
     }
 
     DialogLayoutBinding bindingDialog;
+    DialogApplyBinding dialogApplyBinding;
 
     @Override
     public void onJobBoardClick(int position, List<ParseObject> parseObjects) {
@@ -260,30 +262,41 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         }
         //---------------------->
         bindingDialog.applySlider.setOnSlideCompleteListener(slideToActView -> {
-            //apply
-            if (ParseUser.getCurrentUser().getString("firstName") != null) {
-                currentObject.add("applied", ParseUser.getCurrentUser());
+            dialog.dismiss();
 
-                currentObject.saveInBackground(e -> {
-                    if (e == null) {
-                        Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
+            Dialog applyDialog = new Dialog(this, R.style.Dialog);
+            dialogApplyBinding = DialogApplyBinding.inflate(getLayoutInflater());
 
-                        ParseUser.getCurrentUser().add("appliedPosts", currentObject);
-                        ParseUser.getCurrentUser().saveEventually();
+            applyDialog.setContentView(dialogApplyBinding.getRoot());
 
-                        removeJob(parseObjects, position);
+            applyDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            applyDialog.show();
 
-                        dialog.dismiss();
-                    } else {
-                        Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        slideToActView.resetSlider();
-                    }
-                });
+            dialogApplyBinding.applyButton.setOnClickListener(v -> {
+                //apply
+                if (ParseUser.getCurrentUser().getString("firstName") != null) {
+                    currentObject.add("applied", ParseUser.getCurrentUser());
 
-            } else {
-                Toast.makeText(this, "Please create an account first", Toast.LENGTH_SHORT).show();
-                slideToActView.resetSlider();
-            }
+                    currentObject.saveInBackground(e -> {
+                        if (e == null) {
+                            Toast.makeText(this, "Successfully applied!", Toast.LENGTH_SHORT).show();
+
+                            ParseUser.getCurrentUser().add("appliedPosts", currentObject);
+                            ParseUser.getCurrentUser().saveEventually();
+
+                            removeJob(parseObjects, position);
+
+                            applyDialog.dismiss();
+                        } else {
+                            Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(this, "Please create an account first", Toast.LENGTH_SHORT).show();
+                   applyDialog.dismiss();
+                }
+            });
         });
 
     }
@@ -335,7 +348,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                         globalJobId = jobId;
 
                         try {
-                            if (ActivityCompat.checkSelfPermission(context,Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                                 //ask for permission
                                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
                             } else {
@@ -350,18 +363,10 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
                     }
                 }, percentDone -> {
 
-                    binding.progressJobBoard.setIndicatorColor(ColorEx.JOB_SEEKER_GREEN);
-
-                    binding.progressJobBoard.setProgress(50, true);
                     Log.d("afsfasf", "new: " + percentDone);
 
                     if (percentDone == 100) {
-                        ProgressBarStatus.successFlash(binding.progressJobBoard, JobBoard.this);
-                        binding.textView.setText("Download complete!");
-
-
                         new Handler().postDelayed(() -> {
-                            binding.progressJobBoard.setProgress(0, false);
                         }, 1400);
                     }
                 });
@@ -430,9 +435,9 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         final String[] columns = {id, name};
 
         String folder = "/storage/emulated/0/Download/JobSeeker/JobId_";
-        folder = folder.concat(jobId+"/");
+        folder = folder.concat(jobId + "/");
         //Log.d("Item1",folder);
-         String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
+        String selection = MediaStore.Downloads.DATA + " LIKE ? AND " + MediaStore.Downloads.DATA + " NOT LIKE ? ";
         String[] selectionArgs = new String[]{
                 "%" + folder + "%",
                 "%" + folder + "/%/%",
@@ -459,6 +464,7 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
     private void removeJob(List<ParseObject> parseObjects, int pos) {
         parseObjects.remove(pos);
+
         adapter.notifyItemRemoved(pos);
         adapter.notifyItemRangeChanged(pos, parseObjects.size());
     }

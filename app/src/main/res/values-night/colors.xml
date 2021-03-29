@@ -15,7 +15,7 @@
 
 <!--    Theme colors-->
     <color name="job_seeker_logo_green">#01A514</color>
-    <color name="hint_black">#6DFFFFFF</color>
+    <color name="hint_black">#FFFFFF</color>
     <color name="job_seeker_red">#CD0000</color>
     <color name="job_seeker_green_hint">#8A0CBC20</color>
     <color name="hint_white">#C6FFFFFF</color>
