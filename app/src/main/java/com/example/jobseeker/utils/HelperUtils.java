@@ -164,7 +164,7 @@ public class HelperUtils {
     }
 
     private static String convertTo12(StringBuilder outputTime) {
-        if (outputTime.charAt(1) > '2' && outputTime.charAt(0) > '0') {
+        if ((outputTime.charAt(0)=='1' && outputTime.charAt(1) > '2') || outputTime.charAt(0) > '1') {
             int temp2 = ((outputTime.charAt(0) - '0') * 10 + (outputTime.charAt(1) - '0')) - 12;
             if (temp2 < 10) {
                 outputTime.setCharAt(0, '0');

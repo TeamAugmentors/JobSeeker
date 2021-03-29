@@ -90,12 +90,20 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
             if (recentMessages.get(i).get("createdBy").equals(clientUser.getUsername()) || recentMessages.get(i).get("createdFor").equals(clientUser.getUsername())) {
 
                 //recent message exists
+                String seenTime,currentTime,showTime,message;
+                seenTime = recentMessages.get(i).getUpdatedAt().toString();
+                currentTime = Calendar.getInstance().getTime().toString();
 
+                showTime = HelperUtils.getTime(seenTime, currentTime,false);
+
+                message = recentMessages.get(i).getString("message");
+                if(message.length()>19)
+                    message = message.substring(0,18)+"...";
                 if (recentMessages.get(i).get("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
                     // message was made by me
-                    holder.binding.recentMessage.setText("You: " + recentMessages.get(i).getString("message"));
+                    holder.binding.recentMessage.setText("You: " + message + " \u25c8 "  + showTime);
                 } else {
-                    holder.binding.recentMessage.setText(recentMessages.get(i).getString("message"));
+                    holder.binding.recentMessage.setText(message + " \u25c8 "  + showTime);
                 }
                 holder.binding.firstName.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 recentMessageMap.put(pos, i);

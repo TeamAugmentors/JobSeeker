@@ -76,6 +76,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
             ParseCloud.callFunctionInBackground("getOtp", map, (FunctionCallback<Boolean>) (isLogin, e) -> {
                 if (e == null) {
+                    Toast.makeText(this, "toast", Toast.LENGTH_SHORT).show();
                     slideChange = true;
                     binding.viewPager2.setCurrentItem(1);
                     adapter.getEnterOTPSlide().setOtpHeaderText("We have sent a code to +88" + phoneNo);
@@ -84,7 +85,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
                     submitOtp(null);
                 } else
-                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"ERROR!! "+ e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }
     }
