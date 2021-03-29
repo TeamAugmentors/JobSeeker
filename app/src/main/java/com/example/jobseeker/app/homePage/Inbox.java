@@ -50,8 +50,7 @@ public class Inbox extends AppCompatActivity {
                     adapter = new InboxAdapter(object.get(0), object.get(1), (position, users, recentMessagePosition) -> {
                         startActivity(new Intent(this, LiveMessage.class)
                                 .putExtra("clientUser", users.get(position))
-                                .putExtra("type", "Hirer")
-                                .putExtra("recentMessage", object.get(1).get(recentMessagePosition)));
+                                .putExtra("type", "Hirer"));
                     });
 
                     binding.recyclerView.setAdapter(adapter);

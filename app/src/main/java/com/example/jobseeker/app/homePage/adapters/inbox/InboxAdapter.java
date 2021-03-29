@@ -88,6 +88,9 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
         //Check if recent messages are between me and client and vice versa
         for (int i = 0; i < recentMessages.size(); i++) {
             if (recentMessages.get(i).get("createdBy").equals(clientUser.getUsername()) || recentMessages.get(i).get("createdFor").equals(clientUser.getUsername())) {
+
+                //recent message exists
+
                 if (recentMessages.get(i).get("createdBy").equals(ParseUser.getCurrentUser().getUsername())) {
                     // message was made by me
                     holder.binding.recentMessage.setText("You: " + recentMessages.get(i).getString("message"));
@@ -97,6 +100,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
                 holder.binding.firstName.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 recentMessageMap.put(pos, i);
                 break;
+
+                //---------------->
             } else {
                 holder.binding.recentMessage.setText("Hello! I would like to contact you!");
             }
