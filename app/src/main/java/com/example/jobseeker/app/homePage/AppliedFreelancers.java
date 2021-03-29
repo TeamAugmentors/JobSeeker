@@ -55,9 +55,11 @@ public class AppliedFreelancers extends AppCompatActivity {
 
                             currentJob.saveInBackground(e1 -> {
                                 if (e1 == null){
+
                                     Toast.makeText(AppliedFreelancers.this, "Successfully hired! You can now chat with the free lancer in your inbox!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(AppliedFreelancers.this, CreatedPosts.class).putExtra("jobObject", currentJob));
                                     finish();
+
                                 }
                             });
                         }
