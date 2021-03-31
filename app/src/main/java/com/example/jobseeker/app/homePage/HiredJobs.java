@@ -173,17 +173,20 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
             bindingDialog.seeFreelancerButton.setVisibility(View.GONE);
             bindingDialog.verifyingRoot.setVisibility(View.VISIBLE);
 
-            bindingDialog.indicator1.setIndeterminate(false);  // clear line
-            bindingDialog.indicator1.setTrackColor(ColorEx.JOB_SEEKER_GREEN);  // solid line
+            bindingDialog.indicator2.setIndeterminate(false); // clear line
+            bindingDialog.indicator3.setIndeterminate(false);
+            //bindingDialog.indicator1.setTrackColor(ColorEx.JOB_SEEKER_GREEN);  // solid line
 
-            if (!currentObject.getBoolean("ver1")) {
 
-            } else if (currentObject.getBoolean("ver1")) {
-
-            } else if (currentObject.getBoolean("ver2")) {
-
-            } else if (currentObject.getBoolean("ver3")) {
-
+             if (currentObject.getBoolean("ver1")) {
+                bindingDialog.indicator1.setTrackColor(ColorEx.JOB_SEEKER_GREEN);
+                bindingDialog.indicator2.setIndeterminate(true);
+            }if (currentObject.getBoolean("ver2")) {
+                 bindingDialog.indicator2.setTrackColor(ColorEx.JOB_SEEKER_GREEN);
+                 bindingDialog.indicator3.setIndeterminate(true);
+            }if (currentObject.getBoolean("ver3")) {
+                 bindingDialog.indicator3.setTrackColor(ColorEx.JOB_SEEKER_GREEN);
+                 bindingDialog.verification.setText("Verification Complete!");
             }
         }
 
