@@ -331,7 +331,7 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
                                         Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
 
                                         ParseUser hiredUser = currentObject.getParseUser("hired");
-                                        hiredUser.put("totalEarned", currentObject.getInt("budget"));
+                                        hiredUser.put("totalEarned", currentObject.getInt("budget") + hiredUser.getInt("totalEarned"));
                                         hiredUser.put("jobsCompleted", hiredUser.getInt("jobsCompleted") + 1);
 
                                         hiredUser.saveInBackground(e1 -> {
