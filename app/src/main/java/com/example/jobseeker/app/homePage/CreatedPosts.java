@@ -80,7 +80,6 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         query.include("applied");
         query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 
-
         query.whereEqualTo("locked", false);
 
         query.findInBackground((objects, e) -> {
@@ -234,6 +233,8 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         confirmationDialogView.findViewById(R.id.noButton).setOnClickListener(v1 -> {
             confirmationDialog.dismiss();
         });
+
+        //--------------------------------------Completed job
 
 
     }

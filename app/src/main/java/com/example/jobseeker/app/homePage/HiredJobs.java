@@ -108,7 +108,7 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
                 List<ParseObject> objects = (List<ParseObject>) object.get("appliedPosts");
 
 
-                if (parseObjects != null) {
+                if (objects != null) {
                     for (int i = 0; i < objects.size(); i++) {
                         if (objects.get(i).getBoolean("locked"))
                             parseObjects.add(objects.get(i));
@@ -116,9 +116,9 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
                     adapter = new CreatedPostsAdapter(parseObjects, this);
 
                     binding.recyclerView.setAdapter(adapter);
-                    binding.chip.setText("Applied to " + parseObjects.size() + " Jobs");
+                    binding.chip.setText("Hired " + parseObjects.size() + " Freelances");
                 } else {
-                    binding.chip.setText("Applied to 0 Jobs");
+                    binding.chip.setText("Hired 0 Freelancers");
                 }
             } else {
                 Toast.makeText(HiredJobs.this, e.getMessage(), Toast.LENGTH_SHORT).show();

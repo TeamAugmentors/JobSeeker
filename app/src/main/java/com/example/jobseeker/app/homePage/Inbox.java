@@ -33,7 +33,6 @@ public class Inbox extends AppCompatActivity {
         binding = ActivityInboxBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
-        fetchData();
     }
 
     private void fetchData() {
@@ -64,6 +63,11 @@ public class Inbox extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchData();
+    }
 
     private void init() {
         ToolbarHelper.create(binding.toolbar, null, this, "Inbox");
