@@ -42,7 +42,9 @@ import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreatedPostBinding;
 import com.example.jobseeker.databinding.ActivityHiredJobsBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
+import com.example.jobseeker.utils.ColorEx;
 import com.example.jobseeker.utils.ToolbarHelper;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.ncorti.slidetoact.SlideToActView;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -167,7 +169,18 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         scrollView.setLayoutParams(params);
 
         //Differentiate jobs
-        if (currentObject.getBoolean(""))
+        if (currentObject.getBoolean("completed")){
+            bindingDialog.seeFreelancerButton.setVisibility(View.GONE);
+            bindingDialog.verifyingRoot.setVisibility(View.VISIBLE);
+
+            if (currentObject.getBoolean("ver1")){
+
+            } else if (currentObject.getBoolean("ver2")){
+
+            } else if (currentObject.getBoolean("ver3")){
+
+            }
+        }
 
         //add buttons
         ArrayList<ParseFile> parseFiles = new ArrayList<>();
@@ -187,6 +200,10 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         });
     }
 
+    void disableIndicator(LinearProgressIndicator linearProgressIndicator){
+        linearProgressIndicator.setIndeterminate(false);
+        linearProgressIndicator.setTrackColor(ColorEx.JOB_SEEKER_GREEN);
+    }
 
     private final int PERMISSION_CODE = 1000;
     public final String JOBSEEKER_DIR = Environment.DIRECTORY_DOWNLOADS + "/JobSeeker";
