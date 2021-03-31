@@ -27,6 +27,36 @@
         android:textColor="@color/job_seeker_logo_green"
         android:textSize="@dimen/_18sdp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/driveLink"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:hint="Public Drive Link"
+        android:textColorHint="@color/job_seeker_green_hint"
+        app:endIconMode="none"
+        app:endIconTint="@color/job_seeker_logo_green"
+        app:errorEnabled="false"
+        app:hintTextColor="@color/job_seeker_logo_green">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_taka_big"
+            android:drawableTint="@color/job_seeker_logo_green"
+            android:fontFamily="@font/roboto_light"
+            android:inputType="text"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_17sdp"
+            android:imeOptions="actionDone"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <androidx.appcompat.widget.AppCompatButton
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
@@ -41,8 +71,8 @@
         android:minHeight="0dp"
         android:paddingHorizontal="@dimen/_25sdp"
         android:paddingVertical="@dimen/_6sdp"
-        android:text="Upload files"
-        android:onClick="uploadFiles"
+        android:text="Share Link"
+        android:onClick="shareLink"
         android:textAllCaps="false"
         android:textColor="@color/job_seeker_logo_green"
         android:textSize="@dimen/_16sdp" />

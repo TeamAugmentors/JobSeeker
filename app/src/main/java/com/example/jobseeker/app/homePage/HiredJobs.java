@@ -70,7 +70,6 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         binding = ActivityHiredJobsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
-        fetchData();
     }
 
     private void init() {
@@ -90,6 +89,12 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchData();
+    }
+
     private void fetchData() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.include("appliedPosts");
@@ -97,6 +102,9 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
 
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (object, e) -> {
             if (e == null) {
+
+                parseObjects = new ArrayList<>();
+
                 List<ParseObject> objects = (List<ParseObject>) object.get("appliedPosts");
 
 
@@ -120,6 +128,8 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         });
 
     }
+
+
 
     DialogLayoutBinding bindingDialog;
 
@@ -204,7 +214,8 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         //------------------------>
 
         bindingDialog.seeFreelancerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, CompleteThisJob.class));
+            startActivity(new Intent(this, CompleteThisJob.class).putExtra("jobObject",currentObject));
+            dialog.dismiss();
         });
     }
 

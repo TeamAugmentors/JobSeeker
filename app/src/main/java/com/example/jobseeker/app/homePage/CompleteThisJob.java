@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCompleteThisJobBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.parse.ParseObject;
@@ -13,6 +12,7 @@ import com.parse.ParseObject;
 public class CompleteThisJob extends AppCompatActivity {
     ActivityCompleteThisJobBinding binding;
     ParseObject jobObject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,15 +23,25 @@ public class CompleteThisJob extends AppCompatActivity {
     private void init() {
         ToolbarHelper.create(binding.toolbar, null, this, "Complete This Job");
         jobObject = getIntent().getParcelableExtra("jobObject");
+
     }
 
 
-    public void uploadFiles(View view) {
+
+    public void shareLink(View view) {
         //upload files to drive here
+        jobObject.put("projectFileLink",binding.driveLink.getEditText().getText().toString());
+        jobObject.put("completed",true);
+        jobObject.saveInBackground(e -> {
+            if(e==null){
+                finish();
+            }
+        });
+
 
         //after job completed
 
-        completeJob();
+        //completeJob();
     }
 
     private void completeJob() {

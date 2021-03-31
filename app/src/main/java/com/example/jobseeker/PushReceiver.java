@@ -17,6 +17,8 @@ import com.example.jobseeker.app.homePage.HomePage;
 import com.example.jobseeker.parseSdk.Connect;
 
 import me.pushy.sdk.Pushy;
+import me.pushy.sdk.receivers.PushyBootReceiver;
+import me.pushy.sdk.services.PushyFirebaseService;
 
 public class PushReceiver extends BroadcastReceiver {
 
@@ -29,6 +31,7 @@ public class PushReceiver extends BroadcastReceiver {
         if (intent.getStringExtra("message") != null) {
             notificationText = intent.getStringExtra("message");
         }
+
 
         // Prepare a notification with vibration, sound and lights
         Notification notification = new NotificationCompat.Builder(context, Connect.CHANNEL_1_ID)
