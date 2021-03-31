@@ -80,8 +80,6 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         query.include("applied");
         query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 
-        query.whereEqualTo("locked", false);
-
         query.findInBackground((objects, e) -> {
             if (e == null) {
                 parseObjects = (ArrayList<ParseObject>) objects;
@@ -207,7 +205,7 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         bindingDialog.seeFreelancerButton.setOnClickListener(v -> {
             dialog.dismiss();
             currentPosition = position;
-            startActivity(new Intent(this,AppliedFreelancers.class).putExtra("jobObject", currentObject));
+            startActivity(new Intent(this, AppliedFreelancers.class).putExtra("jobObject", currentObject));
         });
 
         //delete confirmation dialog
@@ -234,9 +232,13 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
             confirmationDialog.dismiss();
         });
 
-        //--------------------------------------Completed job
+        //--------------------------------------Hired Job
 
-
+        if (currentObject.getBoolean("locked")) {
+            bindingDialog.seeFreelancerButton.setVisibility(View.GONE);
+            bindingDialog.deleteButton.setVisibility(View.GONE);
+            bindingDialog.hiredTextView.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -376,8 +378,6 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         cursor.close();
         return false;
     }
-
-
 
 
     private void removeJob(List<ParseObject> parseObjects, int pos) {
