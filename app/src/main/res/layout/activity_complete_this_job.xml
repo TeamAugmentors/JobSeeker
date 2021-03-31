@@ -39,7 +39,7 @@
         android:textColorHint="@color/job_seeker_green_hint"
         app:endIconMode="none"
         app:endIconTint="@color/job_seeker_logo_green"
-        app:errorEnabled="false"
+        app:errorEnabled="true"
         app:hintTextColor="@color/job_seeker_logo_green">
 
 
@@ -67,7 +67,7 @@
         android:textColorHint="@color/job_seeker_green_hint"
         app:endIconMode="none"
         app:endIconTint="@color/job_seeker_logo_green"
-        app:errorEnabled="false"
+        app:errorEnabled="true"
         app:hintTextColor="@color/job_seeker_logo_green">
 
 

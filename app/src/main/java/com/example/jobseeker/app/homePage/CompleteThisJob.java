@@ -41,9 +41,9 @@ public class CompleteThisJob extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (binding.driveLink.getEditText().getText().toString().isEmpty()) {
-                    binding.driveLink.getEditText().setError("*This Field is Required");
+                    binding.driveLink.setError("*This Field is Required");
                 } else {
-                    binding.driveLink.getEditText().setError("");
+                    binding.driveLink.setError("");
                 }
             }
 
@@ -61,9 +61,9 @@ public class CompleteThisJob extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (binding.sampleLink.getEditText().getText().toString().isEmpty()) {
-                    binding.sampleLink.getEditText().setError("*This Field is Required");
+                    binding.sampleLink.setError("*This Field is Required");
                 } else {
-                    binding.sampleLink.getEditText().setError("");
+                    binding.sampleLink.setError("");
                 }
             }
 

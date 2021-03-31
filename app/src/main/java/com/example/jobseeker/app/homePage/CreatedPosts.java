@@ -339,7 +339,7 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
                                         hiredUser.saveInBackground(e12 -> {
                                             if (e12 == null){
                                             } else {
-                                                Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(this, "Error! " + e12.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
