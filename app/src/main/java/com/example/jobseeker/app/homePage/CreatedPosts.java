@@ -329,6 +329,18 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
                                 currentObject.saveInBackground(e -> {
                                     if (e == null) {
                                         Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
+
+                                        ParseUser hiredUser = currentObject.getParseUser("hired");
+                                        hiredUser.put("totalEarned", currentObject.getInt("budget"));
+                                        hiredUser.put("jobsCompleted", hiredUser.getInt("jobsCompleted") + 1);
+
+                                        hiredUser.saveInBackground(e1 -> {
+                                            if (e1 == null){
+
+                                            } else {
+                                                Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentObject.getString("projectFileLink")));
                                         startActivity(browserIntent);
 
