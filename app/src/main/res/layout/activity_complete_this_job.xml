@@ -22,7 +22,7 @@
         android:layout_marginEnd="@dimen/_30sdp"
         android:fontFamily="@font/roboto_light"
         android:lineSpacingExtra="@dimen/_3sdp"
-        android:text="Compress all your project files into a .zip or .rar format and then upload it using the button below."
+        android:text="Upload your main project files into a public drive and share the link. Also, upload a sample of your project files for review in another public drive and share the link below."
         android:textAlignment="textStart"
         android:textColor="@color/job_seeker_logo_green"
         android:textSize="@dimen/_18sdp" />
@@ -46,7 +46,35 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_taka_big"
+            android:drawableEnd="@drawable/ic_baseline_add_to_drive_24"
+            android:drawableTint="@color/job_seeker_logo_green"
+            android:fontFamily="@font/roboto_light"
+            android:inputType="text"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_17sdp"
+            android:imeOptions="actionDone"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sampleLink"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:hint="Sample Drive Link"
+        android:textColorHint="@color/job_seeker_green_hint"
+        app:endIconMode="none"
+        app:endIconTint="@color/job_seeker_logo_green"
+        app:errorEnabled="false"
+        app:hintTextColor="@color/job_seeker_logo_green">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_baseline_add_to_drive_24"
             android:drawableTint="@color/job_seeker_logo_green"
             android:fontFamily="@font/roboto_light"
             android:inputType="text"

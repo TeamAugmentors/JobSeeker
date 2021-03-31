@@ -239,6 +239,12 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
             bindingDialog.deleteButton.setVisibility(View.GONE);
             bindingDialog.hiredTextView.setVisibility(View.VISIBLE);
         }
+
+        //---------------------------------------Phase 2
+
+        if (currentObject.getBoolean("ver1")){
+            //verify sample files
+        }
     }
 
 
