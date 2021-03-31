@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.homePage.CompleteThisJob">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/job_seeker_logo_green"
+        android:id="@+id/toolbar"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:fontFamily="@font/roboto_light"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="Compress all your project files into a .zip or .rar format and then upload it using the button below."
+        android:textAlignment="textStart"
+        android:textColor="@color/job_seeker_logo_green"
+        android:textSize="@dimen/_18sdp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:background="@drawable/button_background"
+        android:drawablePadding="@dimen/_6sdp"
+        android:drawableTint="@color/backgroundColor"
+        android:fontFamily="@font/roboto_light"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:paddingHorizontal="@dimen/_25sdp"
+        android:paddingVertical="@dimen/_6sdp"
+        android:text="Upload files"
+        android:onClick="uploadFiles"
+        android:textAllCaps="false"
+        android:textColor="@color/job_seeker_logo_green"
+        android:textSize="@dimen/_16sdp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:fontFamily="@font/roboto_light"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="Please note that we will verify the files on our side. If the files do not match the selected job, it will be declined and you will have to upload the files again"
+        android:textAlignment="textStart"
+        android:textColor="@color/job_seeker_logo_green"
+        android:textSize="@dimen/_15sdp" />
+
+</LinearLayout>

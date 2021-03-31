@@ -21,7 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker">
-        <activity android:name=".app.homePage.HiredJobs" android:parentActivityName=".app.homePage.HomePage"></activity>
+        <activity android:name=".app.homePage.CompleteThisJob"></activity>
+        <activity
+            android:name=".app.homePage.HiredJobs"
+            android:parentActivityName=".app.homePage.HomePage" />
 
         <service
             android:name="me.pushy.sdk.services.PushyFirebaseService"

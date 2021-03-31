@@ -342,11 +342,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
 
                     if (e == null) {
 
-                        globalData = data;
-                        globalParseFile = parseFile;
-                        globalContext = context;
-                        globalJobId = jobId;
-
                         try {
                             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                                 //ask for permission
@@ -374,21 +369,6 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         }
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            try {
-                saveFile(globalData, globalParseFile, globalContext, globalJobId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
     private void saveFile(byte[] data, ParseFile parseFile, Activity context, String jobId) throws Exception {
         OutputStream outputStream;
