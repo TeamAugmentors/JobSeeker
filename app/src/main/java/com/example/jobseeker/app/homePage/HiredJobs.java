@@ -69,7 +69,6 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         setContentView(binding.getRoot());
         init();
         fetchData();
-
     }
 
     private void init() {
@@ -166,6 +165,9 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
             params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
         }
         scrollView.setLayoutParams(params);
+
+        //Differentiate jobs
+        if (currentObject.getBoolean(""))
 
         //add buttons
         ArrayList<ParseFile> parseFiles = new ArrayList<>();
