@@ -169,15 +169,20 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         scrollView.setLayoutParams(params);
 
         //Differentiate jobs
-        if (currentObject.getBoolean("completed")){
+        if (currentObject.getBoolean("completed")) {
             bindingDialog.seeFreelancerButton.setVisibility(View.GONE);
             bindingDialog.verifyingRoot.setVisibility(View.VISIBLE);
 
-            if (currentObject.getBoolean("ver1")){
+            bindingDialog.indicator1.setIndeterminate(false);  // clear line
+            bindingDialog.indicator1.setTrackColor(ColorEx.JOB_SEEKER_GREEN);  // solid line
 
-            } else if (currentObject.getBoolean("ver2")){
+            if (!currentObject.getBoolean("ver1")) {
 
-            } else if (currentObject.getBoolean("ver3")){
+            } else if (currentObject.getBoolean("ver1")) {
+
+            } else if (currentObject.getBoolean("ver2")) {
+
+            } else if (currentObject.getBoolean("ver3")) {
 
             }
         }
@@ -198,11 +203,6 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         bindingDialog.seeFreelancerButton.setOnClickListener(v -> {
             startActivity(new Intent(this, CompleteThisJob.class));
         });
-    }
-
-    void disableIndicator(LinearProgressIndicator linearProgressIndicator){
-        linearProgressIndicator.setIndeterminate(false);
-        linearProgressIndicator.setTrackColor(ColorEx.JOB_SEEKER_GREEN);
     }
 
     private final int PERMISSION_CODE = 1000;
@@ -276,7 +276,6 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
     }
 
 
-
     private void saveFile(byte[] data, ParseFile parseFile, Activity context, String jobId) throws Exception {
         OutputStream outputStream;
 
@@ -347,7 +346,6 @@ public class HiredJobs extends AppCompatActivity implements CreatedPostsAdapter.
         cursor.close();
         return false;
     }
-
 
 
 }
