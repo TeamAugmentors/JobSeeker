@@ -331,13 +331,13 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
                                     if (e == null) {
                                         Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
 
-                                        ParseUser hiredUser = currentObject.getParseUser("hired");
+                                        ParseObject hiredUser = currentObject.getParseObject("hired");
 
                                         hiredUser.put("totalEarned", currentObject.getInt("budget") + hiredUser.getInt("totalEarned"));
                                         hiredUser.put("jobsCompleted", hiredUser.getInt("jobsCompleted") + 1);
+
                                         hiredUser.saveInBackground(e12 -> {
                                             if (e12 == null){
-
                                             } else {
                                                 Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
