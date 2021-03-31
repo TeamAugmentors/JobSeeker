@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -31,6 +32,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -40,7 +42,10 @@ import android.widget.Toast;
 import com.example.jobseeker.R;
 import com.example.jobseeker.databinding.ActivityCreatedPostBinding;
 import com.example.jobseeker.databinding.DialogApplyBinding;
+import com.example.jobseeker.databinding.DialogBkashBinding;
 import com.example.jobseeker.databinding.DialogLayoutBinding;
+import com.example.jobseeker.databinding.DialogOkBinding;
+import com.example.jobseeker.databinding.DialogTrxIdBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.ncorti.slidetoact.SlideToActView;
 import com.parse.ParseFile;
@@ -242,8 +247,121 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
 
         //---------------------------------------Phase 2
 
-        if (currentObject.getBoolean("ver1")){
+        if (currentObject.getBoolean("ver1")) {
             //verify sample files
+            bindingDialog.hiredTextView.setVisibility(View.GONE);
+            bindingDialog.seeFreelancerButton.setVisibility(View.VISIBLE);
+            bindingDialog.seeFreelancerButton.setText("Get Sample FIles");
+            bindingDialog.seeFreelancerButton.setOnClickListener(v -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentObject.getString("sampleFileLink")));
+                startActivity(browserIntent);
+
+                dialog.dismiss();
+
+                //Make an Ok Dialog
+                Dialog okDialog = new Dialog(this, R.style.Dialog);
+                DialogOkBinding dialogOkBinding = DialogOkBinding.inflate(getLayoutInflater());
+                okDialog.setContentView(dialogOkBinding.getRoot());
+
+                okDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                okDialog.show();
+
+                dialogOkBinding.yesButton.setOnClickListener(v1 -> {
+                    currentObject.put("ver2", true);
+                    currentObject.saveInBackground(e -> {
+                        if (e == null) {
+                            okDialog.dismiss();
+                            fetchData();
+                        } else {
+                            Toast.makeText(this, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
+            });
+        }
+
+        //----------------------------------Phase 3
+
+        if (currentObject.getBoolean("ver2")) {
+            bindingDialog.hiredTextView.setVisibility(View.GONE);
+            bindingDialog.seeFreelancerButton.setVisibility(View.VISIBLE);
+            bindingDialog.seeFreelancerButton.setText("Get Project FIles");
+            bindingDialog.seeFreelancerButton.setOnClickListener(v -> {
+
+                //Prompt bkash dialog
+                DialogBkashBinding bkashBinding = DialogBkashBinding.inflate(getLayoutInflater());
+                Dialog bkashDialog = new Dialog(this, R.style.Dialog);
+
+                bkashDialog.setContentView(bkashBinding.getRoot());
+
+                bkashDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                bkashBinding.jobBudget.setText(currentObject.getInt("budget") + " ");
+                bkashBinding.bkashCharge.setText((currentObject.getInt("budget") * 2 / 100) + " ");
+                bkashBinding.subTotal.setText(((currentObject.getInt("budget") * 2 / 100) + currentObject.getInt("budget")) + " ");
+
+                bkashDialog.show();
+
+                dialog.dismiss();
+
+                bkashBinding.bkashButton.setOnClickListener(v1 -> {
+                    bkashDialog.dismiss();
+
+                    Toast.makeText(this, "here!", Toast.LENGTH_SHORT).show();
+
+                    //Create trxId dialog
+                    DialogTrxIdBinding dialogTrxIdBinding = DialogTrxIdBinding.inflate(getLayoutInflater());
+                    Dialog trxIdDialog = new Dialog(this, R.style.Dialog);
+
+                    trxIdDialog.setContentView(dialogTrxIdBinding.getRoot());
+
+                    trxIdDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    ((AnimationDrawable) dialogTrxIdBinding.bkashBird.getDrawable()).start();
+
+                    dialogTrxIdBinding.bkashBird.setAnimation(AnimationUtils.loadAnimation(this, R.anim.up_down));
+
+                    trxIdDialog.show();
+
+                    dialogTrxIdBinding.yesButton.setOnClickListener(v2 -> {
+                        if (currentObject.getString("trxId") != null) {
+                            if (currentObject.getString("trxId").equals(dialogTrxIdBinding.trxIdEditTextLayout.getEditText().getText().toString())) {
+                                currentObject.put("ver3", true);
+                                currentObject.saveInBackground(e -> {
+                                    if (e == null) {
+                                        Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentObject.getString("projectFileLink")));
+                                        startActivity(browserIntent);
+
+                                    } else {
+                                        Toast.makeText(this, "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(this, "TrxId does not match. Please contact support if the problem exists", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(this, "No payment has yet been made for this job", Toast.LENGTH_SHORT).show();
+                        }
+
+                        trxIdDialog.dismiss();
+                    });
+
+                });
+
+            });
+        }
+
+        //----------------------------------Job completed fully
+
+        if (currentObject.getBoolean("ver3")) {
+            bindingDialog.hiredTextView.setVisibility(View.GONE);
+            bindingDialog.seeFreelancerButton.setVisibility(View.VISIBLE);
+            bindingDialog.seeFreelancerButton.setText("Get Project FIles");
+            bindingDialog.seeFreelancerButton.setOnClickListener(v -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentObject.getString("projectFileLink")));
+                startActivity(browserIntent);
+            });
+
         }
     }
 

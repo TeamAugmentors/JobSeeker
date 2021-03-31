@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/backgroundColor"
+    android:paddingBottom="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_10sdp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+
+        <ImageView
+            android:id="@+id/bkash_bird"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_gravity="center"
+            android:elevation="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:src="@drawable/bkash_birb_animation"
+            />
+
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/roboto_light"
+            android:text="Please enter the TrxId that has been used to pay for the job"
+            android:textAlignment="center"
+            android:textColor="@color/bkash_pink"
+            android:textSize="@dimen/_20sdp" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/trxIdEditTextLayout"
+            style="@style/bkashInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:hint="10 Digit TrxId"
+            android:textColorHint="#8BD32165"
+            app:endIconMode="none"
+            app:endIconTint="@color/bkash_pink"
+            app:errorEnabled="false"
+            app:hintTextColor="@color/bkash_pink">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:textCursorDrawable="@null"
+                android:inputType="text"
+                android:textColor="@color/bkash_pink"
+                android:textSize="@dimen/_17sdp"
+                android:imeOptions="actionDone"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/yesButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_bkash_background_blue"
+                android:drawablePadding="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/roboto_light"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="@dimen/_25sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@color/bkash_pink"
+                android:textSize="@dimen/_16sdp" />
+
+        </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

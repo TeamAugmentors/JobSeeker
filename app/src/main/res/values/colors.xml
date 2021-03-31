@@ -26,4 +26,8 @@
     <color name="color_transparent">#00FFFFFF</color>
     <color name="bkash_color">#df146e</color>
     <color name="dark_green">#028801</color>
+    <color name="tutor_bear_dark_blue">#264467</color>
+    <color name="bkash_pink">#D32165</color>
+    <color name="tutor_bear_green">#1AA14A</color>
+
 </resources>

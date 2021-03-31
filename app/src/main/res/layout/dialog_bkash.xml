@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/backgroundColor"
+    app:cardCornerRadius="@dimen/_4sdp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/_290sdp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:fontFamily="@font/roboto_light"
+            android:lineSpacingExtra="@dimen/_7sdp"
+            android:text="Payment Details"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/bkash_pink"
+            android:textSize="@dimen/_20sdp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:fontFamily="@font/roboto_light"
+                        android:lineSpacingExtra="@dimen/_7sdp"
+                        android:text="Send Money"
+                        android:textColor="@color/bkash_pink"
+                        android:textSize="@dimen/_20sdp" />
+
+                    <TextView
+                        android:id="@+id/mobile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_light"
+                        android:gravity="center|end"
+                        android:lineSpacingExtra="@dimen/_7sdp"
+                        android:text="01714251278"
+                        android:textColor="@color/bkash_pink"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/_20sdp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/service_charge_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_light"
+                        android:lineSpacingExtra="@dimen/_5sdp"
+                        android:text="Job Budget"
+                        android:textColor="@color/tutor_bear_dark_blue"
+                        android:textSize="@dimen/_14sdp" />
+
+
+                    <TextView
+                        android:id="@+id/job_budget"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableEnd="@drawable/ic_taka"
+                        android:fontFamily="@font/roboto_light"
+                        android:lineSpacingExtra="@dimen/_5sdp"
+                        android:text="5000 "
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/tutor_bear_dark_blue"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlayoutBkash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:fontFamily="@font/roboto_light"
+                        android:lineSpacingExtra="@dimen/_5sdp"
+                        android:text="Bkash charge"
+                        android:textColor="@color/tutor_bear_dark_blue"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/bkashCharge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_taka"
+                        android:drawableTint="@color/tutor_bear_dark_blue"
+                        android:fontFamily="@font/roboto_light"
+                        android:lineSpacingExtra="@dimen/_5sdp"
+                        android:text="20 "
+                        android:textColor="@color/tutor_bear_dark_blue"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:background="@color/bkash_pink" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:fontFamily="@font/roboto_light"
+                        android:lineSpacingExtra="@dimen/_5sdp"
+                        android:text="Sub Total"
+                        android:textColor="@color/bkash_pink"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/subTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_taka"
+                        android:drawableTint="@color/bkash_pink"
+                        android:fontFamily="@font/roboto_light"
+                        android:lineSpacingExtra="@dimen/_5sdp"
+                        android:text="1000 "
+                        android:textColor="@color/bkash_pink"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/numberInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:fontFamily="@font/roboto_light"
+                    android:lineSpacingExtra="@dimen/_5sdp"
+                    android:text="Please pay the Sub Total through bKash by sending money to the number stated above. After payment, you will be able to access the project files and do whatever you wish with them!"
+                    android:textColor="@color/tutor_bear_dark_blue"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+
+                    android:fontFamily="@font/roboto_light"
+                    android:lineSpacingExtra="@dimen/_5sdp"
+                    android:text="Please note: If no payment is made in 3 days, you will be banned from creating posts in the future, and also you will not be able to apply to posts"
+                    android:textColor="@color/bkash_pink"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bkash_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:background="@drawable/button_bkash_background_blue"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/roboto_light"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:text="Okay"
+            android:textColor="@color/bkash_pink"
+            android:textSize="@dimen/_17sdp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
