@@ -79,6 +79,7 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
         query.include("applied");
         query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
+        query.whereEqualTo("completed", false);
 
         query.whereEqualTo("locked", false);
 

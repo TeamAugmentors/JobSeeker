@@ -104,6 +104,8 @@ public class JobBoard extends AppCompatActivity implements JobBoardAdapter.OnJob
         query.include("applied");
         query.whereNotEqualTo("applied", ParseUser.getCurrentUser());
         query.whereNotEqualTo("createdBy", ParseUser.getCurrentUser());
+        query.whereEqualTo("completed", false);
+        query.whereEqualTo("locked", false);
         query.orderByDescending("createdAt");
 
         query.findInBackground((objects, e) -> {

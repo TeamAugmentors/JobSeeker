@@ -47,6 +47,7 @@ public class AppliedPosts extends AppCompatActivity implements CreatedPostsAdapt
     private void fetchData() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.include("appliedPosts");
+        query.whereEqualTo("completed", false);
 
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), (object, e) -> {
             if (e == null) {
