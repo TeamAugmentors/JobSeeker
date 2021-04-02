@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:text="Welcome To\nJobSeeker!"
+        android:text="All Done!"
+        android:paddingHorizontal="@dimen/_10sdp"
         android:textAlignment="center"
         android:textColor="@color/job_seeker_logo_green"
         android:textSize="@dimen/_37sdp"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
         android:paddingHorizontal="@dimen/_10sdp"
-        android:text="Welcome to JobSeeker, the first freelancing platform in Bangladesh! Get freelance jobs or hire professional Freelancers of your choice, all in one app!"
+        android:text="You're all set to start using JobSeeker at its full potential!\n\nGoodLuck!"
         android:textAlignment="center"
         android:textColor="@color/job_seeker_logo_green"
         android:textSize="@dimen/_18sdp"
@@ -37,14 +38,11 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.32999998" />
 
-    <com.airbnb.lottie.LottieAnimationView
+    <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/_219sdp"
-        android:layout_height="@dimen/_160sdp"
-        app:lottie_fileName="guide/data.json"
-        app:lottie_imageAssetsFolder="guide/images"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:src="@drawable/prepared"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

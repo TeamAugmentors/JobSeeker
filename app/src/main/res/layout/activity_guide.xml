@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/teal_200"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,49 +17,70 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-        android:id="@+id/dots_indicator"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:dampingRatio="0.5"
-        app:dotsColor="@color/job_seeker_green_hint"
-        app:dotsCornerRadius="2dp"
-        app:dotsSize="16dp"
-        app:dotsSpacing="6dp"
-        app:dotsStrokeColor="@color/black"
-        app:dotsStrokeWidth="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view_pager_guide"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:animateLayoutChanges="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view_pager_guide"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87"
-        app:stiffness="300" />
+        app:layout_constraintVertical_bias="0.96">
 
-    <Button
-        android:id="@+id/skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:text="@string/skip"
-        android:onClick="skip"
-        app:layout_constraintBottom_toBottomOf="@+id/view_pager_guide"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dots_indicator"
-        app:layout_constraintVertical_bias="0.63" />
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:text="@string/next"
-        android:onClick="next"
-        app:layout_constraintBottom_toBottomOf="@+id/view_pager_guide"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dots_indicator"
-        app:layout_constraintVertical_bias="0.63" />
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skip"
+            android:onClick="skip"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_16sdp"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dotsIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dotsColor="@color/job_seeker_green_hint"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="16dp"
+            app:dotsSpacing="4dp"
+            app:dotsWidthFactor="2.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95"
+            app:selectedDotColor="@color/job_seeker_logo_green" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+        <TextView
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:onClick="next"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/job_seeker_logo_green"
+            android:textSize="@dimen/_16sdp"
+            />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JobSeeker">
+
         <activity android:name=".app.homePage.CompleteThisJob"
             android:parentActivityName=".app.homePage.HiredJobs"/>
 
@@ -112,11 +113,13 @@
             android:name=".app.startScreen.SplashScreen"
             android:theme="@style/SplashScreen"
             android:windowSoftInputMode="adjustPan">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".app.startScreen.WelcomeScreen"

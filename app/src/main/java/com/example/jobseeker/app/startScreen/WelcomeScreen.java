@@ -69,12 +69,14 @@ public class WelcomeScreen extends AppCompatActivity {
             Toast.makeText(WelcomeScreen.this, "Please enter a correct phone number!", Toast.LENGTH_SHORT).show();
         } else {
             HashMap<String, String> map = new HashMap<>();
+
             map.put("username", phoneNo);
             String otp = generateOtp(5);
             Toast.makeText(this, otp, Toast.LENGTH_SHORT).show();
             map.put("otp", otp);
 
             ParseCloud.callFunctionInBackground("getOtp", map, (FunctionCallback<Boolean>) (isLogin, e) -> {
+
                 if (e == null) {
                     Toast.makeText(this, "toast", Toast.LENGTH_SHORT).show();
                     slideChange = true;
@@ -101,10 +103,11 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     public void submitOtp(View view) {
+
         ParseUser.logInInBackground(phoneNo, ((OtpView) findViewById(R.id.otp_view)).getText().toString(), (user1, e) -> {
             if (e == null) {
                 Toast.makeText(this, "Login was a success!", Toast.LENGTH_SHORT).show();
-                if (ParseUser.getCurrentUser().getBoolean("isGuideShow") == true) {
+                if (ParseUser.getCurrentUser().getBoolean("isGuideShow")) {
                     startActivity(new Intent(this, HomePage.class));
                     finish();
                 } else {
@@ -127,7 +130,4 @@ public class WelcomeScreen extends AppCompatActivity {
         });
     }
 
-    public void logout(View view) {
-        ParseUser.logOut();
-    }
 }

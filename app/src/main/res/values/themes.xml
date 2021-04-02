@@ -26,10 +26,12 @@
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+
         <item name="android:windowBackground">@drawable/layer_list</item>
 
         <item name="android:statusBarColor">@color/job_seeker_logo_green</item>
         <item name="android:navigationBarColor">@color/job_seeker_logo_green</item>
+
     </style>
 
     <style name="AppTheme.Toolbar" parent="Theme.JobSeeker">

@@ -36,11 +36,11 @@ public class Guide extends AppCompatActivity {
             public void onPageSelected(int position) {
                 if(position==binding.viewPagerGuide.getAdapter().getItemCount()-1) {
                     if(binding.viewPagerGuide.getCurrentItem()==binding.viewPagerGuide.getAdapter().getItemCount()-1)
-                        binding.next.setText("DONE");
+                        binding.next.setText("Done");
                 }
                 else
                 {
-                        binding.next.setText("NEXT");
+                        binding.next.setText("Next");
                 }
             }
         });
@@ -51,9 +51,9 @@ public class Guide extends AppCompatActivity {
         {
             binding.viewPagerGuide.setCurrentItem(binding.viewPagerGuide.getCurrentItem()+1);
             if(binding.viewPagerGuide.getCurrentItem()==binding.viewPagerGuide.getAdapter().getItemCount()-1)
-                binding.next.setText("DONE");
+                binding.next.setText("Done");
             else
-                binding.next.setText("NEXT");
+                binding.next.setText("Next");
         }
         else
         {
@@ -62,6 +62,7 @@ public class Guide extends AppCompatActivity {
             finish();
         }
     }
+
     public void skip(View view)
     {
         Intent intent = new Intent(Guide.this, HomePage.class);
