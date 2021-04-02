@@ -42,6 +42,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -82,49 +83,54 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
 
     private void fetchData() {
-        if (ParseUser.getCurrentUser().get("firstName") != null) {
-            binding.navView.getMenu().getItem(0).setTitle("Edit Profile");
-            binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_edit_profile);
-            ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().getString("firstName") + "!");
+        ParseUser.getCurrentUser().fetchInBackground((object, e3) -> {
+            if (e3 == null){
+                if (ParseUser.getCurrentUser().get("firstName") != null) {
+                    binding.navView.getMenu().getItem(0).setTitle("Edit Profile");
+                    binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_edit_profile);
+                    ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, " + ParseUser.getCurrentUser().getString("firstName") + "!");
 
-            ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
-            imageFile.getDataInBackground((data, e) -> {
-                if (e == null) {
+                    ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
+                    imageFile.getDataInBackground((data, e) -> {
+                        if (e == null) {
 
-                    Glide.with(this)
-                            .asBitmap()
-                            .load(data)
-                            .override(500, 500)
-                            .transform(new CircleCrop())
-                            .into((ImageView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.proPic));
+                            Glide.with(this)
+                                    .asBitmap()
+                                    .load(data)
+                                    .override(500, 500)
+                                    .transform(new CircleCrop())
+                                    .into((ImageView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.proPic));
 
-                } else {
-                    Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    if (ParseUser.getCurrentUser().get("skillSet") != null) {
+                        fetchJobs(null);
+                    } else {
+                        binding.textViewLinearLayout.setVisibility(View.VISIBLE);
+                        binding.refreshForYou.setVisibility(View.GONE);
+
+                        binding.forYouRecyclerView.setAdapter(null);
+
+                        binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_edit_small, 0, 0, 0);
+                        binding.addSkill.setText("Edit Profile");
+                        binding.textView.setText("Please add some skills\nto get recommendations!");
+                    }
+
                 }
-            });
+                else {
+                    ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
+                    binding.navView.getMenu().getItem(0).setTitle("Create Profile");
+                    binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
 
-            if (ParseUser.getCurrentUser().get("skillSet") != null) {
-                fetchJobs(null);
-            } else {
-                binding.textViewLinearLayout.setVisibility(View.VISIBLE);
-                binding.refreshForYou.setVisibility(View.GONE);
-
-                binding.forYouRecyclerView.setAdapter(null);
-
-                binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_edit_small, 0, 0, 0);
-                binding.addSkill.setText("Edit Profile");
-                binding.textView.setText("Please add some skills\nto get recommendations!");
+                    binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_small, 0, 0, 0);
+                    binding.addSkill.setText("Create Profile");
+                    binding.textView.setText("Please create a profile\nto get recommendations!");
+                }
             }
-
-        } else {
-            ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
-            binding.navView.getMenu().getItem(0).setTitle("Create Profile");
-            binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
-
-            binding.addSkill.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_create_small, 0, 0, 0);
-            binding.addSkill.setText("Create Profile");
-            binding.textView.setText("Please create a profile\nto get recommendations!");
-        }
+        });
 
     }
 
@@ -146,6 +152,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         query.include("applied");
         query.whereNotEqualTo("applied", ParseUser.getCurrentUser());
         query.whereNotEqualTo("createdBy", ParseUser.getCurrentUser());
+        query.whereEqualTo("locked", false);
+        query.whereEqualTo("completed", false);
+
         query.orderByDescending("createdAt");
 
         binding.forYouSpinKit.setVisibility(View.VISIBLE);
@@ -393,6 +402,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 ((TextView) dialog.findViewById(R.id.bkash_chip)).setText(ParseUser.getCurrentUser().get("bkashNo").toString());
 
                 double temp = ParseUser.getCurrentUser().getInt("totalEarned");
+                Log.d("asofjas", temp + "");
                 if (temp > 1000) {
                     temp /= 1000;
                     int flag = (int) ((temp * 10) % 10);

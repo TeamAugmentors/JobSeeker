@@ -48,6 +48,8 @@ import com.example.jobseeker.databinding.DialogOkBinding;
 import com.example.jobseeker.databinding.DialogTrxIdBinding;
 import com.example.jobseeker.utils.ToolbarHelper;
 import com.ncorti.slidetoact.SlideToActView;
+import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -58,6 +60,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapter.OnCreatedPostsListener {
@@ -81,22 +84,41 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
     }
 
     private void fetchData() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
-        query.include("applied");
-        query.include("hired");
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobBoard");
+//        query.include("applied");
+//        query.include("hired");
+//
+//        query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
+//
+//        query.findInBackground((objects, e) -> {
+//            if (e == null) {
+//                parseObjects = (ArrayList<ParseObject>) objects;
+//                adapter = new CreatedPostsAdapter(parseObjects, this);
+//
+//                binding.recyclerView.setAdapter(adapter);
+//
+//                binding.chip.setText("Created " + parseObjects.size() + " Jobs");
+//            } else {
+//                Toast.makeText(CreatedPosts.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                binding.chip.setText("Unable to fetch");
+//            }
+//        });
 
-        query.whereEqualTo("createdBy", ParseUser.getCurrentUser());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("userId", ParseUser.getCurrentUser().getObjectId());
 
-        query.findInBackground((objects, e) -> {
+        ParseCloud.callFunctionInBackground("fetchCreatedJobs", params, (objects, e) -> {
             if (e == null) {
                 parseObjects = (ArrayList<ParseObject>) objects;
+
                 adapter = new CreatedPostsAdapter(parseObjects, this);
 
                 binding.recyclerView.setAdapter(adapter);
 
                 binding.chip.setText("Created " + parseObjects.size() + " Jobs");
             } else {
-                Toast.makeText(CreatedPosts.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                 binding.chip.setText("Unable to fetch");
             }
@@ -331,18 +353,34 @@ public class CreatedPosts extends AppCompatActivity implements CreatedPostsAdapt
                                 currentObject.saveInBackground(e -> {
                                     if (e == null) {
                                         Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
+                                        HashMap<String, Object> hashMap = new HashMap<>();
 
                                         ParseObject hiredUser = currentObject.getParseObject("hired");
 
-                                        hiredUser.put("totalEarned", currentObject.getInt("budget") + hiredUser.getInt("totalEarned"));
-                                        hiredUser.put("jobsCompleted", hiredUser.getInt("jobsCompleted") + 1);
+                                        hashMap.put("hiredId", currentObject.getParseObject("hired").getObjectId());
+                                        hashMap.put("totalEarned", currentObject.getInt("budget") + hiredUser.getInt("totalEarned"));
+                                        hashMap.put("jobsCompleted", hiredUser.getInt("jobsCompleted") + 1);
 
-                                        hiredUser.saveInBackground(e12 -> {
-                                            if (e12 == null){
-                                            } else {
-                                                Toast.makeText(this, "Error! " + e12.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
+                                        ParseCloud.callFunctionInBackground("updateFreelancer", hashMap, (object, e1) -> {
+                                            if (e1 == null) {
+                                                Toast.makeText(this, "success!", Toast.LENGTH_SHORT).show();
+                                            } else
+                                                Toast.makeText(this, "error!" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         });
+
+
+//
+//                                        Log.d("asodfjas", hiredUser.toString());
+//
+//                                        hiredUser.put("totalEarned", currentObject.getInt("budget") + hiredUser.getInt("totalEarned"));
+//                                        hiredUser.put("jobsCompleted", hiredUser.getInt("jobsCompleted") + 1);
+//
+//                                        hiredUser.saveInBackground(e12 -> {
+//                                            if (e12 == null) {
+//                                            } else {
+//                                                Log.d("asodfjas", e12.getMessage());
+//                                            }
+//                                        });
 
                                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentObject.getString("projectFileLink")));
                                         startActivity(browserIntent);
