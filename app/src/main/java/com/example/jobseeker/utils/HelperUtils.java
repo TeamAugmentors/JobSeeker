@@ -115,32 +115,6 @@ public class HelperUtils {
         return extension.toString();
     }
 
-    public static BottomSheetBehavior defaultSheet(ViewGroup bottomSheetRoot, Button dismissButton) {
-
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRoot);
-
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        bottomSheetBehavior.setPeekHeight(bottomSheetRoot.getHeight());
-        bottomSheetBehavior.setHideable(true);
-
-        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
-        dismissButton.setOnClickListener(v -> bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED));
-
-        return bottomSheetBehavior;
-    }
 
 
     public static String getTime(String seenTime, String currentTime, boolean seenFlag) {
