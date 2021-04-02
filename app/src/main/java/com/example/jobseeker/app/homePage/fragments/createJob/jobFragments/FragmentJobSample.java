@@ -106,7 +106,7 @@ public class FragmentJobSample extends Fragment {
 
         String extension = HelperUtils.getFileExtention(displayName);
 
-        parseFiles[requestCode - 1] = new ParseFile("SampleFile1." + extension, inputData);
+        parseFiles[requestCode - 1] = new ParseFile("SampleFile"+requestCode+"." + extension, inputData);
 
         parseFiles[requestCode - 1].saveInBackground(e -> {
             if (e != null) {
