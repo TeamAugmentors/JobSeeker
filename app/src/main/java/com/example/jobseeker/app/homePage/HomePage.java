@@ -77,8 +77,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void registerUserForPush() {
         Pushy.toggleFCM(true, this);
-        if (!Pushy.isRegistered(this))
-            new RegisterForPushNotificationsAsync(this).execute();
+        new RegisterForPushNotificationsAsync(this).execute();
     }
 
 
@@ -101,7 +100,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                                         .transform(new CircleCrop())
                                         .into((ImageView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.proPic));
 
-                            } catch (Exception e1){
+                            } catch (Exception e1) {
 
                             }
 

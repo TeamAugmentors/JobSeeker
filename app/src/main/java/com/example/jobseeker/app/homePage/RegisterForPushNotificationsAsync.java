@@ -60,12 +60,12 @@ class RegisterForPushNotificationsAsync extends AsyncTask<Void, Void, Object> {
             message = "Pushy device token: " + result.toString() + "\n\n(copy from logcat)";
         }
 
-        Activity activity = activityRef.get();
-        // Registration succeeded, display an alert with the device token
-        new android.app.AlertDialog.Builder(activity)
-                .setTitle("Pushy")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
+//        Activity activity = activityRef.get();
+//        // Registration succeeded, display an alert with the device token
+//        new android.app.AlertDialog.Builder(activity)
+//                .setTitle("Pushy")
+//                .setMessage(message)
+//                .setPositiveButton(android.R.string.ok, null)
+//                .show();
     }
 }
