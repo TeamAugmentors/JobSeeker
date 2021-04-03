@@ -84,7 +84,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void fetchData() {
         ParseUser.getCurrentUser().fetchInBackground((object, e3) -> {
-            if (e3 == null){
+            if (e3 == null) {
                 if (ParseUser.getCurrentUser().get("firstName") != null) {
                     binding.navView.getMenu().getItem(0).setTitle("Edit Profile");
                     binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_edit_profile);
@@ -93,13 +93,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     ParseFile imageFile = (ParseFile) ParseUser.getCurrentUser().get("proPic");
                     imageFile.getDataInBackground((data, e) -> {
                         if (e == null) {
+                            try {
+                                Glide.with(this)
+                                        .asBitmap()
+                                        .load(data)
+                                        .override(500, 500)
+                                        .transform(new CircleCrop())
+                                        .into((ImageView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.proPic));
 
-                            Glide.with(this)
-                                    .asBitmap()
-                                    .load(data)
-                                    .override(500, 500)
-                                    .transform(new CircleCrop())
-                                    .into((ImageView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.proPic));
+                            } catch (Exception e1){
+
+                            }
 
                         } else {
                             Toast.makeText(this, "Error ! " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -119,8 +123,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                         binding.textView.setText("Please add some skills\nto get recommendations!");
                     }
 
-                }
-                else {
+                } else {
                     ((TextView) binding.navView.getHeaderView(0).getRootView().findViewById(R.id.user)).setText("Welcome, user!");
                     binding.navView.getMenu().getItem(0).setTitle("Create Profile");
                     binding.navView.getMenu().getItem(0).setIcon(R.drawable.ic_create_profile);
@@ -460,11 +463,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         } else if (item.getItemId() == R.id.nav_switch) {
             setDarkMode(true);
-        }else if(item.getItemId() == R.id.nav_hired_jobs){
-            startActivity(new Intent(HomePage.this,HiredJobs.class));
-        }
-        else if(item.getItemId() == R.id.nav_job_history){
-            startActivity(new Intent(HomePage.this,JobHistory.class));
+        } else if (item.getItemId() == R.id.nav_hired_jobs) {
+            startActivity(new Intent(HomePage.this, HiredJobs.class));
+        } else if (item.getItemId() == R.id.nav_job_history) {
+            startActivity(new Intent(HomePage.this, JobHistory.class));
         }
         return true;
     }
