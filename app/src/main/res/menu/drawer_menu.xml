@@ -33,19 +33,14 @@
                 android:title="Hired Jobs" />
         </menu>
     </item>
-<!--    <item android:title="History">-->
-<!--        <menu>-->
-<!--            <item-->
-<!--                android:id="@+id/nav_job_history"-->
-<!--                android:icon="@drawable/ic_create_job"-->
-<!--                android:title="Job History" />-->
-
-<!--            <item-->
-<!--                android:id="@+id/nav_payment_history"-->
-<!--                android:icon="@drawable/ic_list"-->
-<!--                android:title="Payment History" />-->
-<!--        </menu>-->
-<!--    </item>-->
+    <item android:title="History">
+        <menu>
+            <item
+                android:id="@+id/nav_job_history"
+                android:icon="@drawable/ic_create_job"
+                android:title="Job History" />
+        </menu>
+    </item>
     <item android:title="">
         <menu>
             <item android:id="@+id/nav_switch"

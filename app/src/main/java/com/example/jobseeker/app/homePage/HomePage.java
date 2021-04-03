@@ -463,6 +463,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }else if(item.getItemId() == R.id.nav_hired_jobs){
             startActivity(new Intent(HomePage.this,HiredJobs.class));
         }
+        else if(item.getItemId() == R.id.nav_job_history){
+            startActivity(new Intent(HomePage.this,JobHistory.class));
+        }
         return true;
     }
 

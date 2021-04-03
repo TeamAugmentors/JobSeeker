@@ -2,6 +2,7 @@ package com.example.jobseeker.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,10 +11,12 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,22 +31,30 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.jobseeker.R;
+import com.example.jobseeker.databinding.DialogApplyBinding;
+import com.example.jobseeker.databinding.DialogLayoutBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.core.app.ActivityCompat.requestPermissions;
 import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 public class HelperUtils {
 
+
+    private static DialogLayoutBinding bindingDialog;
+    private static DialogApplyBinding dialogApplyBinding;
 
     public static String getAllChipText(ChipGroup chipGroup) {
         StringBuilder result = new StringBuilder();
@@ -153,5 +164,53 @@ public class HelperUtils {
         }
         return outputTime.toString() + " am";
     }
+    public static Object[] createDialog(int position, List<ParseObject> parseObjects, Context context){
+        Dialog dialog = new Dialog(context, R.style.Dialog);
+        bindingDialog = DialogLayoutBinding.inflate(((Activity)context).getLayoutInflater());
 
+        dialog.setContentView(bindingDialog.getRoot());
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        bindingDialog.close.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        ParseObject currentObject = parseObjects.get(position);
+
+        bindingDialog.title.setText(currentObject.getString("title"));
+        bindingDialog.description.setText(currentObject.getString("description"));
+        bindingDialog.budget.setText(currentObject.getInt("budget") + "");
+        bindingDialog.duration.setText(currentObject.getString("duration"));
+        bindingDialog.revisions.setText(currentObject.getInt("revisions") + "");
+        bindingDialog.seeFreelancerButton.setVisibility(View.GONE);
+        bindingDialog.deleteButton.setVisibility(View.GONE);
+
+        if (currentObject.getBoolean("negotiable"))
+            bindingDialog.negotiable.setText("Yes");
+        else
+            bindingDialog.negotiable.setText("No");
+
+        //Dynamic scroll view height
+
+        String text = bindingDialog.description.getText().toString();
+
+        int charCount = text.length();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+
+        LinearLayout.LayoutParams params;
+
+        if (charCount <= 200) {
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } else {
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4);
+        }
+
+        bindingDialog.scrollView.setLayoutParams(params);
+        return new Object[]{dialog, bindingDialog};
+    }
 }
