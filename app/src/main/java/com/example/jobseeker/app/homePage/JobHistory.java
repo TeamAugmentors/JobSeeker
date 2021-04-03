@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -91,6 +92,7 @@ public class JobHistory extends AppCompatActivity {
                         objects = HelperUtils.createDialog(position,parseObjects,JobHistory.this);
                         Dialog dialog = (Dialog) objects[0];
                         bindingDialog = (DialogLayoutBinding) objects[1];
+                        bindingDialog.applySlider.setVisibility(View.GONE);
 
                         //---------------------->
                         ArrayList<ParseFile> parseFiles = new ArrayList<>();
