@@ -7,4 +7,4 @@ Project Functionality and Key Features
 • A very intuitive user interface and convenient.
 • Security through our app (We will ensure no stealing/cheating while using our platform).
 
-(Project demo)[https://youtu.be/YYKiquIiLZ4]
+[Project demo](https://youtu.be/YYKiquIiLZ4)
